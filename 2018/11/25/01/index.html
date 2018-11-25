@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>微服务基础简介 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="微服务基础简介：  微服务基础简介">
+<meta name="keywords" content="微服务 分布式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务基础简介">
+<meta property="og:url" content="https://alexbrucelu.github.io/2018/11/25/01/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="微服务基础简介：  微服务基础简介">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/Uber0.png">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/Uber1.png">
+<meta property="og:updated_time" content="2018-11-25T14:23:54.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务基础简介">
+<meta name="twitter:description" content="微服务基础简介：  微服务基础简介">
+<meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/Uber0.png">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AlexBruceLu</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/microServices/">微服务</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/AlexBruceLu/" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="https://weibo.com/2707660541/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/微服务-分布式/" style="font-size: 10px;">微服务 分布式</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://blog.csdn.net/weixin_42954306">csdn</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AlexBruceLu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AlexBruceLu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/microServices/">微服务</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/AlexBruceLu/" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/2707660541/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-01" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/11/25/01/" class="article-date">
+      <time datetime="2018-11-25T14:27:45.480Z" itemprop="datePublished">2018-11-25</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      微服务基础简介
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/algorithm/">algorithm</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务-分布式/">微服务 分布式</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong> 微服务基础简介：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>微服务基础简介</p>
+<a id="more"></a>
+<p>[TOC]</p>
+<h1 id="一、微服务（microServices）"><a href="#一、微服务（microServices）" class="headerlink" title="一、微服务（microServices）"></a>一、微服务（microServices）</h1><h2 id="1-什么是微服务？"><a href="#1-什么是微服务？" class="headerlink" title="1. 什么是微服务？"></a>1. 什么是微服务？</h2><p>在介绍微服务时，首先得先理解什么是微服务，顾名思义，微服务得从两个方面去理解，什么是”微”、什么是”服<br>务”？ 微（micro） 狭义来讲就是体积小，著名的”2 pizza 团队”很好的诠释了这一解释（2 pizza 团队最早是亚马<br>逊 CEO Bezos提出来的，意思是说单个服务的设计，所有参与人从设计、开发、测试、运维所有人加起来 只需要2个披萨就够了 ）。 服务（service） 一定要区别于系统，服务一个或者一组相对较小且独立的功能单元，是用户<br>可以感知最小功能集。</p>
+<p>那么广义上来讲，微服务是一种分布式系统解决方案，推动细粒度服务的使用，这些服务协同工作。</p>
+<h2 id="2-为什么需要微服务？"><a href="#2-为什么需要微服务？" class="headerlink" title="2. 为什么需要微服务？"></a>2. 为什么需要微服务？</h2><h3 id="2-1-开发单体式应用的不足之处"><a href="#2-1-开发单体式应用的不足之处" class="headerlink" title="2.1 开发单体式应用的不足之处"></a>2.1 开发单体式应用的不足之处</h3><ul>
+<li><strong>单体式打车软件的架构示意图</strong></li>
+</ul>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/Uber0.png" alt="示意图"></p>
+<ul>
+<li><p><strong>三层架构（MVC）的具体内容如下：</strong></p>
+<ul>
+<li><p><strong>表示层（view）</strong>： 用户使用应用程序时，看到的、听见的、输入的或者交互的部分。</p>
+</li>
+<li><p><strong>业务逻辑层（controller）</strong>： 根据用户输入的信息，进行逻辑计算或者业务处理的部分。</p>
+</li>
+<li><p><strong>数据访问层（model）</strong>： 关注有效地操作原始数据的部分，如将数据存储到存储介质（如数据库、文件系统）及从存储介质中读取数据等。</p>
+<blockquote>
+<font color="green">虽然现在程序被分成了三层，但只是逻辑上的分层，并不是物理上的分层。也就是说，对不同层的代码而言，经过编译、打包和部署后，所有的代码最终还是运行在同一个进程中。而这，就是所谓的单块架构。</font>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>随着业务的不断扩大，不断暴露出的问题</strong></p>
+<ul>
+<li><p>复杂性逐渐变高</p>
+<blockquote>
+<p>比如有的项目有几十万行代码，各个模块之间区别比较模糊，逻辑比较混乱，代码越多复杂性越高，越难解决遇到的问题。</p>
+</blockquote>
+</li>
+<li><p>技术债务逐渐上升</p>
+<blockquote>
+<p>公司的人员流动是再正常不过的事情，有的员工在离职之前，疏于代码质量的自我管束，导致留下来很多坑，由于单体项目代码量庞大的惊人，留下的坑很难被发觉，这就给新来的员工带来很大的烦恼，人员流动越大所留下的坑越多，也就是所谓的技术债务越来越多。</p>
+</blockquote>
+</li>
+<li><p>维护成本大</p>
+<blockquote>
+<p>当应用程序的功能越来越多、团队越来越大时，沟通成本、管理成本显著增加。当出现 bug 时，可能引起 bug 的原因组合越来越多，导致分析、定位和修复的成本增加；并且在对全局功能缺乏深度理解的情况下，容易在修复bug 时引入新的 bug。</p>
+</blockquote>
+</li>
+<li><p>持续交付周期长</p>
+<blockquote>
+<p>构建和部署时间会随着功能的增多而增加，任何细微的修改都会触发部署流水线。新人培养周期长：新成员了解背景、熟悉业务和配置环境的时间越来越长。 技术选型成本高 单块架构倾向于采用统一的技术平台或方案来解决所有问题，如果后续想引入新的技术或框架，成本和风险都很大。</p>
+</blockquote>
+</li>
+<li><p>可扩展性差</p>
+<blockquote>
+<p>随着功能的增加，垂直扩展的成本将会越来越大；而对于水平扩展而言，因为所有代码都运行在同一个进程，没办法做到针对应用程序的部分功能做独立的扩展。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-微服务的优点"><a href="#2-2-微服务的优点" class="headerlink" title="2.2 微服务的优点"></a>2.2 微服务的优点</h3><ul>
+<li><strong>微服务架构示意图</strong></li>
+</ul>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/Uber1.png" alt=""></p>
+<ul>
+<li><font color="red"><strong>微服务架构的特性</strong></font>
+
+<ul>
+<li><p>职责单一</p>
+<blockquote>
+<p>微服务架构中的每个服务，都是具有业务逻辑的，符合高内聚、低耦合原则以及单一职责原则的单元，不同的服务通过“管道”的方式灵活组合，从而构建出庞大的系统。</p>
+</blockquote>
+</li>
+<li><p>轻量级通信</p>
+<blockquote>
+<p>服务之间通过轻量级的通信机制实现互通互联，而所谓的轻量级，通常指语言无关、平台无关的交互方式。对于轻量级通信的格式而言，我们熟悉的 XML 和 JSON，它们是语言无关、平台无关的；对于通信的协议而言，通常基于 HTTP，能让服务间的通信变得标准化、无状态化。目前大家熟悉的 REST（Representational State Transfer）是实现服务间互相协作的轻量级通信机制之一。使用轻量级通信机制，可以让团队选择更适合的语言、工具或者平台来开发服务本身。</p>
+<p><font color="red">问：REST是什么和restful一样吗？</font><br>答：REST 指的是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就RESTful。</p>
+</blockquote>
+</li>
+<li><p>独立性</p>
+<blockquote>
+<p>在微服务架构中，每个服务都是独立的业务单元，与其他服务高度解耦，只需要改变当前服务本身，就可以完成独立的开发、测试和部署。</p>
+</blockquote>
+</li>
+<li><p>进程隔离</p>
+<blockquote>
+<p>在微服务架构中，应用程序由多个服务组成，每个服务都是高度自治的独立业务实体，可以运行在独立的进程中，不同的服务能非常容易地部署到不同的主机上。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-微服务的缺点"><a href="#2-3-微服务的缺点" class="headerlink" title="2.3 微服务的缺点"></a>2.3 微服务的缺点</h3><ul>
+<li><p>运维要求较高</p>
+<blockquote>
+<p>对于单体架构来讲，我们只需要维护好这一个项目就可以了，但是对于微服务架构来讲，由于项目是由多个微服务构成的，每个模块出现问题都会造成整个项目运行出现异常，想要知道是哪个模块造成的问题往往是不容易的，因为我们无法一步一步通过debug的方式来跟踪，这就对运维人员提出了很高的要求。</p>
+</blockquote>
+</li>
+<li><p>分布式的复杂性</p>
+<blockquote>
+<p>对于单体架构来讲，我们可以不使用分布式，但是对于微服务架构来说，分布式几乎是必会用的技术，由于分布式本身的复杂性，导致微服务架构也变得复杂起来。</p>
+</blockquote>
+</li>
+<li><p>接口调整成本高</p>
+<blockquote>
+<p>比如，用户微服务是要被订单微服务和电影微服务所调用的，一旦用户微服务的接口发生大的变动，那么所有依赖它的微服务都要做相应的调整，由于微服务可能非常多，那么调整接口所造成的成本将会明显提高。</p>
+</blockquote>
+</li>
+<li><p>重复劳动</p>
+<blockquote>
+<p>对于单体架构来讲，如果某段业务被多个模块所共同使用，我们便可以抽象成一个工具类，被所有模块直接调用，但是微服务却无法这样做，因为这个微服务的工具类是不能被其它微服务所直接调用的，从而我们便不得不在每个微服务上都建这么一个工具类，从而导致代码的重复。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="3-传统单体架构与分布式微服务架构的区别"><a href="#3-传统单体架构与分布式微服务架构的区别" class="headerlink" title="3. 传统单体架构与分布式微服务架构的区别"></a>3. 传统单体架构与分布式微服务架构的区别</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center"><strong>传统单体架构</strong></th>
+<th style="text-align:center"><strong>分布式微服务化架构</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>新功能开发</strong></td>
+<td style="text-align:center">需要时间</td>
+<td style="text-align:center">容易开发和实线</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>部署</strong></td>
+<td style="text-align:center">不经常而且容易部署</td>
+<td style="text-align:center">经常发布，部署复杂</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>隔离性</strong></td>
+<td style="text-align:center">故障影响范围大</td>
+<td style="text-align:center">故障影响范围小</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>架构设计</strong></td>
+<td style="text-align:center">初期设计选型难度大</td>
+<td style="text-align:center">设计逻辑难度大</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>系统性能</strong></td>
+<td style="text-align:center">响应时间快，吞吐量小</td>
+<td style="text-align:center">响应时间慢，吞吐量大</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>系统运维</strong></td>
+<td style="text-align:center">运维简单</td>
+<td style="text-align:center">运维复杂</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>新人上手</strong></td>
+<td style="text-align:center">学习曲线大（应用逻辑）</td>
+<td style="text-align:center">学习曲线大（架构逻辑）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>技术</strong></td>
+<td style="text-align:center">技术单一而且封闭</td>
+<td style="text-align:center">技术多样而且开发</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>测试和差错</strong></td>
+<td style="text-align:center">简单</td>
+<td style="text-align:center">复杂（每个服务都要进行单独测试，还需要集群测试）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>系统扩展性</strong></td>
+<td style="text-align:center">扩展性差</td>
+<td style="text-align:center">扩展性好</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>系统管理</strong></td>
+<td style="text-align:center">重点在于开发成本</td>
+<td style="text-align:center">重点在于服务治理和调度</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4-为什么使用微服务架构"><a href="#4-为什么使用微服务架构" class="headerlink" title="4. 为什么使用微服务架构"></a>4. 为什么使用微服务架构</h2><ul>
+<li><p>开发简单</p>
+<blockquote>
+<p>微服务架构将复杂系统进行拆分之后，让每个微服务应用都开放变得非常简单，没有太多的累赘。对于每一个开发者来说，这无疑是一种解脱，因为再也不用进行繁重的劳动了，每天都在一种轻松愉快的氛围中工作，其效率也会整备地提高</p>
+</blockquote>
+</li>
+<li><p>快速响应需求变化</p>
+<blockquote>
+<p>一般的需求变化来自于举步功能的变化，这种变化落实到每个微服务上，而每个微服务的功能相对来说都非常简单，更改起来非常容易，所以微服务非常适合敏捷开发方式，能够快速的影响业务的需求变化。</p>
+</blockquote>
+</li>
+<li><p>随时随地更新</p>
+<blockquote>
+<p>一方面，微服务的部署和更新并不会影响全局系统的正常运行；</p>
+<p>另一方面，使用多实例的部署方法，可以做到一个服务的重启和更新在不易察觉的情况下进行，所以每个服务任何时候都可以进行更新部署。</p>
+</blockquote>
+</li>
+<li><p>系统更加稳定可靠</p>
+<blockquote>
+<p>微服务运行在一个高可用的分布式环境之中，有配套的监控和调度管理机制，并且还可以提供自由伸缩的管理，充分保证了系统的稳定性和可靠性。</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/11/25/01/">微服务基础简介</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
+        <p><span>发布时间:</span>2018年11月25日 - 22时27分</p>
+        <p><span>最后更新:</span>2018年11月25日 - 22时23分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/25/01/" title="微服务基础简介">https://alexbrucelu.github.io/2018/11/25/01/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/25/01/　　作者: AlexBruceLu" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一、微服务（microServices）"><span class="toc-number">1.</span> <span class="toc-text">一、微服务（microServices）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-什么是微服务？"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是微服务？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-为什么需要微服务？"><span class="toc-number">1.2.</span> <span class="toc-text">2. 为什么需要微服务？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-开发单体式应用的不足之处"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 开发单体式应用的不足之处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-微服务的优点"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 微服务的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-微服务的缺点"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 微服务的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-传统单体架构与分布式微服务架构的区别"><span class="toc-number">1.3.</span> <span class="toc-text">3. 传统单体架构与分布式微服务架构的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-为什么使用微服务架构"><span class="toc-number">1.4.</span> <span class="toc-text">4. 为什么使用微服务架构</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 AlexBruceLu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit">极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
