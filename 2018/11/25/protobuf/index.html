@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>protobuf | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="protobuf：  微服务之protobuf">
+<meta name="keywords" content="微服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="protobuf">
+<meta property="og:url" content="https://alexbrucelu.github.io/2018/11/25/protobuf/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="protobuf：  微服务之protobuf">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-25T14:54:51.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="protobuf">
+<meta name="twitter:description" content="protobuf：  微服务之protobuf">
+  
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AlexBruceLu</a></h1>
+        </hgroup>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/microServices/">微服务</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/AlexBruceLu/" title="github">github</a>
+                            
+                                <a class="fl weibo" target="_blank" href="https://weibo.com/2707660541/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/微服务/" style="font-size: 10px;">微服务</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://blog.csdn.net/weixin_42954306">csdn</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AlexBruceLu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AlexBruceLu</a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/microServices/">微服务</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/AlexBruceLu/" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="https://weibo.com/2707660541/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-protobuf" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2018/11/25/protobuf/" class="article-date">
+      <time datetime="2018-11-25T14:51:31.682Z" itemprop="datePublished">2018-11-25</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      protobuf
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/microServices/">microServices</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><strong> protobuf：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>微服务之protobuf</p>
+<a id="more"></a>
+<h1 id="protobuf"><a href="#protobuf" class="headerlink" title="protobuf"></a>protobuf</h1><h2 id="1-protobuf-简介"><a href="#1-protobuf-简介" class="headerlink" title="1. protobuf 简介"></a>1. protobuf 简介</h2><blockquote>
+<p><font color="red">Google Protocol Buffer(简称 Protobuf)</font>是一种轻便高效的结构化数据格式，无关平台、无关语言、可扩展，用于通讯协议和数据存储等领域。</p>
+</blockquote>
+<h3 id="1-1-protobuf-的优点"><a href="#1-1-protobuf-的优点" class="headerlink" title="1.1 protobuf 的优点"></a>1.1 protobuf 的优点</h3><blockquote>
+<p>protobuf 有如XML，不过它更小、更快、规范、更简单。可以自定义自己的数据结构，然后使用代码生成器的代码来读写这个数据结构。甚至可以在无需重新部署程序的情况下更新数据结构。只需使用protobuf 对数据结构进行一次描述，即可利用各种不同的语言或从各种不同数据流中对结构化的数据轻松读写。</p>
+<p>protobuf 向后兼容性好，不必破坏已经部署的“老”数据格式的程序就可以对数据结构进行升级。</p>
+<p>protobuf 语义更清晰，无需类似XML 解析器的东西（因为protobuf 编译器会将.proto 文件编译生成对应的数据，访问类似于对protobuf 数据进行序列化、反序列化操作）。</p>
+<p>protobuf 的编程模式比较友好，无需学习复杂的文档对象模型，简单易学。</p>
+</blockquote>
+<h3 id="1-2-protobuf-的缺点"><a href="#1-2-protobuf-的缺点" class="headerlink" title="1.2 protobuf 的缺点"></a>1.2 protobuf 的缺点</h3><blockquote>
+<p>protobuf 与 XML 相比的不足之处有以下几点：</p>
+<ul>
+<li>功能简单，无法用来表示复杂的概念</li>
+<li>XML 已经成为多种行业的标准编写工具，protobuf 只是Google 内部使用的工具，在通用性上差很多</li>
+<li>文本并不适合描述数据结构，所以 protobuf 不适合用来对基于文本的标记文档（如HTML）建模</li>
+<li>由于XML具有某种程度的字自解释性，它可以被人直接读取编辑，protobuf不行，它以二进制的方式存储，除非有 .proto 定义，否则无法直接读出 protobuf 的任何内容</li>
+</ul>
+</blockquote>
+<h2 id="2-常见数据交互的格式比较"><a href="#2-常见数据交互的格式比较" class="headerlink" title="2. 常见数据交互的格式比较"></a>2. 常见数据交互的格式比较</h2><ol>
+<li><p>json：一般的web项目中，最流行的主要还是json，因为浏览器对于json数据支持非常好，有很多内建函数的支持。</p>
+</li>
+<li><p>XML：在 WebService 中应用最为广泛，但相比json 更加冗余，因为需要成对的闭合标签，而json 使用了 键值对的方式，不仅压缩了一定的数据空间，而且具有一定的可读性</p>
+</li>
+<li><p>protobuf：是谷歌开源的一种数据格式，适合高性能，对响应速度有要求的传输数据场景。protobuf 是二进制数据，需要编码和解码，数据本身并不具有可读性，只有对其进行反序列化之后才能得到可读的数据</p>
+<blockquote>
+<p>对于其他数据格式，protobuf的优势</p>
+<ol>
+<li>序列化之后体积相对于json 和 XML 很小，适合网络传输</li>
+<li>支持跨平台多语言</li>
+<li>消息格式升级兼容性好</li>
+<li>序列化、反序列化的速度快，快于json的处理速度</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h2 id="3-protobuf-的安装"><a href="#3-protobuf-的安装" class="headerlink" title="3. protobuf 的安装"></a>3. protobuf 的安装</h2><h3 id="3-1-安装-protobuf"><a href="#3-1-安装-protobuf" class="headerlink" title="3.1 安装 protobuf"></a>3.1 安装 protobuf</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 下载 protobuf</span><br><span class="line"><span class="meta">$</span> git clone https://github.com/protocolbuffers/protobuf.git</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 下载依赖库</span><br><span class="line"><span class="meta">$</span> sudo apt-get install autoconf automake libtool curl make g++ unzip libffidev -y</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> 安装</span><br><span class="line"><span class="meta">$</span> cd protobuf/</span><br><span class="line"><span class="meta">$</span> ./autogen.sh</span><br><span class="line"><span class="meta">$</span> ./configure</span><br><span class="line"><span class="meta">$</span> make</span><br><span class="line"><span class="meta">$</span> sudo make install</span><br><span class="line"><span class="meta">$</span> sudo ldconfig # 刷新共享库（重要）</span><br><span class="line"><span class="meta">$</span> protoc -h</span><br><span class="line"><span class="meta">#</span> 出现帮助列表说明protobuf 安装成功</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-获取-proto-包"><a href="#3-2-获取-proto-包" class="headerlink" title="3.2 获取 proto 包"></a>3.2 获取 proto 包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> go get -v -u github.com/golang/protobuf/protoc</span><br></pre></td></tr></table></figure>
+<h3 id="3-3-安装-protoc-gen-go-插件"><a href="#3-3-安装-protoc-gen-go-插件" class="headerlink" title="3.3 安装 protoc-gen-go 插件"></a>3.3 安装 protoc-gen-go 插件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 安装</span><br><span class="line"><span class="meta">$</span> go get -v -u github.com/golang/protobuf/protoc-gen-go</span><br><span class="line"><span class="meta">#</span> 编译</span><br><span class="line"><span class="meta">$</span> cd $GOPATH/src/github.com/golang/protobuf/protoc-gen-go</span><br><span class="line"><span class="meta">$</span> go build</span><br><span class="line"><span class="meta">#</span> 将生成的 protoc-gen-go 可执行文件放在/bin 目录下</span><br><span class="line"><span class="meta">$</span> sudo cp protoc-gen-go /bin/</span><br></pre></td></tr></table></figure>
+<h2 id="4-protobuf-的语法"><a href="#4-protobuf-的语法" class="headerlink" title="4. protobuf 的语法"></a>4. protobuf 的语法</h2><h3 id="4-1-定义一个消息"><a href="#4-1-定义一个消息" class="headerlink" title="4.1 定义一个消息"></a>4.1 定义一个消息</h3><p>要想使用 protobuf 必须先得定义 proto 文件，所以先得 熟悉消息定义的相关语法</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">message BruceRequest &#123;</span><br><span class="line">    string name = 1;</span><br><span class="line">    int32 height = 2;</span><br><span class="line">    repeated int32 weight = 3；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><strong>BruceRequest</strong> 消息格式有三个字段，在消息中承载的数据分别对应于每一个字段，其中每一个字段都有一个名字和一种类型</p>
+</li>
+<li><p>文件第一行是指定了使用<code>proto3</code> 语法，如果没有指定，默认<code>proto2</code> 语法。指定语法行，必须是非空、非注释的第一行</p>
+</li>
+<li><code>repeated</code> 关键字表示重复的，在go语言中用切片进行代表</li>
+<li>在消息定义中每个字段都有一个唯一的标识符</li>
+</ul>
+<h3 id="4-3-定义一个消息类型"><a href="#4-3-定义一个消息类型" class="headerlink" title="4.3 定义一个消息类型"></a>4.3 定义一个消息类型</h3><p>在一个 .proto 文件中可以定义多个消息类型。在定义多个相关的消息的时候，这一点特别有用——例如，如果想定义与 SearchResponse 消息类型对应的回复消息格式的话，你可以将它添加到相同的 .proto 文件中</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">message BruceRequest &#123;</span><br><span class="line">    string name = 1;</span><br><span class="line">    int32 height = 2;</span><br><span class="line">    repeated int32 weight = 3；</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message AlexRequest &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-4-添加注释"><a href="#4-4-添加注释" class="headerlink" title="4.4 添加注释"></a>4.4 添加注释</h3><p>如一般的编程语言一直使用 ‘//‘</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">message BruceRequest &#123;</span><br><span class="line">    string name = 1; // 姓名</span><br><span class="line">    int32 height = 2; // 身高</span><br><span class="line">    repeated int32 weight = 3；// 体重</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">message AlexRequest &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-5-proto-文件生成文件"><a href="#4-5-proto-文件生成文件" class="headerlink" title="4.5 .proto 文件生成文件"></a>4.5 .proto 文件生成文件</h3><p>当用protocol buffer编译器来运行.proto文件时，编译器将生成所选择语言的代码，这些代码可以操作在.proto文件中定义的消息类型，包括获取、设置字段值，将消息序列化到一个输出流中，以及从一个输入流中解析消息。</p>
+<blockquote>
+<p>对C++来说，编译器会为每个.proto文件生成一个.h文件和一个.cc文件，.proto文件中的每一个消息有一个对应的类。 对Python来说，有点不太一样——Python编译器为.proto文件中的每个消息类型生成一个含有静态描述符的模块，，该模块与一个元类（metaclass）在运行时（runtime）被用来创建所需的Python数据访问类。 对go来说，编译器会为每个消息类型生成了一个.pd.go文件。</p>
+</blockquote>
+<h3 id="4-6-标准数据类型"><a href="#4-6-标准数据类型" class="headerlink" title="4.6 标准数据类型"></a>4.6 标准数据类型</h3><p>一个标量消息字段可以含有一个如下的类型:</p>
+<blockquote>
+<p>该表格展示了定义于.proto文件中的类型，以及与之对应的、在自动生成的访问类中定义的类型</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">.proto</th>
+<th style="text-align:center">Notes</th>
+<th style="text-align:center">C++</th>
+<th style="text-align:center">Python</th>
+<th style="text-align:center">Go</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">double</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">float64</td>
+</tr>
+<tr>
+<td style="text-align:center">float</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">float</td>
+<td style="text-align:center">float32</td>
+</tr>
+<tr>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">使用变长编码，对于负值的效率很低,如果你的域有可能有负值，请使用sint64替代</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+</tr>
+<tr>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint32</td>
+</tr>
+<tr>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">使用变长编码</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+</tr>
+<tr>
+<td style="text-align:center">sint32</td>
+<td style="text-align:center">使用变长编码，这些编码在负值时比int32高效的多</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+</tr>
+<tr>
+<td style="text-align:center">sint64</td>
+<td style="text-align:center">使用变长编码，有符号的整型值。编码时比通常的int64高效</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed32</td>
+<td style="text-align:center">总是4个字节，如果数值总是比总是比228大的话，这个类型会比uint32高效</td>
+<td style="text-align:center">uint32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">uint32</td>
+</tr>
+<tr>
+<td style="text-align:center">fixed64</td>
+<td style="text-align:center">总是8个字节，如果数值总是比总是比256大的话，这个类型会比uint64高效</td>
+<td style="text-align:center">uint64</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">uint64</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed32</td>
+<td style="text-align:center">总是4个字节</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed32</td>
+<td style="text-align:center">总是4个字节</td>
+<td style="text-align:center">int32</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">int32</td>
+</tr>
+<tr>
+<td style="text-align:center">sfixed64</td>
+<td style="text-align:center">总是8个字节</td>
+<td style="text-align:center">int64</td>
+<td style="text-align:center">int/long</td>
+<td style="text-align:center">int64</td>
+</tr>
+<tr>
+<td style="text-align:center">bool</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">bool</td>
+<td style="text-align:center">bool</td>
+</tr>
+<tr>
+<td style="text-align:center">string</td>
+<td style="text-align:center">一个字符串必须是UTF-8编码或者7-bit ASCII编码的文本</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">str/unicode</td>
+<td style="text-align:center">string</td>
+</tr>
+<tr>
+<td style="text-align:center">bytes</td>
+<td style="text-align:center">可能包含任意顺序的字节数据</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">str</td>
+<td style="text-align:center">[]byte</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4-6-1-默认值"><a href="#4-6-1-默认值" class="headerlink" title="4.6.1 默认值"></a>4.6.1 默认值</h4><p>当一个消息被解析的时候，如果被编码的信息不包含一个特定的元素，被解析的对象锁对应的域被设置位一个默认值，对于不同类型指定如下： </p>
+<ul>
+<li>对于strings，默认是一个空string </li>
+<li>对于bytes，默认是一个空的bytes </li>
+<li>对于bool，默认是false </li>
+<li>对于数值类型，默认是0</li>
+</ul>
+<h3 id="4-7-使用其他消息类型"><a href="#4-7-使用其他消息类型" class="headerlink" title="4.7 使用其他消息类型"></a>4.7 使用其他消息类型</h3><p>可以将其他消息类型用作字段类型。</p>
+<blockquote>
+<p>例如，假设在每一个PersonInfo消息中包含Person消息，此时可以在相同的 .proto 文件中定义一个Result消息类型，然后在PersonInfo消息中指定一个Person类型的字段</p>
+</blockquote>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line"></span><br><span class="line">message BruceRequest &#123;</span><br><span class="line">    string name = 1;</span><br><span class="line">    int32 height = 2;</span><br><span class="line">    repeated int32 weight = 3；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-8-使用proto2消息类型"><a href="#4-8-使用proto2消息类型" class="headerlink" title="4.8 使用proto2消息类型"></a>4.8 使用proto2消息类型</h3><p>在你的proto3消息中导入proto2的消息类型也是可以的，反之亦然，然后proto2枚举不可以直接在proto3的标识符中使用（如果仅仅在proto2消息中使用是可以的）。</p>
+<h4 id="4-8-1-嵌套类型"><a href="#4-8-1-嵌套类型" class="headerlink" title="4.8.1 嵌套类型"></a>4.8.1 嵌套类型</h4><p>你可以在其他消息类型中定义、使用消息类型，在下面的例子中，Person消息就定义在PersonInfo消息内，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">message PersonInfo &#123;</span><br><span class="line">	message Person &#123;</span><br><span class="line">		string name = 1;</span><br><span class="line">		int32 shengao = 2;</span><br><span class="line">		repeated int32 tizhong = 3;</span><br><span class="line">	&#125; </span><br><span class="line">	repeated Person info = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你想在它的父消息类型的外部重用这个消息类型，你需要以PersonInfo.Person的形式使用它，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">message PersonMessage &#123;</span><br><span class="line">	PersonInfo.Person info = 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，你也可以将消息嵌套任意多层，如：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">message Grandpa &#123; // Level 0</span><br><span class="line">	message Father &#123; // Level 1</span><br><span class="line">		message son &#123; // Level 2</span><br><span class="line">			string name = 1;</span><br><span class="line">			int32 age = 2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; </span><br><span class="line"></span><br><span class="line">	message Uncle &#123; // Level 1</span><br><span class="line">		message Son &#123; // Level 2</span><br><span class="line">			string name = 1;</span><br><span class="line">			int32 age = 2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="4-8-2-定义服务-Service"><a href="#4-8-2-定义服务-Service" class="headerlink" title="4.8.2 定义服务(Service)"></a>4.8.2 定义服务(Service)</h4><p>果想要将消息类型用在RPC(远程方法调用)系统中，可以在.proto文件中定义一个RPC服务接口，protocol buffer编译器将会根据所选择的不同语言生成服务接口代码及存根。如，想要定义一个RPC服务并具有一个方法，该方法能够接收 SearchRequest并返回一个SearchResponse，此时可以在.proto文件中进行如下定义：</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">service SearchService &#123;</span><br><span class="line">	//rpc 服务的函数名 （传入参数）返回（返回参数）</span><br><span class="line">	rpc Search (SearchRequest) returns (SearchResponse);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最直观的使用protocol buffer的RPC系统是gRPC一个由谷歌开发的语言和平台中的开源的RPC系统，gRPC在使用protocl buffer时非常有效，如果使用特殊的protocol buffer插件可以直接为您从.proto文件中产生相关的RPC代码。</p>
+<p>如果你不想使用gRPC，也可以使用protocol buffer用于自己的RPC实现，你可以从proto2语言指南中找到更多信息</p>
+<h4 id="4-8-3-生成访问类"><a href="#4-8-3-生成访问类" class="headerlink" title="4.8.3 生成访问类"></a>4.8.3 生成访问类</h4><p>可以通过定义好的.proto文件来生成Java,Python,C++, Ruby, JavaNano, Objective-C,或者C# 代码，需要基于.proto文件运行protocol buffer编译器protoc。如果你没有安装编译器，下载安装包并遵照README安装。对于Go,你还需要安装一个特殊的代码生成器件。你可以通过GitHub上的protobuf库找到安装过程<br>通过如下方式调用protocol编译器:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> protoc --proto_path=IMPORT_PATH --cpp_out=DST_DIR --python_out=DST_DIR --go_out=DST_DIR path/to/file.proto</span><br></pre></td></tr></table></figure>
+<p>IMPORT_PATH声明了一个.proto文件所在的解析import具体目录。如果忽略该值，则使用当前目录。如果有多个目录则可以多次调用–proto_path，它们将会顺序的被访问并执行导入。-I=IMPORT_PATH是–proto_path的简化形式。</p>
+<p><strong>当然也可以提供一个或多个输出路径：</strong></p>
+<p> –cpp_out 在目标目录DST_DIR中产生C++代码，可以在C++代码生成参考中查看更多。 </p>
+<p>–python_out 在目标目录 DST_DIR 中产生Python代码，可以在Python代码生成参考中查看更多。</p>
+<p>–go_out 在目标目录 DST_DIR 中产生Go代码，可以在GO代码生成参考中查看更多。</p>
+<blockquote>
+<p>作为一个方便的拓展，如果DST_DIR以.zip或者.jar结尾，编译器会将输出写到一个ZIP格式文件或者符合JAR标准的.jar文件中。注意如果输出已经存在则会被覆盖，编译器还没有智能到可以追加文件。 - 你必须提议一个或多个.proto文件作为输入，多<br>个.proto文件可以只指定一次。虽然文件路径是相对于当前目录的，每个文件必须位于其IMPORT_PATH下，以便每个文件可以确定其规范的名称。</p>
+</blockquote>
+<h4 id="4-8-4-测试"><a href="#4-8-4-测试" class="headerlink" title="4.8.4 测试"></a>4.8.4 测试</h4><p>protobuf的使用方法是将数据结构写入到 .proto文件中，使用 protoc编译器编译(间接使用了插件）得到一个新的go包，里面包含 go中可以使用的数据结构和一些辅助方法。</p>
+<ul>
+<li><p>编写 test.proto文件</p>
+<ul>
+<li><p>$GOPATH/src/创建 myproto文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd $GOPATH/src/</span><br><span class="line"><span class="meta">$</span> mkdir myproto</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>myproto文件夹中创建 test.proto文件 (protobuf协议文件)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim test.proto</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>文件内容</p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto3&quot;;</span><br><span class="line">package myproto;</span><br><span class="line"></span><br><span class="line">message Test &#123;</span><br><span class="line">	string name = 1;</span><br><span class="line">	int32 stature = 2 ;</span><br><span class="line">	repeated int64 weight = 3;</span><br><span class="line">	string motto = 4;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>编译 :执行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ protoc --go_out=./ *.proto </span><br><span class="line"><span class="comment"># 生成 test.pb.go文件</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用 protobuf 做数据格式转换</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"github.com/golang/protobuf/proto"</span></span><br><span class="line">	<span class="string">"myproto"</span></span><br><span class="line">) </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	test := &amp;myproto.Test&#123;</span><br><span class="line">		Name : <span class="string">"panda"</span>,</span><br><span class="line">		Stature : <span class="number">180</span>,</span><br><span class="line">		Weight : []<span class="keyword">int64</span>&#123;<span class="number">120</span>,<span class="number">125</span>,<span class="number">198</span>,<span class="number">180</span>,<span class="number">150</span>,<span class="number">180</span>&#125;,</span><br><span class="line">		Motto : <span class="string">"天行健，地势坤"</span>,</span><br><span class="line">	&#125; </span><br><span class="line">    <span class="comment">//将Struct test 转换成 protobuf</span></span><br><span class="line">	data,err:= proto.Marshal(test)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(<span class="string">"转码失败"</span>,err)</span><br><span class="line">	&#125; </span><br><span class="line">    <span class="comment">//得到一个新的Test结构体 newTest</span></span><br><span class="line">	newtest:= &amp;myproto.Test&#123;&#125;</span><br><span class="line">    <span class="comment">//将data转换为test结构体</span></span><br><span class="line">	err = proto.Unmarshal(data,newtest)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"转码失败"</span>,err)</span><br><span class="line">	&#125; </span><br><span class="line">    fmt.Println(newtest.String())</span><br><span class="line">	<span class="comment">//得到name字段</span></span><br><span class="line">	fmt.Println(<span class="string">"newtest-&gt;name"</span>,newtest.GetName())</span><br><span class="line">	fmt.Println(<span class="string">"newtest-&gt;Stature"</span>,newtest.GetStature())</span><br><span class="line">	fmt.Println(<span class="string">"newtest-&gt;Weight"</span>,newtest.GetWeight())</span><br><span class="line">	fmt.Println(<span class="string">"newtest-&gt;Motto"</span>,newtest.GetMotto())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/11/25/protobuf/">protobuf</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
+        <p><span>发布时间:</span>2018年11月25日 - 22时51分</p>
+        <p><span>最后更新:</span>2018年11月25日 - 22时54分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/25/protobuf/" title="protobuf">https://alexbrucelu.github.io/2018/11/25/protobuf/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/25/protobuf/　　作者: AlexBruceLu" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2018/11/25/micro/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Micro
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/25/01/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">微服务基础简介</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#protobuf"><span class="toc-number">1.</span> <span class="toc-text">protobuf</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-protobuf-简介"><span class="toc-number">1.1.</span> <span class="toc-text">1. protobuf 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-protobuf-的优点"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 protobuf 的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-protobuf-的缺点"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 protobuf 的缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-常见数据交互的格式比较"><span class="toc-number">1.2.</span> <span class="toc-text">2. 常见数据交互的格式比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-protobuf-的安装"><span class="toc-number">1.3.</span> <span class="toc-text">3. protobuf 的安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-安装-protobuf"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 安装 protobuf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-获取-proto-包"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 获取 proto 包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-安装-protoc-gen-go-插件"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 安装 protoc-gen-go 插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-protobuf-的语法"><span class="toc-number">1.4.</span> <span class="toc-text">4. protobuf 的语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-定义一个消息"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 定义一个消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-定义一个消息类型"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.3 定义一个消息类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-添加注释"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.4 添加注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-proto-文件生成文件"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.5 .proto 文件生成文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-标准数据类型"><span class="toc-number">1.4.5.</span> <span class="toc-text">4.6 标准数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6-1-默认值"><span class="toc-number">1.4.5.1.</span> <span class="toc-text">4.6.1 默认值</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-使用其他消息类型"><span class="toc-number">1.4.6.</span> <span class="toc-text">4.7 使用其他消息类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-使用proto2消息类型"><span class="toc-number">1.4.7.</span> <span class="toc-text">4.8 使用proto2消息类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8-1-嵌套类型"><span class="toc-number">1.4.7.1.</span> <span class="toc-text">4.8.1 嵌套类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8-2-定义服务-Service"><span class="toc-number">1.4.7.2.</span> <span class="toc-text">4.8.2 定义服务(Service)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8-3-生成访问类"><span class="toc-number">1.4.7.3.</span> <span class="toc-text">4.8.3 生成访问类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-8-4-测试"><span class="toc-number">1.4.7.4.</span> <span class="toc-text">4.8.4 测试</span></a></li></ol></li></ol></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2018/11/25/micro/" title="上一篇: Micro">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2018/11/25/01/" title="下一篇: 微服务基础简介">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 AlexBruceLu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit">极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
