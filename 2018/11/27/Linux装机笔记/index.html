@@ -9,13 +9,17 @@
   
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="[TOC]  安装WMware时选择硬盘，一定要选择单一文件模式，后期好扩容，最好50G以上  基本环境WMware 15 + Ubuntu 18.04  点虚拟机菜单，安装WMware tools , cp WMware tools .tz ~/ ,sudo ./wm***.pl  彩色命令行 1export PS1=&quot;\[\e[0;32;40m\]-\#-[\[\e[1;32;40m\]\u\">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://alexbrucelu.github.io/index.html">
+<meta property="og:url" content="https://alexbrucelu.github.io/2018/11/27/Linux装机笔记/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="[TOC]  安装WMware时选择硬盘，一定要选择单一文件模式，后期好扩容，最好50G以上  基本环境WMware 15 + Ubuntu 18.04  点虚拟机菜单，安装WMware tools , cp WMware tools .tz ~/ ,sudo ./wm***.pl  彩色命令行 1export PS1=&quot;\[\e[0;32;40m\]-\#-[\[\e[1;32;40m\]\u\">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-11-29T01:58:17.609Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="[TOC]  安装WMware时选择硬盘，一定要选择单一文件模式，后期好扩容，最好50G以上  基本环境WMware 15 + Ubuntu 18.04  点虚拟机菜单，安装WMware tools , cp WMware tools .tz ~/ ,sudo ./wm***.pl  彩色命令行 1export PS1=&quot;\[\e[0;32;40m\]-\#-[\[\e[1;32;40m\]\u\">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -29,9 +33,6 @@
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
-    
-    
-  
   
       <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
   
@@ -42,8 +43,8 @@
       var yiliaConfig = {
           fancybox: true,
           animate: true,
-          isHome: true,
-          isPost: false,
+          isHome: false,
+          isPost: true,
           isArchive: false,
           isTag: false,
           isCategory: false,
@@ -287,9 +288,7 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-Linux装机笔记" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Linux装机笔记" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2018/11/27/Linux装机笔记/" class="article-date">
@@ -426,676 +425,153 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-房屋租赁" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/26/房屋租赁/" class="article-date">
-      <time datetime="2018-11-26T01:23:12.662Z" itemprop="datePublished">2018-11-26</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>[TOC]</p>
-<h1 id="房屋租赁"><a href="#房屋租赁" class="headerlink" title="房屋租赁"></a>房屋租赁</h1><h2 id="1-项目简述"><a href="#1-项目简述" class="headerlink" title="1. 项目简述"></a>1. 项目简述</h2><h2 id="2-项目启动"><a href="#2-项目启动" class="headerlink" title="2. 项目启动"></a>2. 项目启动</h2><h3 id="2-1-拆分原则"><a href="#2-1-拆分原则" class="headerlink" title="2.1 拆分原则"></a>2.1 拆分原则</h3><ol>
-<li>单一职责</li>
-<li>服务粒度适中</li>
-<li>考虑团队结构</li>
-<li>以业务模型切入</li>
-<li>演进式拆分</li>
-<li>避免环形依赖和双向依赖 </li>
-</ol>
-<h3 id="2-2-前期准备工作"><a href="#2-2-前期准备工作" class="headerlink" title="2.2 前期准备工作"></a>2.2 前期准备工作</h3><h4 id="2-2-1-单机版的-consul-启动"><a href="#2-2-1-单机版的-consul-启动" class="headerlink" title="2.2.1 单机版的 consul 启动"></a>2.2.1 单机版的 consul 启动</h4><p>项目开始之前首先要启动单机版的consul </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> consul agent -dev</span><br></pre></td></tr></table></figure>
-<h4 id="2-2-2-数据库的创建"><a href="#2-2-2-数据库的创建" class="headerlink" title="2.2.2 数据库的创建"></a>2.2.2 数据库的创建</h4><p>在mysql中创建一个项目所用数据库 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mysql -uroot -p</span><br><span class="line"><span class="meta">mysql&gt;</span> create database if not exists house default charset utf8 collate utf8_general_ci;</span><br><span class="line"><span class="meta">#</span> 查看数据库</span><br><span class="line"><span class="meta">mysql&gt;</span> show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| cms                |</span><br><span class="line">| house              |</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sdrms              |</span><br><span class="line">| sys                |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.85 sec)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>创建表的关系逻辑图</p>
-<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/user.png" alt=""></p>
-</li>
-</ul>
-<h2 id="3-web-服务的创建"><a href="#3-web-服务的创建" class="headerlink" title="3. web 服务的创建"></a>3. web 服务的创建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "web" micro/houseWeb</span><br><span class="line"><span class="meta">#</span> 以GOPATH/src 问基准的局对路径 $GOPATH/src/micro/houseWeb</span><br><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── handler</span><br><span class="line">│   └── handler.go</span><br><span class="line">├── main.go</span><br><span class="line">├── Makefile</span><br><span class="line">├── plugin.go</span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure>
-<h3 id="3-1-创建工具函数文件夹"><a href="#3-1-创建工具函数文件夹" class="headerlink" title="3.1 创建工具函数文件夹"></a>3.1 创建工具函数文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建工具函数文件夹</span><br><span class="line"><span class="meta">$</span> mkdir utils</span><br><span class="line"><span class="meta">#</span> 进入文件夹创建文件</span><br><span class="line"><span class="meta">$</span> cd utils</span><br><span class="line"><span class="meta">#</span> 配置文件读取函数文件</span><br><span class="line"><span class="meta">$</span> touch config.go</span><br><span class="line"><span class="meta">#</span> 错误码文件</span><br><span class="line"><span class="meta">$</span> touch error.go</span><br><span class="line"><span class="meta">#</span> 字符串拼接文件</span><br><span class="line"><span class="meta">$</span> touch misc.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-创建数据库文件"><a href="#3-2-创建数据库文件" class="headerlink" title="3.2 创建数据库文件"></a>3.2 创建数据库文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir models</span><br><span class="line"><span class="meta">#</span>创建数据库文件</span><br><span class="line"><span class="meta">$</span> vim models.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-运行服务并且创建表单"><a href="#3-3-运行服务并且创建表单" class="headerlink" title="3.3 运行服务并且创建表单"></a>3.3 运行服务并且创建表单</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建conf文件夹用来存放配置文件</span><br><span class="line"><span class="meta">$</span> mkdir conf</span><br><span class="line"><span class="meta">#</span>创建data.sql文件</span><br><span class="line"><span class="meta">$</span> vim data.sql</span><br></pre></td></tr></table></figure>
-<p>data.sql 内容</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`area`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span> (<span class="string">'东城区'</span>),(<span class="string">'西城区'</span>),(<span class="string">'朝阳区'</span>),(<span class="string">'海淀区'</span>),(<span class="string">'昌平区'</span>),(<span class="string">'丰台区'</span>),(<span class="string">'房山区'</span>),(<span class="string">'通州区'</span>),(<span class="string">'顺义区'</span>),(<span class="string">'大兴区'</span>),(<span class="string">'怀柔区'</span>),(<span class="string">'平谷区'</span>),(<span class="string">'密云区'</span>),(<span class="string">'延庆区'</span>),(<span class="string">'石景山区'</span>),(<span class="string">'天津'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`facility`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span>(<span class="string">'无线网络'</span>),(<span class="string">'热水淋浴'</span>),(<span class="string">'空调'</span>),(<span class="string">'暖气'</span>),(<span class="string">'允许吸烟'</span>),(<span class="string">'饮水设备'</span>),(<span class="string">'牙具'</span>),(<span class="string">'香皂'</span>),(<span class="string">'拖鞋'</span>),(<span class="string">'手纸'</span>),(<span class="string">'毛巾'</span>),(<span class="string">'沐浴露、洗发露'</span>),(<span class="string">'冰箱'</span>),(<span class="string">'洗衣机'</span>),(<span class="string">'电梯'</span>),(<span class="string">'允许做饭'</span>),(<span class="string">'允许带宠物'</span>),(<span class="string">'允许聚会'</span>),(<span class="string">'门禁系统'</span>),(<span class="string">'停车位'</span>),(<span class="string">'有线网络'</span>),(<span class="string">'电视'</span>),(<span class="string">'浴缸'</span>),(<span class="string">'吃鸡'</span>),(<span class="string">'打台球'</span>),(<span class="string">'游泳'</span>);</span><br></pre></td></tr></table></figure>
-<p><strong><code>data.sql</code></strong>内容的导入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd houseWeb/</span><br><span class="line"><span class="meta">mysql&gt;</span> source ./conf/data.sql;</span><br></pre></td></tr></table></figure>
-<h2 id="4-获取地区信息"><a href="#4-获取地区信息" class="headerlink" title="4. 获取地区信息"></a>4. 获取地区信息</h2><h3 id="4-1-创建服务"><a href="#4-1-创建服务" class="headerlink" title="4.1 创建服务"></a>4.1 创建服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "srv" micro/getArea</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-业务逻辑示意图"><a href="#4-2-业务逻辑示意图" class="headerlink" title="4.2 业务逻辑示意图"></a>4.2 业务逻辑示意图</h3><p><img src="https://github.com/AlexBruceLu/DAPP/wiki/area.png" alt=""></p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Docker的安装与简介" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/Docker的安装与简介/" class="article-date">
-      <time datetime="2018-11-25T15:51:45.185Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> Docker的安装与简介：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>Docker养成记之安装与简介</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/docker/">docker</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Docker/">Docker</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/Docker的安装与简介/#more">查看更多 >></a>
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2018/11/27/Linux装机笔记/"></a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
+        <p><span>发布时间:</span>2018年11月27日 - 21时47分</p>
+        <p><span>最后更新:</span>2018年11月29日 - 09时58分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/27/Linux装机笔记/" title="">https://alexbrucelu.github.io/2018/11/27/Linux装机笔记/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/27/Linux装机笔记/　　作者: AlexBruceLu" title=""></span>
         </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-MySQL的安装与简介" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/MySQL的安装与简介/" class="article-date">
-      <time datetime="2018-11-25T15:49:54.779Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> MySQL的安装与简介：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>MySQL养成记之安装与简介</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/database/">database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MySQL/">MySQL</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/MySQL的安装与简介/#more">查看更多 >></a>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
-      
-      <div class="clearfix"></div>
     </div>
-    
-  </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2018/11/26/房屋租赁/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
   
 </article>
 
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搜狗输入法的安装"><span class="toc-number">1.</span> <span class="toc-text">搜狗输入法的安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-安装"><span class="toc-number">2.</span> <span class="toc-text">MySQL 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-安装"><span class="toc-number">3.</span> <span class="toc-text">Redis 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoDB-安装"><span class="toc-number">4.</span> <span class="toc-text">MongoDB 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#golang-安装"><span class="toc-number">5.</span> <span class="toc-text">golang 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goland-安装"><span class="toc-number">6.</span> <span class="toc-text">goland 安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sublime-text3-安装"><span class="toc-number">7.</span> <span class="toc-text">sublime text3 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Emmet"><span class="toc-number">7.0.0.1.</span> <span class="toc-text">Emmet</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#html5"><span class="toc-number">7.0.0.2.</span> <span class="toc-text">html5</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#jQuery"><span class="toc-number">7.0.0.3.</span> <span class="toc-text">jQuery</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SideBarEnhancements"><span class="toc-number">7.0.0.4.</span> <span class="toc-text">SideBarEnhancements</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Ctags"><span class="toc-number">7.0.0.5.</span> <span class="toc-text">Ctags</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Alignment"><span class="toc-number">7.0.0.6.</span> <span class="toc-text">Alignment</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SublimeLinter"><span class="toc-number">7.0.0.7.</span> <span class="toc-text">SublimeLinter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ChineseLocalizations"><span class="toc-number">7.0.0.8.</span> <span class="toc-text">ChineseLocalizations</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#A-File-Icon"><span class="toc-number">7.0.0.9.</span> <span class="toc-text">A File Icon</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BracketHighlighter"><span class="toc-number">7.0.0.10.</span> <span class="toc-text">BracketHighlighter</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#vim-go语言插件"><span class="toc-number">8.</span> <span class="toc-text">vim go语言插件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装OpenSSL"><span class="toc-number">9.</span> <span class="toc-text">安装OpenSSL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Chrome"><span class="toc-number">10.</span> <span class="toc-text">安装Chrome</span></a></li>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
 
 
 
 
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
 
 
 
-
-
-  
-    <article id="post-MongoDB的安装与简介" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/MongoDB的安装与简介/" class="article-date">
-      <time datetime="2018-11-25T15:47:34.522Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
     
-      <input type="hidden" class="isFancy">
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
     
-    
-      <header class="article-header">
+
+
+
+    <div class="scroll" id="post-nav-button">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> MongoDB的安装与简介：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>MongoDB养成记之安装与简介</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/database/">database</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MongoDB/">MongoDB</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/MongoDB的安装与简介/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-gorountine" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/gorountine/" class="article-date">
-      <time datetime="2018-11-25T15:04:32.074Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/gorountine/">gorountine</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> gorountine：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之gorountine</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/gorountine/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-channel" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/channel/" class="article-date">
-      <time datetime="2018-11-25T15:04:32.073Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/channel/">channel</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> channel：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之channel</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/channel/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-http及其标准库" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/http及其标准库/" class="article-date">
-      <time datetime="2018-11-25T15:04:32.072Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
+            <a href="/2018/11/26/房屋租赁/" title="下一篇: ">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/http及其标准库/">http及其标准库</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> http及其标准库：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之http及其标准库</p>
-          
-      
     </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">房屋租赁</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
     
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
-    </div>
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/http及其标准库/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
 
 
 
 
-
-
-
-
-
-
-
-  
-    <article id="post-内建容器" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/内建容器/" class="article-date">
-      <time datetime="2018-11-25T15:04:21.765Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
+    <script>
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/内建容器/">内建容器</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> 内建容器：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之内建容器</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/内建容器/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-面向接口" class="article article-type-post" itemscope="" itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2018/11/25/面向接口/" class="article-date">
-      <time datetime="2018-11-25T15:04:21.763Z" itemprop="datePublished">2018-11-25</time>
-</a>
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/11/25/面向接口/">面向接口</a>
-    </h1>
-  
-
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p><strong> 面向接口：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之面向接口</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2018/11/25/面向接口/#more">查看更多 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
-  
+    </script>
 
 </div>
       <footer id="footer">
