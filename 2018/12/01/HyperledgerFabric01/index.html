@@ -17,10 +17,12 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-01T14:50:41.232Z">
+<meta property="og:image" content="https://AlexBruceLu/DAPP/wiki/fen.png">
+<meta property="og:updated_time" content="2018-12-01T15:44:28.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HyperLedger Fabric">
 <meta name="twitter:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
+<meta name="twitter:image" content="https://AlexBruceLu/DAPP/wiki/fen.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -340,6 +342,59 @@
         <p><strong> HyperLedger Fabric：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
 <p>HyperLedger基础概念简介，以及核心模块的介绍</p>
 <a id="more"></a>
+<p>[TOC]</p>
+<h1 id="Fabric基本概念"><a href="#Fabric基本概念" class="headerlink" title="Fabric基本概念"></a>Fabric基本概念</h1><h2 id="1-逻辑架构"><a href="#1-逻辑架构" class="headerlink" title="1. 逻辑架构"></a>1. 逻辑架构</h2><p><img src="https://AlexBruceLu/DAPP/wiki/fen.png" alt=""></p>
+<ul>
+<li><strong>成员管理（MemberShip）</strong><ul>
+<li>会员注册<ul>
+<li>注册成功一个账号得到的不是用户名密码</li>
+<li>使用证书作用身份认证的标志</li>
+</ul>
+</li>
+<li>身份保护</li>
+<li>交易审计</li>
+<li>内容保密<ul>
+<li>可以多条区块链, 通过通道来区分的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>账本管理</strong></p>
+<ul>
+<li>区块链<ul>
+<li>保存所有的交易记录</li>
+</ul>
+</li>
+<li>世界状态<ul>
+<li>数据的最新状态</li>
+<li>数据存储在当前节点的数据库中<ul>
+<li>自带的默认数据库: levelDB, 也可以使用couchdb</li>
+<li>以键值对的方式进行存储 的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>交易管理</strong></p>
+<ul>
+<li>部署交易<ul>
+<li>部署的是链码, 就是给节点安装链码 - chaincode</li>
+</ul>
+</li>
+<li>调用交易<ul>
+<li>invoke</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>智能合约</strong><ul>
+<li>一段代码， 处理网络成员所同意的业务逻辑</li>
+<li>真正实现了链码和账本的分离（逻辑和数据分离）</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
     
@@ -350,7 +405,7 @@
         <p><span>本文标题:</span><a href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2018年12月01日 - 22时45分</p>
-        <p><span>最后更新:</span>2018年12月01日 - 22时50分</p>
+        <p><span>最后更新:</span>2018年12月01日 - 23时44分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/12/01/HyperledgerFabric01/" title="HyperLedger Fabric">https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/　　作者: AlexBruceLu" title=""></span>
@@ -387,7 +442,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fabric基本概念"><span class="toc-number">1.</span> <span class="toc-text">Fabric基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-逻辑架构"><span class="toc-number">1.1.</span> <span class="toc-text">1. 逻辑架构</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {

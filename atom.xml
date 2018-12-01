@@ -44,9 +44,9 @@
     <link href="https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/"/>
     <id>https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/</id>
     <published>2018-12-01T14:45:58.103Z</published>
-    <updated>2018-12-01T14:50:41.232Z</updated>
+    <updated>2018-12-01T15:44:28.790Z</updated>
     
-    <content type="html"><![CDATA[<p><strong> HyperLedger Fabric：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p><p>HyperLedger基础概念简介，以及核心模块的介绍</p><a id="more"></a>]]></content>
+    <content type="html"><![CDATA[<p><strong> HyperLedger Fabric：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p><p>HyperLedger基础概念简介，以及核心模块的介绍</p><a id="more"></a><p>[TOC]</p><h1 id="Fabric基本概念"><a href="#Fabric基本概念" class="headerlink" title="Fabric基本概念"></a>Fabric基本概念</h1><h2 id="1-逻辑架构"><a href="#1-逻辑架构" class="headerlink" title="1. 逻辑架构"></a>1. 逻辑架构</h2><p><img src="https://AlexBruceLu/DAPP/wiki/fen.png" alt=""></p><ul><li><strong>成员管理（MemberShip）</strong><ul><li>会员注册<ul><li>注册成功一个账号得到的不是用户名密码</li><li>使用证书作用身份认证的标志</li></ul></li><li>身份保护</li><li>交易审计</li><li>内容保密<ul><li>可以多条区块链, 通过通道来区分的</li></ul></li></ul></li><li><p><strong>账本管理</strong></p><ul><li>区块链<ul><li>保存所有的交易记录</li></ul></li><li>世界状态<ul><li>数据的最新状态</li><li>数据存储在当前节点的数据库中<ul><li>自带的默认数据库: levelDB, 也可以使用couchdb</li><li>以键值对的方式进行存储 的</li></ul></li></ul></li></ul></li><li><p><strong>交易管理</strong></p><ul><li>部署交易<ul><li>部署的是链码, 就是给节点安装链码 - chaincode</li></ul></li><li>调用交易<ul><li>invoke</li></ul></li></ul></li><li><strong>智能合约</strong><ul><li>一段代码， 处理网络成员所同意的业务逻辑</li><li>真正实现了链码和账本的分离（逻辑和数据分离）</li></ul></li></ul>]]></content>
     
     <summary type="html">
     
