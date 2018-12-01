@@ -464,46 +464,44 @@
       <input type="hidden" class="isFancy">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/11/26/房屋租赁/">Micro</a>
+    </h1>
+  
+
+
+      </header>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>[TOC]</p>
-<h1 id="房屋租赁"><a href="#房屋租赁" class="headerlink" title="房屋租赁"></a>房屋租赁</h1><h2 id="1-项目简述"><a href="#1-项目简述" class="headerlink" title="1. 项目简述"></a>1. 项目简述</h2><h2 id="2-项目启动"><a href="#2-项目启动" class="headerlink" title="2. 项目启动"></a>2. 项目启动</h2><h3 id="2-1-拆分原则"><a href="#2-1-拆分原则" class="headerlink" title="2.1 拆分原则"></a>2.1 拆分原则</h3><ol>
-<li>单一职责</li>
-<li>服务粒度适中</li>
-<li>考虑团队结构</li>
-<li>以业务模型切入</li>
-<li>演进式拆分</li>
-<li>避免环形依赖和双向依赖 </li>
-</ol>
-<h3 id="2-2-前期准备工作"><a href="#2-2-前期准备工作" class="headerlink" title="2.2 前期准备工作"></a>2.2 前期准备工作</h3><h4 id="2-2-1-单机版的-consul-启动"><a href="#2-2-1-单机版的-consul-启动" class="headerlink" title="2.2.1 单机版的 consul 启动"></a>2.2.1 单机版的 consul 启动</h4><p>项目开始之前首先要启动单机版的consul </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> consul agent -dev</span><br></pre></td></tr></table></figure>
-<h4 id="2-2-2-数据库的创建"><a href="#2-2-2-数据库的创建" class="headerlink" title="2.2.2 数据库的创建"></a>2.2.2 数据库的创建</h4><p>在mysql中创建一个项目所用数据库 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mysql -uroot -p</span><br><span class="line"><span class="meta">mysql&gt;</span> create database if not exists house default charset utf8 collate utf8_general_ci;</span><br><span class="line"><span class="meta">#</span> 查看数据库</span><br><span class="line"><span class="meta">mysql&gt;</span> show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| cms                |</span><br><span class="line">| house              |</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sdrms              |</span><br><span class="line">| sys                |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.85 sec)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>创建表的关系逻辑图</p>
-<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/user.png" alt=""></p>
-</li>
-</ul>
-<h2 id="3-web-服务的创建"><a href="#3-web-服务的创建" class="headerlink" title="3. web 服务的创建"></a>3. web 服务的创建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "web" micro/houseWeb</span><br><span class="line"><span class="meta">#</span> 以GOPATH/src 问基准的局对路径 $GOPATH/src/micro/houseWeb</span><br><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── handler</span><br><span class="line">│   └── handler.go</span><br><span class="line">├── main.go</span><br><span class="line">├── Makefile</span><br><span class="line">├── plugin.go</span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure>
-<h3 id="3-1-创建工具函数文件夹"><a href="#3-1-创建工具函数文件夹" class="headerlink" title="3.1 创建工具函数文件夹"></a>3.1 创建工具函数文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建工具函数文件夹</span><br><span class="line"><span class="meta">$</span> mkdir utils</span><br><span class="line"><span class="meta">#</span> 进入文件夹创建文件</span><br><span class="line"><span class="meta">$</span> cd utils</span><br><span class="line"><span class="meta">#</span> 配置文件读取函数文件</span><br><span class="line"><span class="meta">$</span> touch config.go</span><br><span class="line"><span class="meta">#</span> 错误码文件</span><br><span class="line"><span class="meta">$</span> touch error.go</span><br><span class="line"><span class="meta">#</span> 字符串拼接文件</span><br><span class="line"><span class="meta">$</span> touch misc.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-创建数据库文件"><a href="#3-2-创建数据库文件" class="headerlink" title="3.2 创建数据库文件"></a>3.2 创建数据库文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir models</span><br><span class="line"><span class="meta">#</span>创建数据库文件</span><br><span class="line"><span class="meta">$</span> vim models.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-运行服务并且创建表单"><a href="#3-3-运行服务并且创建表单" class="headerlink" title="3.3 运行服务并且创建表单"></a>3.3 运行服务并且创建表单</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建conf文件夹用来存放配置文件</span><br><span class="line"><span class="meta">$</span> mkdir conf</span><br><span class="line"><span class="meta">#</span>创建data.sql文件</span><br><span class="line"><span class="meta">$</span> vim data.sql</span><br></pre></td></tr></table></figure>
-<p>data.sql 内容</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`area`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span> (<span class="string">'东城区'</span>),(<span class="string">'西城区'</span>),(<span class="string">'朝阳区'</span>),(<span class="string">'海淀区'</span>),(<span class="string">'昌平区'</span>),(<span class="string">'丰台区'</span>),(<span class="string">'房山区'</span>),(<span class="string">'通州区'</span>),(<span class="string">'顺义区'</span>),(<span class="string">'大兴区'</span>),(<span class="string">'怀柔区'</span>),(<span class="string">'平谷区'</span>),(<span class="string">'密云区'</span>),(<span class="string">'延庆区'</span>),(<span class="string">'石景山区'</span>),(<span class="string">'天津'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`facility`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span>(<span class="string">'无线网络'</span>),(<span class="string">'热水淋浴'</span>),(<span class="string">'空调'</span>),(<span class="string">'暖气'</span>),(<span class="string">'允许吸烟'</span>),(<span class="string">'饮水设备'</span>),(<span class="string">'牙具'</span>),(<span class="string">'香皂'</span>),(<span class="string">'拖鞋'</span>),(<span class="string">'手纸'</span>),(<span class="string">'毛巾'</span>),(<span class="string">'沐浴露、洗发露'</span>),(<span class="string">'冰箱'</span>),(<span class="string">'洗衣机'</span>),(<span class="string">'电梯'</span>),(<span class="string">'允许做饭'</span>),(<span class="string">'允许带宠物'</span>),(<span class="string">'允许聚会'</span>),(<span class="string">'门禁系统'</span>),(<span class="string">'停车位'</span>),(<span class="string">'有线网络'</span>),(<span class="string">'电视'</span>),(<span class="string">'浴缸'</span>),(<span class="string">'吃鸡'</span>),(<span class="string">'打台球'</span>),(<span class="string">'游泳'</span>);</span><br></pre></td></tr></table></figure>
-<p><strong><code>data.sql</code></strong>内容的导入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd houseWeb/</span><br><span class="line"><span class="meta">mysql&gt;</span> source ./conf/data.sql;</span><br></pre></td></tr></table></figure>
-<h2 id="4-获取地区信息"><a href="#4-获取地区信息" class="headerlink" title="4. 获取地区信息"></a>4. 获取地区信息</h2><h3 id="4-1-创建服务"><a href="#4-1-创建服务" class="headerlink" title="4.1 创建服务"></a>4.1 创建服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "srv" micro/getArea</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-业务逻辑示意图"><a href="#4-2-业务逻辑示意图" class="headerlink" title="4.2 业务逻辑示意图"></a>4.2 业务逻辑示意图</h3><p><img src="https://github.com/AlexBruceLu/DAPP/wiki/area.png" alt=""></p>
-
+              <p><strong> Micro：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>基于go-micro的微服务之房屋租赁</p>
+          
       
     </div>
     
     <div class="article-info article-info-index">
       
       
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/microServices/">microServices</a>
+    </div>
+
 
       
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2018/11/26/房屋租赁/#more">查看更多 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
