@@ -7,20 +7,20 @@
   
   
   
-  <title>面向接口 | Hexo</title>
+  <title>HyperLedger Fabric | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="面向接口：  go语言养成记之面向接口">
-<meta name="keywords" content="golang">
+  <meta name="description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
+<meta name="keywords" content="Fabric">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面向接口">
-<meta property="og:url" content="https://alexbrucelu.github.io/2018/11/25/面向接口/index.html">
+<meta property="og:title" content="HyperLedger Fabric">
+<meta property="og:url" content="https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="面向接口：  go语言养成记之面向接口">
+<meta property="og:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-25T15:12:24.652Z">
+<meta property="og:updated_time" content="2018-12-01T14:50:41.232Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面向接口">
-<meta name="twitter:description" content="面向接口：  go语言养成记之面向接口">
+<meta name="twitter:title" content="HyperLedger Fabric">
+<meta name="twitter:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -293,11 +293,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-面向接口" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-HyperledgerFabric01" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/11/25/面向接口/" class="article-date">
-      <time datetime="2018-11-25T15:04:21.763Z" itemprop="datePublished">2018-11-25</time>
+      <a href="/2018/12/01/HyperledgerFabric01/" class="article-date">
+      <time datetime="2018-12-01T14:45:58.103Z" itemprop="datePublished">2018-12-01</time>
 </a>
 
     </div>
@@ -311,7 +311,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      面向接口
+      HyperLedger Fabric
     </h1>
   
 
@@ -321,13 +321,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/golang/">golang</a>
+    <a class="article-category-link" href="/categories/hyperledger/">hyperledger</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fabric/">Fabric</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -337,55 +337,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong> 面向接口：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>go语言养成记之面向接口</p>
+        <p><strong> HyperLedger Fabric：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>HyperLedger基础概念简介，以及核心模块的介绍</p>
 <a id="more"></a>
-<h2 id="1-duck-typing-的概念"><a href="#1-duck-typing-的概念" class="headerlink" title="1. duck typing 的概念"></a>1. duck typing 的概念</h2><blockquote>
-<p>“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。”</p>
-<p>在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。</p>
-<font color="blue">鸭子本来不是人，但是实现了某些人的方法就会被认为是人。</font>
-</blockquote>
-<ul>
-<li><p>描述事物的外部行为而非内部结构</p>
-</li>
-<li><p>其他语言中的duck typing</p>
-<ul>
-<li>Python</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(retriever)</span>:</span> // download 是duck typing 的使用者</span><br><span class="line">    <span class="keyword">return</span> retriever.get(<span class="string">"666"</span>) // retriever是duck typing的对象(实现者)</span><br></pre></td></tr></table></figure>
-<p><strong>注 ：</strong>编译时才知道传入的retriever 有没有get</p>
-<ul>
-<li><p>C++</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">R</span>&gt;</span></span><br><span class="line"><span class="class">    </span></span><br><span class="line"><span class="class"><span class="title">string</span> <span class="title">download</span>(<span class="title">const</span> <span class="title">R</span>&amp; <span class="title">retriever</span>) &#123;</span></span><br><span class="line">    <span class="keyword">return</span> retriever.get(<span class="string">"666"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注 ：</strong>1. 编译时才知道传入的retriever 有没有get</p>
-<p>​    2. 需要注释来说明接口</p>
-</li>
-<li><p>Java</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;R extends Retriever&gt;</span><br><span class="line"><span class="function">String <span class="title">download</span><span class="params">(R r)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> retriever.get(<span class="string">"666"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注：</strong>传入的参数必须实现Retrieve 接口，并不是duck typing；不需要注释说明接口</p>
-<font color="red">go语言中的duck typing，具有灵活性和类型检查的严格性</font>
-
-
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="2-接口的定义和实现"><a href="#2-接口的定义和实现" class="headerlink" title="2. 接口的定义和实现"></a>2. 接口的定义和实现</h2><h3 id="2-1-基本介绍"><a href="#2-1-基本介绍" class="headerlink" title="2.1 基本介绍"></a>2.1 基本介绍</h3><ul>
-<li>golang 中多态的特性主要通过接口来实现的</li>
-<li><p>interface 类型可以定义一组方法，但并需要实现。并且，interface 不能包含任何变量。到某个自定义类型要使用的时候，根据具体的情况再把这些方法实现出来</p>
-</li>
-<li><p>基本语法</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> 接口名 <span class="keyword">interface</span> &#123;</span><br><span class="line">    method1(参数列表) 返回值列表</span><br><span class="line">    method2(参数列表) 返回值列表</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t 自定义类型)</span> <span class="title">method1</span><span class="params">(参数列表)</span> 返回值列表</span>&#123;</span><br><span class="line">    <span class="comment">// 具体实现</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(t 自定义类型)</span> <span class="title">method2</span><span class="params">(参数列表)</span> 返回值列表</span>&#123;</span><br><span class="line">    <span class="comment">// 具体实现</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>接口里的所有的方法都没有方法体，即<font color="red">接口的方法都是没有实现的方法</font>。接口体现了程序设计的<font color="red">多态和高内聚低耦合</font>的思想</li>
-<li>接口不需要显式的实现，只要有一个变量，含有接口的所有方法，那么这个变量就实现了这个接口</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-2-一个例子"><a href="#2-2-一个例子" class="headerlink" title="2.2 一个例子"></a>2.2 一个例子</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Retriever <span class="keyword">interface</span> &#123;</span><br><span class="line">    Get(url <span class="keyword">string</span>) <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">download</span><span class="params">(r Retriever)</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> r.Get(<span class="string">"http://www.baidu.com"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> r Retriever</span><br><span class="line">    r = demo.Retriever&#123;&#125;</span><br><span class="line">    fmt.Println(download(r))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> demo</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">    <span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Retriver <span class="keyword">struct</span> &#123;</span><br><span class="line">    UserAgent <span class="keyword">string</span></span><br><span class="line">    TimeOut time.Duration</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r Retriver)</span> <span class="title">Get</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="title">string</span></span>&#123;</span><br><span class="line">    resp,err := http.Get(url)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    result,err := httputil.DumpResponse(resp,<span class="literal">true</span>)</span><br><span class="line">    resp.Body.Close()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="built_in">panic</span>(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">string</span>(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>输出结果</strong>：baidu.com 的网页信息</p>
-<h2 id="3-接口的值类型"><a href="#3-接口的值类型" class="headerlink" title="3. 接口的值类型"></a>3. 接口的值类型</h2><h2 id="4-接口的组合"><a href="#4-接口的组合" class="headerlink" title="4. 接口的组合"></a>4. 接口的组合</h2><h2 id="5-常用的系统接口"><a href="#5-常用的系统接口" class="headerlink" title="5. 常用的系统接口"></a>5. 常用的系统接口</h2>
       
     </div>
     
@@ -393,13 +347,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/11/25/面向接口/">面向接口</a></p>
+        <p><span>本文标题:</span><a href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
-        <p><span>发布时间:</span>2018年11月25日 - 23时04分</p>
-        <p><span>最后更新:</span>2018年11月25日 - 23时12分</p>
+        <p><span>发布时间:</span>2018年12月01日 - 22时45分</p>
+        <p><span>最后更新:</span>2018年12月01日 - 22时50分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/11/25/面向接口/" title="面向接口">https://alexbrucelu.github.io/2018/11/25/面向接口/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/25/面向接口/　　作者: AlexBruceLu" title=""></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/12/01/HyperledgerFabric01/" title="HyperLedger Fabric">https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
             <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
@@ -410,18 +364,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/11/25/内建容器/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/01/Solidity基础语法/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          内建容器
+          Solidity基础语法
         
       </div>
     </a>
   
   
-    <a href="/2018/11/25/面向对象/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">面向对象</div>
+    <a href="/2018/11/27/Linux装机笔记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Linux+Go装机笔记</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -433,7 +387,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-duck-typing-的概念"><span class="toc-number">1.</span> <span class="toc-text">1. duck typing 的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-接口的定义和实现"><span class="toc-number">2.</span> <span class="toc-text">2. 接口的定义和实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-基本介绍"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-一个例子"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 一个例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-接口的值类型"><span class="toc-number">3.</span> <span class="toc-text">3. 接口的值类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-接口的组合"><span class="toc-number">4.</span> <span class="toc-text">4. 接口的组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-常用的系统接口"><span class="toc-number">5.</span> <span class="toc-text">5. 常用的系统接口</span></a></li></ol>
+    
 </div>
 <style>
     .left-col .switch-btn {
@@ -506,13 +460,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/11/25/内建容器/" title="上一篇: 内建容器">
+            <a href="/2018/12/01/Solidity基础语法/" title="上一篇: Solidity基础语法">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2018/11/25/面向对象/" title="下一篇: 面向对象">
+            <a href="/2018/11/27/Linux装机笔记/" title="下一篇: Linux+Go装机笔记">
                 <i class="fa fa-angle-right"></i>
             </a>
         
