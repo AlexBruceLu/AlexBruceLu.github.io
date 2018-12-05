@@ -17,10 +17,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="http与https协议的区别：  相关概念">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-05T07:35:09.866Z">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http1.jpg">
+<meta property="og:image" content="https://github.com/AlexBruceLU/DAPP/wiki/http2.gif">
+<meta property="og:updated_time" content="2018-12-05T07:45:45.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http与https协议的区别">
 <meta name="twitter:description" content="http与https协议的区别：  相关概念">
+<meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -353,7 +356,7 @@
 <p>　　3、http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。</p>
 <p>　　4、http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</p>
 <h3 id="三、HTTPS的工作原理"><a href="#三、HTTPS的工作原理" class="headerlink" title="三、HTTPS的工作原理"></a><strong>三、HTTPS的工作原理</strong></h3><p>　　我们都知道HTTPS能够加密信息，以免敏感信息被第三方获取，所以很多银行网站或电子邮箱等等安全级别较高的服务都会采用HTTPS协议。</p>
-<p><img src="" alt=""></p>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/http1.jpg" alt=""></p>
 <p>客户端在使用HTTPS方式与Web服务器通信时有以下几个步骤，如图所示。</p>
 <p>　　（1）客户使用https的URL访问Web服务器，要求与Web服务器建立SSL连接。</p>
 <p>　　（2）Web服务器收到客户端请求后，会将网站的证书信息（证书中包含公钥）传送一份给客户端。</p>
@@ -361,7 +364,7 @@
 <p>　　（4）客户端的浏览器根据双方同意的安全等级，建立会话密钥，然后利用网站的公钥将会话密钥加密，并传送给网站。</p>
 <p>　　（5）Web服务器利用自己的私钥解密出会话密钥。</p>
 <p>　　（6）Web服务器利用会话密钥加密与客户端之间的通信。</p>
-<p><img src="" alt=""></p>
+<p><img src="https://github.com/AlexBruceLU/DAPP/wiki/http2.gif" alt=""></p>
 <h3 id="四、HTTPS的优点"><a href="#四、HTTPS的优点" class="headerlink" title="四、HTTPS的优点"></a><strong>四、HTTPS的优点</strong></h3><p>　　尽管HTTPS并非绝对安全，掌握根证书的机构、掌握加密算法的组织同样可以进行中间人形式的攻击，但HTTPS仍是现行架构下最安全的解决方案，主要有以下几个好处：</p>
 <p>　　（1）使用HTTPS协议可认证用户和服务器，确保数据发送到正确的客户机和服务器；</p>
 <p>　　（2）HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全，可防止数据在传输过程中不被窃取、改变，确保数据的完整性。</p>
@@ -387,7 +390,7 @@
         <p><span>本文标题:</span><a href="/2018/12/03/http网络/">http与https协议的区别</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2018年12月03日 - 20时51分</p>
-        <p><span>最后更新:</span>2018年12月05日 - 15时35分</p>
+        <p><span>最后更新:</span>2018年12月05日 - 15时45分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/12/03/http网络/" title="http与https协议的区别">https://alexbrucelu.github.io/2018/12/03/http网络/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/03/http网络/　　作者: AlexBruceLu" title=""></span>
