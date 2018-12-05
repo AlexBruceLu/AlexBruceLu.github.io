@@ -7,23 +7,25 @@
   
   
   
-  <title>Micro | Hexo</title>
+  <title>详解http协议 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Micro：  基于go-micro的微服务之房屋租赁">
-<meta name="keywords" content="微服务">
+  <meta name="description" content="详解http协议：  http网络协议的详解概述">
+<meta name="keywords" content="http&#x2F;https">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Micro">
-<meta property="og:url" content="https://alexbrucelu.github.io/2018/11/26/房屋租赁/index.html">
+<meta property="og:title" content="详解http协议">
+<meta property="og:url" content="https://alexbrucelu.github.io/2018/12/05/详解http协议/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Micro：  基于go-micro的微服务之房屋租赁">
+<meta property="og:description" content="详解http协议：  http网络协议的详解概述">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/user.png">
-<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/area.png">
-<meta property="og:updated_time" content="2018-12-01T12:04:25.068Z">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http3.webp">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http2.webp">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http4.webp">
+<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http5.webp">
+<meta property="og:updated_time" content="2018-12-05T08:36:52.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Micro">
-<meta name="twitter:description" content="Micro：  基于go-micro的微服务之房屋租赁">
-<meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/user.png">
+<meta name="twitter:title" content="详解http协议">
+<meta name="twitter:description" content="详解http协议：  http网络协议的详解概述">
+<meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/http3.webp">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -296,11 +298,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-房屋租赁" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-详解http协议" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/11/26/房屋租赁/" class="article-date">
-      <time datetime="2018-11-26T01:23:12.662Z" itemprop="datePublished">2018-11-26</time>
+      <a href="/2018/12/05/详解http协议/" class="article-date">
+      <time datetime="2018-12-05T08:20:13.313Z" itemprop="datePublished">2018-12-05</time>
 </a>
 
     </div>
@@ -314,7 +316,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Micro
+      详解http协议
     </h1>
   
 
@@ -324,13 +326,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/microServices/">microServices</a>
+    <a class="article-category-link" href="/categories/others/">others</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http-https/">http/https</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -340,38 +342,27 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong> Micro：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>基于go-micro的微服务之房屋租赁</p>
+        <p><strong> 详解http协议：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>http网络协议的详解概述</p>
 <a id="more"></a>
 <p>[TOC]</p>
-<h1 id="房屋租赁"><a href="#房屋租赁" class="headerlink" title="房屋租赁"></a>房屋租赁</h1><h2 id="1-项目简述"><a href="#1-项目简述" class="headerlink" title="1. 项目简述"></a>1. 项目简述</h2><h2 id="2-项目启动"><a href="#2-项目启动" class="headerlink" title="2. 项目启动"></a>2. 项目启动</h2><h3 id="2-1-拆分原则"><a href="#2-1-拆分原则" class="headerlink" title="2.1 拆分原则"></a>2.1 拆分原则</h3><ol>
-<li>单一职责</li>
-<li>服务粒度适中</li>
-<li>考虑团队结构</li>
-<li>以业务模型切入</li>
-<li>演进式拆分</li>
-<li>避免环形依赖和双向依赖 </li>
-</ol>
-<h3 id="2-2-前期准备工作"><a href="#2-2-前期准备工作" class="headerlink" title="2.2 前期准备工作"></a>2.2 前期准备工作</h3><h4 id="2-2-1-单机版的-consul-启动"><a href="#2-2-1-单机版的-consul-启动" class="headerlink" title="2.2.1 单机版的 consul 启动"></a>2.2.1 单机版的 consul 启动</h4><p>项目开始之前首先要启动单机版的consul </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> consul agent -dev</span><br></pre></td></tr></table></figure>
-<h4 id="2-2-2-数据库的创建"><a href="#2-2-2-数据库的创建" class="headerlink" title="2.2.2 数据库的创建"></a>2.2.2 数据库的创建</h4><p>在mysql中创建一个项目所用数据库 </p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mysql -uroot -p</span><br><span class="line"><span class="meta">mysql&gt;</span> create database if not exists house default charset utf8 collate utf8_general_ci;</span><br><span class="line"><span class="meta">#</span> 查看数据库</span><br><span class="line"><span class="meta">mysql&gt;</span> show databases;</span><br><span class="line">+--------------------+</span><br><span class="line">| Database           |</span><br><span class="line">+--------------------+</span><br><span class="line">| cms                |</span><br><span class="line">| house              |</span><br><span class="line">| information_schema |</span><br><span class="line">| mysql              |</span><br><span class="line">| performance_schema |</span><br><span class="line">| sdrms              |</span><br><span class="line">| sys                |</span><br><span class="line">+--------------------+</span><br><span class="line">7 rows in set (0.85 sec)</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/http3.webp" alt="一张图带你看完本篇文章"></p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><h4 id="1-计算机网络体系结构分层"><a href="#1-计算机网络体系结构分层" class="headerlink" title="1. 计算机网络体系结构分层"></a>1. 计算机网络体系结构分层</h4><p><img src="https://github.com/AlexBruceLu/DAPP/wiki/http2.webp" alt="计算机网络体系结构分层"></p>
+<h4 id="2-TCP-IP-通信传输流"><a href="#2-TCP-IP-通信传输流" class="headerlink" title="2. TCP/IP 通信传输流"></a>2. TCP/IP 通信传输流</h4><p>利用 TCP/IP 协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则从链路层往上走。如下：</p>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/http4.webp" alt="TCP/IP 通信传输流"></p>
 <ul>
-<li><p>创建表的关系逻辑图</p>
-<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/user.png" alt=""></p>
-</li>
+<li>首先作为发送端的客户端在应用层（HTTP 协议）发出一个想看某个 Web 页面的 HTTP 请求。</li>
+<li>接着，为了传输方便，在传输层（TCP 协议）把从应用层处收到的数据（HTTP 请求报文）进行分割，并在各个报文上打上标记序号及端口号后转发给网络层。</li>
+<li>在网络层（IP 协议），增加作为通信目的地的 MAC 地址后转发给链路层。这样一来，发往网络的通信请求就准备齐全了。</li>
+<li>接收端的服务器在链路层接收到数据，按序往上层发送，一直到应用层。当传输到应用层，才能算真正接收到由客户端发送过来的 HTTP请求。</li>
 </ul>
-<h2 id="3-web-服务的创建"><a href="#3-web-服务的创建" class="headerlink" title="3. web 服务的创建"></a>3. web 服务的创建</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "web" micro/houseWeb</span><br><span class="line"><span class="meta">#</span> 以GOPATH/src 问基准的局对路径 $GOPATH/src/micro/houseWeb</span><br><span class="line">.</span><br><span class="line">├── Dockerfile</span><br><span class="line">├── handler</span><br><span class="line">│   └── handler.go</span><br><span class="line">├── main.go</span><br><span class="line">├── Makefile</span><br><span class="line">├── plugin.go</span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure>
-<h3 id="3-1-创建工具函数文件夹"><a href="#3-1-创建工具函数文件夹" class="headerlink" title="3.1 创建工具函数文件夹"></a>3.1 创建工具函数文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建工具函数文件夹</span><br><span class="line"><span class="meta">$</span> mkdir utils</span><br><span class="line"><span class="meta">#</span> 进入文件夹创建文件</span><br><span class="line"><span class="meta">$</span> cd utils</span><br><span class="line"><span class="meta">#</span> 配置文件读取函数文件</span><br><span class="line"><span class="meta">$</span> touch config.go</span><br><span class="line"><span class="meta">#</span> 错误码文件</span><br><span class="line"><span class="meta">$</span> touch error.go</span><br><span class="line"><span class="meta">#</span> 字符串拼接文件</span><br><span class="line"><span class="meta">$</span> touch misc.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-创建数据库文件"><a href="#3-2-创建数据库文件" class="headerlink" title="3.2 创建数据库文件"></a>3.2 创建数据库文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> mkdir models</span><br><span class="line"><span class="meta">#</span>创建数据库文件</span><br><span class="line"><span class="meta">$</span> vim models.go</span><br></pre></td></tr></table></figure>
-<h3 id="3-3-运行服务并且创建表单"><a href="#3-3-运行服务并且创建表单" class="headerlink" title="3.3 运行服务并且创建表单"></a>3.3 运行服务并且创建表单</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>创建conf文件夹用来存放配置文件</span><br><span class="line"><span class="meta">$</span> mkdir conf</span><br><span class="line"><span class="meta">#</span>创建data.sql文件</span><br><span class="line"><span class="meta">$</span> vim data.sql</span><br></pre></td></tr></table></figure>
-<p>data.sql 内容</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`area`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span> (<span class="string">'东城区'</span>),(<span class="string">'西城区'</span>),(<span class="string">'朝阳区'</span>),(<span class="string">'海淀区'</span>),(<span class="string">'昌平区'</span>),(<span class="string">'丰台区'</span>),(<span class="string">'房山区'</span>),(<span class="string">'通州区'</span>),(<span class="string">'顺义区'</span>),(<span class="string">'大兴区'</span>),(<span class="string">'怀柔区'</span>),(<span class="string">'平谷区'</span>),(<span class="string">'密云区'</span>),(<span class="string">'延庆区'</span>),(<span class="string">'石景山区'</span>),(<span class="string">'天津'</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`facility`</span>(<span class="string">`name`</span>) <span class="keyword">VALUES</span>(<span class="string">'无线网络'</span>),(<span class="string">'热水淋浴'</span>),(<span class="string">'空调'</span>),(<span class="string">'暖气'</span>),(<span class="string">'允许吸烟'</span>),(<span class="string">'饮水设备'</span>),(<span class="string">'牙具'</span>),(<span class="string">'香皂'</span>),(<span class="string">'拖鞋'</span>),(<span class="string">'手纸'</span>),(<span class="string">'毛巾'</span>),(<span class="string">'沐浴露、洗发露'</span>),(<span class="string">'冰箱'</span>),(<span class="string">'洗衣机'</span>),(<span class="string">'电梯'</span>),(<span class="string">'允许做饭'</span>),(<span class="string">'允许带宠物'</span>),(<span class="string">'允许聚会'</span>),(<span class="string">'门禁系统'</span>),(<span class="string">'停车位'</span>),(<span class="string">'有线网络'</span>),(<span class="string">'电视'</span>),(<span class="string">'浴缸'</span>),(<span class="string">'吃鸡'</span>),(<span class="string">'打台球'</span>),(<span class="string">'游泳'</span>);</span><br></pre></td></tr></table></figure>
-<p><strong><code>data.sql</code></strong>内容的导入</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> cd houseWeb/</span><br><span class="line"><span class="meta">mysql&gt;</span> source ./conf/data.sql;</span><br></pre></td></tr></table></figure>
-<h2 id="4-获取地区信息"><a href="#4-获取地区信息" class="headerlink" title="4. 获取地区信息"></a>4. 获取地区信息</h2><h3 id="4-1-创建服务"><a href="#4-1-创建服务" class="headerlink" title="4.1 创建服务"></a>4.1 创建服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> micro new --type "srv" micro/getArea</span><br></pre></td></tr></table></figure>
-<h3 id="4-2-业务逻辑示意图"><a href="#4-2-业务逻辑示意图" class="headerlink" title="4.2 业务逻辑示意图"></a>4.2 业务逻辑示意图</h3><p><img src="https://github.com/AlexBruceLu/DAPP/wiki/area.png" alt=""></p>
-
+<p>如下图所示：</p>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/http5.webp" alt="HTTP 请求"></p>
+<p>在网络体系结构中，包含了众多的网络协议，这篇文章主要围绕 HTTP 协议（HTTP/1.1版本）展开。</p>
+<blockquote>
+<p>HTTP协议（HyperText Transfer Protocol，超文本传输协议）是用于从WWW服务器传输超文本到本地浏览器的传输协议。它可以使浏览器更加高效，使网络传输减少。它不仅保证计算机正确快速地传输超文本文档，还确定传输文档中的哪一部分，以及哪部分内容首先显示(如文本先于图形)等。<br> HTTP是客户端浏览器或其他程序与Web服务器之间的应用层通信协议。在Internet上的Web服务器上存放的都是超文本信息，客户机需要通过HTTP协议传输所要访问的超文本信息。HTTP包含命令和传输信息，不仅可用于Web访问，也可以用于其他因特网/内联网应用系统之间的通信，从而实现各类应用资源超媒体访问的集成。<br> 我们在浏览器的地址栏里输入的网站地址叫做URL (Uniform Resource Locator，统一资源定位符)。就像每家每户都有一个门牌地址一样，每个网页也都有一个Internet地址。当你在浏览器的地址框中输入一个URL或是单击一个超级链接时，URL就确定了要浏览的地址。浏览器通过超文本传输协议(HTTP)，将Web服务器上站点的网页代码提取出来，并翻译成漂亮的网页。</p>
+</blockquote>
+<h3 id="HTTP-工作过程"><a href="#HTTP-工作过程" class="headerlink" title="HTTP 工作过程"></a>HTTP 工作过程</h3>
       
     </div>
     
@@ -379,13 +370,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/11/26/房屋租赁/">Micro</a></p>
+        <p><span>本文标题:</span><a href="/2018/12/05/详解http协议/">详解http协议</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
-        <p><span>发布时间:</span>2018年11月26日 - 09时23分</p>
-        <p><span>最后更新:</span>2018年12月01日 - 20时04分</p>
+        <p><span>发布时间:</span>2018年12月05日 - 16时20分</p>
+        <p><span>最后更新:</span>2018年12月05日 - 16时36分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/11/26/房屋租赁/" title="Micro">https://alexbrucelu.github.io/2018/11/26/房屋租赁/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/26/房屋租赁/　　作者: AlexBruceLu" title=""></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/12/05/详解http协议/" title="详解http协议">https://alexbrucelu.github.io/2018/12/05/详解http协议/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/05/详解http协议/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
             <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
@@ -396,18 +387,18 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/11/27/Linux装机笔记/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/12/05/详解TCPIP协议/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          Linux+Go装机笔记
+          详解TCP/IP协议
         
       </div>
     </a>
   
   
-    <a href="/2018/11/25/Docker的安装与简介/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Docker的安装与简介</div>
+    <a href="/2018/12/03/http网络/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">http与https协议的区别</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -419,7 +410,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#房屋租赁"><span class="toc-number">1.</span> <span class="toc-text">房屋租赁</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-项目简述"><span class="toc-number">1.1.</span> <span class="toc-text">1. 项目简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-项目启动"><span class="toc-number">1.2.</span> <span class="toc-text">2. 项目启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-拆分原则"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 拆分原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-前期准备工作"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 前期准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-单机版的-consul-启动"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">2.2.1 单机版的 consul 启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-数据库的创建"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">2.2.2 数据库的创建</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-web-服务的创建"><span class="toc-number">1.3.</span> <span class="toc-text">3. web 服务的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-创建工具函数文件夹"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 创建工具函数文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-创建数据库文件"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 创建数据库文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-运行服务并且创建表单"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 运行服务并且创建表单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-获取地区信息"><span class="toc-number">1.4.</span> <span class="toc-text">4. 获取地区信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-创建服务"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 创建服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-业务逻辑示意图"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 业务逻辑示意图</span></a></li></ol></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-计算机网络体系结构分层"><span class="toc-number">1.1.</span> <span class="toc-text">1. 计算机网络体系结构分层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-TCP-IP-通信传输流"><span class="toc-number">1.2.</span> <span class="toc-text">2. TCP/IP 通信传输流</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP-工作过程"><span class="toc-number">2.</span> <span class="toc-text">HTTP 工作过程</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -492,13 +483,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/11/27/Linux装机笔记/" title="上一篇: Linux+Go装机笔记">
+            <a href="/2018/12/05/详解TCPIP协议/" title="上一篇: 详解TCP/IP协议">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2018/11/25/Docker的安装与简介/" title="下一篇: Docker的安装与简介">
+            <a href="/2018/12/03/http网络/" title="下一篇: http与https协议的区别">
                 <i class="fa fa-angle-right"></i>
             </a>
         
