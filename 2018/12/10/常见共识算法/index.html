@@ -7,20 +7,21 @@
   
   
   
-  <title>Hexo</title>
+  <title>常见的共识算法 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文是对区块链技术中涉及的共识算法的学习总结整理。 其中PBFT和Raft是联盟链和私有链常用的共识算法，而PoW（比特币采用）和PoS是公有链常用的共识算法。  建议对区块链的学习，要分成是公有链还是联盟链，这两种链中一般采用的共识算法是有较大不同的，P2P网络等也有较大的不同。传统的共识算法一般不适用于公有链，而一定程度上适用于联盟链。  实用拜占庭容错系统PBFT（联盟链中常用）拜占庭容错技">
+  <meta name="description" content="常见的共识算法：  PoS、PoW、DPoS">
+<meta name="keywords" content="共识算法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="常见的共识算法">
 <meta property="og:url" content="https://alexbrucelu.github.io/2018/12/10/常见共识算法/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="本文是对区块链技术中涉及的共识算法的学习总结整理。 其中PBFT和Raft是联盟链和私有链常用的共识算法，而PoW（比特币采用）和PoS是公有链常用的共识算法。  建议对区块链的学习，要分成是公有链还是联盟链，这两种链中一般采用的共识算法是有较大不同的，P2P网络等也有较大的不同。传统的共识算法一般不适用于公有链，而一定程度上适用于联盟链。  实用拜占庭容错系统PBFT（联盟链中常用）拜占庭容错技">
+<meta property="og:description" content="常见的共识算法：  PoS、PoW、DPoS">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/ddd.png">
-<meta property="og:updated_time" content="2018-12-10T06:35:06.742Z">
+<meta property="og:updated_time" content="2018-12-10T06:38:43.474Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="本文是对区块链技术中涉及的共识算法的学习总结整理。 其中PBFT和Raft是联盟链和私有链常用的共识算法，而PoW（比特币采用）和PoS是公有链常用的共识算法。  建议对区块链的学习，要分成是公有链还是联盟链，这两种链中一般采用的共识算法是有较大不同的，P2P网络等也有较大的不同。传统的共识算法一般不适用于公有链，而一定程度上适用于联盟链。  实用拜占庭容错系统PBFT（联盟链中常用）拜占庭容错技">
+<meta name="twitter:title" content="常见的共识算法">
+<meta name="twitter:description" content="常见的共识算法：  PoS、PoW、DPoS">
 <meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/ddd.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -207,7 +208,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+                        <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/共识算法/" style="font-size: 10px;">共识算法</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
                     </div>
                 </section>
                 
@@ -308,10 +309,40 @@
       <input type="hidden" class="isFancy">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      常见的共识算法
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/others/">others</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/共识算法/">共识算法</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>本文是对区块链技术中涉及的共识算法的学习总结整理。 其中PBFT和Raft是联盟链和私有链常用的共识算法，而PoW（比特币采用）和PoS是公有链常用的共识算法。</p>
+        <p><strong> 常见的共识算法：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>PoS、PoW、DPoS</p>
+<a id="more"></a>
+<p>本文是对区块链技术中涉及的共识算法的学习总结整理。 其中PBFT和Raft是联盟链和私有链常用的共识算法，而PoW（比特币采用）和PoS是公有链常用的共识算法。</p>
 <blockquote>
 <p>建议对区块链的学习，要分成是公有链还是联盟链，这两种链中一般采用的共识算法是有较大不同的，P2P网络等也有较大的不同。传统的共识算法一般不适用于公有链，而一定程度上适用于联盟链。</p>
 </blockquote>
@@ -364,12 +395,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/12/10/常见共识算法/"></a></p>
+        <p><span>本文标题:</span><a href="/2018/12/10/常见共识算法/">常见的共识算法</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2018年12月10日 - 14时04分</p>
-        <p><span>最后更新:</span>2018年12月10日 - 14时35分</p>
+        <p><span>最后更新:</span>2018年12月10日 - 14时38分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/12/10/常见共识算法/" title="">https://alexbrucelu.github.io/2018/12/10/常见共识算法/</a>
+            <span>原始链接:</span><a class="post-url" href="/2018/12/10/常见共识算法/" title="常见的共识算法">https://alexbrucelu.github.io/2018/12/10/常见共识算法/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/10/常见共识算法/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
@@ -477,7 +508,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
