@@ -7,19 +7,20 @@
   
   
   
-  <title>Hexo</title>
+  <title>面向接口 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. duck typing 的概念 “当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。” 在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。 鸭子本来不是人，但是实现了某些人的方法就会被认为是人。   描述事物的外部行为而非内部结构  其他语言中的duck typing  Python  12def download(retriever): //">
+  <meta name="description" content="面向接口：  go语言养成记之面向接口">
+<meta name="keywords" content="golang">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="面向接口">
 <meta property="og:url" content="https://alexbrucelu.github.io/2018/11/25/面向接口/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. duck typing 的概念 “当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。” 在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。 鸭子本来不是人，但是实现了某些人的方法就会被认为是人。   描述事物的外部行为而非内部结构  其他语言中的duck typing  Python  12def download(retriever): //">
+<meta property="og:description" content="面向接口：  go语言养成记之面向接口">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-09T06:56:01.013Z">
+<meta property="og:updated_time" content="2018-12-10T10:14:52.423Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="1. duck typing 的概念 “当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。” 在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。 鸭子本来不是人，但是实现了某些人的方法就会被认为是人。   描述事物的外部行为而非内部结构  其他语言中的duck typing  Python  12def download(retriever): //">
+<meta name="twitter:title" content="面向接口">
+<meta name="twitter:description" content="面向接口：  go语言养成记之面向接口">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -205,7 +206,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 10px;">MySQL</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/共识算法/" style="font-size: 10px;">共识算法</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+                        <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/共识算法/" style="font-size: 10px;">共识算法</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
                     </div>
                 </section>
                 
@@ -306,10 +307,40 @@
       <input type="hidden" class="isFancy">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      面向接口
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/golang/">golang</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/golang/">golang</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="1-duck-typing-的概念"><a href="#1-duck-typing-的概念" class="headerlink" title="1. duck typing 的概念"></a>1. duck typing 的概念</h2><blockquote>
+        <p><strong> 面向接口：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>go语言养成记之面向接口</p>
+<a id="more"></a>
+<h2 id="1-duck-typing-的概念"><a href="#1-duck-typing-的概念" class="headerlink" title="1. duck typing 的概念"></a>1. duck typing 的概念</h2><blockquote>
 <p>“当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。”</p>
 <p>在鸭子类型中，关注的不是对象的类型本身，而是它是如何使用的。</p>
 <font color="blue">鸭子本来不是人，但是实现了某些人的方法就会被认为是人。</font>
@@ -384,7 +415,8 @@
 <li><p>空接口 <code>interface{}</code>没有任何方法，所以所有类型都实现了空接口，即可以吧任何一个变量赋值给空接口。</p>
 </li>
 </ol>
-<h2 id="3-接口的值类型"><a href="#3-接口的值类型" class="headerlink" title="3. 接口的值类型"></a>3. 接口的值类型</h2><h2 id="4-接口的组合"><a href="#4-接口的组合" class="headerlink" title="4. 接口的组合"></a>4. 接口的组合</h2><h2 id="5-常用的系统接口"><a href="#5-常用的系统接口" class="headerlink" title="5. 常用的系统接口"></a>5. 常用的系统接口</h2>
+<h2 id="常用的系统接口"><a href="#常用的系统接口" class="headerlink" title="常用的系统接口"></a>常用的系统接口</h2><h3 id="案例一：对切片进行排序"><a href="#案例一：对切片进行排序" class="headerlink" title="案例一：对切片进行排序"></a>案例一：对切片进行排序</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"math/rand"</span></span><br><span class="line">	<span class="string">"sort"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Hero <span class="keyword">struct</span> &#123;</span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">	Age <span class="keyword">int</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> HeroSlice []Hero</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现interface接口</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(hs HeroSlice)</span> <span class="title">Len</span><span class="params">()</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">len</span>(hs)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 实现less方法决定排序方式</span></span><br><span class="line"><span class="comment">// 按照Hero的年龄从小到达排序</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(hs HeroSlice)</span> <span class="title">Less</span><span class="params">(i,j <span class="keyword">int</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> hs[i].Age &lt; hs[j].Age</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(hs HeroSlice)</span> <span class="title">Swap</span><span class="params">(i,j <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">	hs[i],hs[j] = hs[j],hs[i]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 对切片进行排序</span></span><br><span class="line">	intSlice := []<span class="keyword">int</span>&#123;<span class="number">0</span>,<span class="number">-1</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">7</span>,<span class="number">18</span>&#125;</span><br><span class="line">	sort.Ints(intSlice)</span><br><span class="line">	fmt.Println(intSlice)</span><br><span class="line">    <span class="comment">// 对结构体进行排序，使用系统方法</span></span><br><span class="line">	<span class="keyword">var</span> heroes HeroSlice</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		hero:=Hero&#123;</span><br><span class="line">			Name:fmt.Sprintf(<span class="string">"英雄-%d"</span>,rand.Intn(<span class="number">100</span>)),</span><br><span class="line">			Age:rand.Intn(<span class="number">100</span>),</span><br><span class="line">		&#125;</span><br><span class="line">		heroes = <span class="built_in">append</span>(heroes, hero)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, value := <span class="keyword">range</span> heroes &#123;</span><br><span class="line">		fmt.Println(value)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	fmt.Println(<span class="string">"----------排序后-----------"</span>)</span><br><span class="line">	sort.Sort(heroes)</span><br><span class="line">	<span class="keyword">for</span> _, value := <span class="keyword">range</span> heroes &#123;</span><br><span class="line">		fmt.Println(value)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -392,12 +424,12 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/11/25/面向接口/"></a></p>
+        <p><span>本文标题:</span><a href="/2018/11/25/面向接口/">面向接口</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2018年11月25日 - 23时04分</p>
-        <p><span>最后更新:</span>2018年12月09日 - 14时56分</p>
+        <p><span>最后更新:</span>2018年12月10日 - 18时14分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/11/25/面向接口/" title="">https://alexbrucelu.github.io/2018/11/25/面向接口/</a>
+            <span>原始链接:</span><a class="post-url" href="/2018/11/25/面向接口/" title="面向接口">https://alexbrucelu.github.io/2018/11/25/面向接口/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/25/面向接口/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
@@ -432,7 +464,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-duck-typing-的概念"><span class="toc-number">1.</span> <span class="toc-text">1. duck typing 的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-接口的定义和实现"><span class="toc-number">2.</span> <span class="toc-text">2. 接口的定义和实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-基本介绍"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-一个例子"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 一个例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">2.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-接口的值类型"><span class="toc-number">3.</span> <span class="toc-text">3. 接口的值类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-接口的组合"><span class="toc-number">4.</span> <span class="toc-text">4. 接口的组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-常用的系统接口"><span class="toc-number">5.</span> <span class="toc-text">5. 常用的系统接口</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-duck-typing-的概念"><span class="toc-number">1.</span> <span class="toc-text">1. duck typing 的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-接口的定义和实现"><span class="toc-number">2.</span> <span class="toc-text">2. 接口的定义和实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-基本介绍"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 基本介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-一个例子"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 一个例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注意事项"><span class="toc-number">2.3.</span> <span class="toc-text">注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用的系统接口"><span class="toc-number">3.</span> <span class="toc-text">常用的系统接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例一：对切片进行排序"><span class="toc-number">3.1.</span> <span class="toc-text">案例一：对切片进行排序</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -516,7 +548,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/go操作redis/">go操作Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/16/MySQL的常用命令/">MySQL的常用命令与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/12/gRPC官方文档/">gRPC官方文档</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
