@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="gorountine：  go语言养成记之gorountine">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-25T15:06:55.323Z">
+<meta property="og:updated_time" content="2018-12-19T09:05:06.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gorountine">
 <meta name="twitter:description" content="gorountine：  go语言养成记之gorountine">
@@ -340,6 +340,45 @@
         <p><strong> gorountine：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
 <p>go语言养成记之gorountine</p>
 <a id="more"></a>
+<p>[TOC]</p>
+<h2 id="goroutine基本介绍"><a href="#goroutine基本介绍" class="headerlink" title="goroutine基本介绍"></a>goroutine基本介绍</h2><h3 id="进程和线程的介绍"><a href="#进程和线程的介绍" class="headerlink" title="进程和线程的介绍"></a>进程和线程的介绍</h3><ol>
+<li>进程就是程序在操作系统中的一次执行过程，是系统进行资源分配和调度的基本单位</li>
+<li>线程是进程的一个执行实例，是程序执行的最小单元，它是比进程更小的能独立运行的基本单位</li>
+<li>一个进程可以创建和销毁多个线程，同一个进程中的多个线程可以并发执行</li>
+<li>一个程序至少有一个进程，一个进程至少有一个线程</li>
+</ol>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><ol>
+<li>并发和并行<ol>
+<li>多线程程序在单核上运行，就是并发</li>
+<li>多线程程序在多核上运行，就是并行</li>
+</ol>
+</li>
+<li>小结<ol>
+<li><code>并发：</code>因为是在一个cpu上，比如有10个线程，每个线程执行10毫秒（进行轮询操作），从人的角度看，好像10个线程都在运行，但是在微观上看，在某一个时间点看，其实只有一个线程在执行，这就是并发。</li>
+<li><code>并行：</code>因为是在多个cpu上（比如有10个cpu），比如有10个线程，每个线程执行10毫秒（各自在不同的cpu上执行），从人的角度看，这10个线程都在运行，但是从微观上看，在某一个时间点看，也同时有10个线程在执行，这就是并行。</li>
+</ol>
+</li>
+</ol>
+<h3 id="Go-协程和-Go-主线程"><a href="#Go-协程和-Go-主线程" class="headerlink" title="Go 协程和 Go 主线程"></a>Go 协程和 Go 主线程</h3><p>Go主线程（有人直接称为线程/也可以理解成进程）：一个Go线程上，可以起多个协程，可以理解为协程就是轻量级的线程</p>
+<p>Go协程的特点：</p>
+<ol>
+<li>有独立的栈空间</li>
+<li>共享程序堆空间</li>
+<li>调度由用户控制</li>
+<li>协程是轻量级的线程</li>
+</ol>
+<h2 id="goroutine快速入门"><a href="#goroutine快速入门" class="headerlink" title="goroutine快速入门"></a>goroutine快速入门</h2><h3 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h3><p>编写一个程序，完成如下功能：</p>
+<ol>
+<li>在主线程（可以理解成进程）中，开启一个goroutine，该协程每个一秒输出“hello world”</li>
+<li>在主线程中也每个一秒输出“hello golang”，输出10次后退出程序</li>
+<li>要求主线程和goroutine同时执行</li>
+<li>按上述要求画出流程图</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: 程序开始-进程/主线程开始执行</span><br><span class="line">e=&gt;end: 主线程结束（程序退出）</span><br><span class="line">op1=&gt;operation: go test();开启协程</span><br><span class="line">cond=&gt;condition: 主线程 for 循环执行</span><br><span class="line">op3=&gt;operation: 	协程在这里for循环执行 </span><br><span class="line">1. 如果主线程退出，协程即使还没有执行完毕，也会退出 </span><br><span class="line">2. 协程也可以在主线程没有退出前就自己结束了，完成自己的任务</span><br><span class="line">st-&gt;op1-&gt;cond</span><br><span class="line">cond(yes)-&gt;e</span><br><span class="line">cond(no)-&gt;op3</span><br></pre></td></tr></table></figure>
+<font color="red"><strong>代码实现：</strong></font>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"time"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">test</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"test(%d) hello world\n"</span>,i+<span class="number">1</span>)</span><br><span class="line">		time.Sleep(time.Second)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="keyword">go</span> test()</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span><br><span class="line">		fmt.Printf(<span class="string">"main(%d) hello golang\n"</span>,i+<span class="number">1</span>)</span><br><span class="line">		time.Sleep(time.Second)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 执行结果</span></span><br><span class="line"><span class="comment">// main(1) hello golang</span></span><br><span class="line"><span class="comment">// test(1) hello world</span></span><br><span class="line"><span class="comment">// test(2) hello world</span></span><br><span class="line"><span class="comment">// main(2) hello golang</span></span><br><span class="line"><span class="comment">// main(3) hello golang</span></span><br><span class="line"><span class="comment">// test(3) hello world</span></span><br><span class="line"><span class="comment">// test(4) hello world</span></span><br><span class="line"><span class="comment">// main(4) hello golang</span></span><br><span class="line"><span class="comment">// test(5) hello world</span></span><br><span class="line"><span class="comment">// main(5) hello golang</span></span><br><span class="line"><span class="comment">// test(6) hello world</span></span><br><span class="line"><span class="comment">// main(6) hello golang</span></span><br><span class="line"><span class="comment">// main(7) hello golang</span></span><br><span class="line"><span class="comment">// test(7) hello world</span></span><br><span class="line"><span class="comment">// test(8) hello world</span></span><br><span class="line"><span class="comment">// main(8) hello golang</span></span><br><span class="line"><span class="comment">// main(9) hello golang</span></span><br><span class="line"><span class="comment">// test(9) hello world</span></span><br><span class="line"><span class="comment">// main(10) hello golang</span></span><br><span class="line"><span class="comment">// test(10) hello world</span></span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -350,7 +389,7 @@
         <p><span>本文标题:</span><a href="/2018/11/25/gorountine/">gorountine</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2018年11月25日 - 23时04分</p>
-        <p><span>最后更新:</span>2018年11月25日 - 23时06分</p>
+        <p><span>最后更新:</span>2018年12月19日 - 17时05分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/25/gorountine/" title="gorountine">https://alexbrucelu.github.io/2018/11/25/gorountine/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/11/25/gorountine/　　作者: AlexBruceLu" title=""></span>
@@ -387,7 +426,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine基本介绍"><span class="toc-number">1.</span> <span class="toc-text">goroutine基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程和线程的介绍"><span class="toc-number">1.1.</span> <span class="toc-text">进程和线程的介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发和并行"><span class="toc-number">1.2.</span> <span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Go-协程和-Go-主线程"><span class="toc-number">1.3.</span> <span class="toc-text">Go 协程和 Go 主线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#goroutine快速入门"><span class="toc-number">2.</span> <span class="toc-text">goroutine快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#案例一"><span class="toc-number">2.1.</span> <span class="toc-text">案例一</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
