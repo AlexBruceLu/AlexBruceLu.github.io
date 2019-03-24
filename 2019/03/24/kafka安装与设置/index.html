@@ -7,22 +7,29 @@
   
   
   
-  <title>HyperLedger Fabric | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
-<meta name="keywords" content="Fabric">
+  <meta name="description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HyperLedger Fabric">
-<meta property="og:url" content="https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/index.html">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
+<meta property="og:description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/AlexBruceLu/DAPP/wiki/fen.png">
-<meta property="og:updated_time" content="2018-12-03T03:41:50.446Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812132732633?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812132906662?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133057808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133131159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133222818?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133300278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133330959?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133419255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="https://img-blog.csdn.net/20170812133447425?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2019-03-24T09:19:37.558Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HyperLedger Fabric">
-<meta name="twitter:description" content="HyperLedger Fabric：  HyperLedger基础概念简介，以及核心模块的介绍">
-<meta name="twitter:image" content="https://github.com/AlexBruceLu/DAPP/wiki/fen.png">
+<meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170812132732633?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -299,11 +306,11 @@
         </header>
     </div>
 </nav>
-      <div class="body-wrap"><article id="post-HyperledgerFabric01" class="article article-type-post" itemscope="" itemprop="blogPost">
+      <div class="body-wrap"><article id="post-kafka安装与设置" class="article article-type-post" itemscope="" itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/12/01/HyperledgerFabric01/" class="article-date">
-      <time datetime="2018-12-01T14:45:58.103Z" itemprop="datePublished">2018-12-01</time>
+      <a href="/2019/03/24/kafka安装与设置/" class="article-date">
+      <time datetime="2019-03-24T09:20:32.598Z" itemprop="datePublished">2019-03-24</time>
 </a>
 
     </div>
@@ -313,91 +320,85 @@
       <input type="hidden" class="isFancy">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      HyperLedger Fabric
-    </h1>
-  
-
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/hyperledger/">hyperledger</a>
-    </div>
-
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Fabric/">Fabric</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong> HyperLedger Fabric：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
-<p>HyperLedger基础概念简介，以及核心模块的介绍</p>
-<a id="more"></a>
-<p>[TOC]</p>
-<h1 id="Fabric基本概念"><a href="#Fabric基本概念" class="headerlink" title="Fabric基本概念"></a>Fabric基本概念</h1><h2 id="1-逻辑架构"><a href="#1-逻辑架构" class="headerlink" title="1. 逻辑架构"></a>1. 逻辑架构</h2><p><img src="https://github.com/AlexBruceLu/DAPP/wiki/fen.png" alt=""></p>
-<ul>
-<li><strong>成员管理（MemberShip）</strong><ul>
-<li>会员注册<ul>
-<li>注册成功一个账号得到的不是用户名密码</li>
-<li>使用证书作用身份认证的标志</li>
-</ul>
-</li>
-<li>身份保护</li>
-<li>交易审计</li>
-<li>内容保密<ul>
-<li>可以多条区块链, 通过通道来区分的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>账本管理</strong></p>
-<ul>
-<li>区块链<ul>
-<li>保存所有的交易记录</li>
-</ul>
-</li>
-<li>世界状态<ul>
-<li>数据的最新状态</li>
-<li>数据存储在当前节点的数据库中<ul>
-<li>自带的默认数据库: levelDB, 也可以使用couchdb</li>
-<li>以键值对的方式进行存储 的</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><strong>交易管理</strong></p>
-<ul>
-<li>部署交易<ul>
-<li>部署的是链码, 就是给节点安装链码 - chaincode</li>
-</ul>
-</li>
-<li>调用交易<ul>
-<li>invoke</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>智能合约</strong><ul>
-<li>一段代码， 处理网络成员所同意的业务逻辑</li>
-<li>真正实现了链码和账本的分离（逻辑和数据分离）</li>
-</ul>
-</li>
-</ul>
+        <p>[TOC]</p>
+<h2 id="kafka安装与设置"><a href="#kafka安装与设置" class="headerlink" title="kafka安装与设置"></a>kafka安装与设置</h2><h3 id="1-Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网"><a href="#1-Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网" class="headerlink" title="1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网"></a>1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网</h3><h3 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2.环境搭建"></a>2.环境搭建</h3><h4 id="2-1-安装JDK"><a href="#2-1-安装JDK" class="headerlink" title="2.1 安装JDK"></a>2.1 安装JDK</h4><p>​    下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">jre下载</a></p>
+<p>   默认安装文件夹，C:\Program Files\Java\jre1.8.0_202</p>
+<h4 id="2-1-1-设置环境变量"><a href="#2-1-1-设置环境变量" class="headerlink" title="2.1.1 设置环境变量"></a>2.1.1 设置环境变量</h4><p>新建系统变量<code>JAVA_HOME</code>：C:\Program Files\Java\jre1.8.0_202;</p>
+<p>在<code>path</code>里面添加：<code>%JAVA_HOME%\bin</code>；</p>
+<h3 id="2-2-安装Zookeeper"><a href="#2-2-安装Zookeeper" class="headerlink" title="2.2 安装Zookeeper"></a>2.2 安装Zookeeper</h3><p>​     下载地址：<a href="https://zookeeper.apache.org/releases.html" target="_blank" rel="noopener">https://zookeeper.apache.org/releases.html</a></p>
+<pre><code>下载后，解压放在目录D:\kafka（本文所用的目录）下，关于zookeeper以及kafka的目录，路径中最好不要出现空格，比如D:\Program Files，尽量别用，运行脚本时会有问题。
+
+1. 进入zookeeper的相关设置所在的文件目录，例如本文的：     D:\bigdata\zookeeper-3.4.10\conf
+
+2. 将&quot;zoo_sample.cfg&quot;重命名为&quot;zoo.cfg&quot;
+
+3. 打开zoo.cfg(至于使用什么编辑器，根据自己喜好选即可)，找到并编辑：
+
+dataDir=/tmp/zookeeper  to  D:/kafka/zookeeper-3.4.10/data或 D:\\kafka\\zookeeper-3.4.10\\data(路径仅为示例，具体可根据需要配置)
+
+这里注意，路径要么是&quot;/&quot;分割，要么是转义字符&quot;\\&quot;，这样会生成正确的路径(层级，子目录)。
+
+4. 与配置jre类似，在系统环境变量中添加：
+
+    a.系统变量中添加ZOOKEEPER_HOME=D:\kafka\zookeeper-3.4.10
+
+    b.编辑系统变量中的path变量，增加%ZOOKEEPER_HOME%\bin
+
+5. 在zoo.cfg文件中修改默认的Zookeeper端口(默认端口2181)
+6. 打开cmd窗口，输入zkserver，运行Zookeeper，运行结果如下：
+</code></pre><p><img src="https://img-blog.csdn.net/20170812132732633?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>恭喜，Zookeeper已经安装完成，已在2181端口运行。</p>
+<h3 id="2-3-安装kafka"><a href="#2-3-安装kafka" class="headerlink" title="2.3 安装kafka"></a>2.3 安装kafka</h3><p>下载地址：<a href="http://kafka.apache.org/downloads" target="_blank" rel="noopener">http://kafka.apache.org/downloads</a></p>
+<pre><code>要下载Binary downloads这个类型，不要下载源文件，这种方便使用。下载后，解压放在D:\bigdata目录下。
+</code></pre><p>①进入kafka配置文件所在目录，D:\bigdata\kafka_2.11-0.9.0.1\config</p>
+<p>②编辑文件”server.properties”，找到并编辑：</p>
+<p> log.dirs=/tmp/kafka-logs  to  log.dirs=D:/bigdata/kafka_2.11-0.9.0.1/kafka-logs 或者 D:\bigdata\kafka_2.11-0.9.0.1\kafka-logs</p>
+<p>同样注意：路径要么是”/“分割，要么是转义字符”\“，这样会生成正确的路径(层级，子目录)。错误路径情况可自行尝试，文件夹名为这种形式：bigdatakafka_2.11-0.9.0.1kafka-logs</p>
+<p>③在server.properties文件中，zookeeper.connect=localhost:2181代表kafka所连接的zookeeper所在的服务器IP以及端口，可根据需要更改。本文在同一台机器上使用，故不用修改。</p>
+<p>④kafka会按照默认配置，在9092端口上运行，并连接zookeeper的默认端口2181。</p>
+<h3 id="2-4-运行kafka"><a href="#2-4-运行kafka" class="headerlink" title="2.4 运行kafka"></a>2.4 运行kafka</h3><p>提示：请确保启动kafka服务器前，Zookeeper实例已经在运行，因为kafka的运行是需要zookeeper这种分布式应用程序协调服务。</p>
+<p>①进入kafka安装目录D:\bigdata\kafka_2.11-0.9.0.1</p>
+<p>②按下shift+鼠标右键，选择”在此处打开命令窗口”，打开命令行。</p>
+<p>③在命令行中输入：.\bin\windows\kafka-server-start.bat .\config\server.properties   回车。</p>
+<p>④正确运行的情况为：</p>
+<p><img src="https://img-blog.csdn.net/20170812132906662?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>到目前为止，zookeeper以及kafka都已正确运行。保持运行状态，不要关闭。</p>
+<font color="red">重要（操作日志的处理）：</font>
+
+
+<p>kafka启动后，如果你去查看kafka所在的根目录，或者是kafka本身的目录，会发现已经默认生成一堆操作日志(这样看起来真心很乱)：</p>
+<p>而且会不断生成不同时间戳的操作日志。刚开始不知所措，一番研究后，看了启动的脚本内容，发现启动的时候是会默认使用到这个log4j.properties文件中的配置，而在zoo.cfg是不会看到本身的启动会调用到这个，还以为只有那一个日志路径：</p>
+<p><img src="https://img-blog.csdn.net/20170812133057808?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>在这里配置一下就可以了，找到config下的log4j.properties：</p>
+<p><img src="https://img-blog.csdn.net/20170812133131159?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>将路径更改下即可，这样就可以归档在一个文件夹下边了，路径根据自己喜好定义：</p>
+<p><img src="https://img-blog.csdn.net/20170812133222818?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>另外如何消除不断生成日志的问题，就是同一天的不同时间会不停生成。</p>
+<p>修改这里，还是在log4j.properties中：</p>
+<p><img src="https://img-blog.csdn.net/20170812133300278?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>本身都为trace，字面理解为会生成一堆跟踪日志，将其改为INFO即可。</p>
+<h2 id="3-创建主题"><a href="#3-创建主题" class="headerlink" title="3. 创建主题"></a>3. 创建主题</h2><p>①创建主题，命名为”test0811”，replicationfactor=1(因为只有一个kafka服务器在运行)。可根据集群中kafka服务器个数来修改replicationfactor的数量，以便提高系统容错性等。</p>
+<p>②在D:\kafka\kafka_2.11-0.9.0.1\bin\windows目录下打开新的命令行</p>
+<p>③输入命令：</p>
+<p>kafka-topics.bat –create –zookeeper localhost:2181 –replication-factor 1 –partitions 1 –topic test0811回车。 </p>
+<p><img src="https://img-blog.csdn.net/20170812133330959?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<font color="red">该窗口可以关闭。</font>
+
+<h3 id="3-1-创建生产者、消费者"><a href="#3-1-创建生产者、消费者" class="headerlink" title="3.1 创建生产者、消费者"></a>3.1 创建生产者、消费者</h3><p>①在D:\bigdata\kafka_2.11-0.9.0.1\bin\windows目录下打开新的命令行。</p>
+<p>②输入命令，启动producer：</p>
+<p>kafka-console-producer.bat –broker-list localhost:9092 –topic test0811 </p>
+<p><strong>该窗口不要关闭。</strong></p>
+<p>③同样在该目录下打开新的命令行。</p>
+<p>④输入命令，启动consumer：</p>
+<p>kafka-console-consumer.bat –bootstrap-server localhost:9092 –topic test0811 –from-beginning</p>
+<p><strong><font color="red">参数 –from-beginning 是表示消费者从生产者消息源头开始接收，去掉之后就只是接收新消息</font></strong></p>
+<p><img src="https://img-blog.csdn.net/20170812133419255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
+<p>现在生产者、消费者均已创建完成。</p>
+<p>⑤在producer命令行窗口中任意输入内容，回车  在consumer命令行窗口中即可看到相应的内容。</p>
+<p><img src="https://img-blog.csdn.net/20170812133447425?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="img"></p>
 
       
     </div>
@@ -406,13 +407,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></p>
+        <p><span>本文标题:</span><a href="/2019/03/24/kafka安装与设置/"></a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
-        <p><span>发布时间:</span>2018年12月01日 - 22时45分</p>
-        <p><span>最后更新:</span>2018年12月03日 - 11时41分</p>
+        <p><span>发布时间:</span>2019年03月24日 - 17时20分</p>
+        <p><span>最后更新:</span>2019年03月24日 - 17时19分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/12/01/HyperledgerFabric01/" title="HyperLedger Fabric">https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/</a>
-            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2018/12/01/HyperledgerFabric01/　　作者: AlexBruceLu" title=""></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/24/kafka安装与设置/" title="">https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
             <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
@@ -423,18 +424,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/12/01/Solidity基础语法/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Solidity基础语法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/11/27/Linux装机笔记/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Linux+Go装机笔记</div>
+    <a href="/2019/02/27/HTTP幂等性/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">http幂等性</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -446,7 +438,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Fabric基本概念"><span class="toc-number">1.</span> <span class="toc-text">Fabric基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-逻辑架构"><span class="toc-number">1.1.</span> <span class="toc-text">1. 逻辑架构</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kafka安装与设置"><span class="toc-number">1.</span> <span class="toc-text">kafka安装与设置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网"><span class="toc-number">1.1.</span> <span class="toc-text">1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-环境搭建"><span class="toc-number">1.2.</span> <span class="toc-text">2.环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-安装JDK"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 安装JDK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-设置环境变量"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.1.1 设置环境变量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-安装Zookeeper"><span class="toc-number">1.3.</span> <span class="toc-text">2.2 安装Zookeeper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-安装kafka"><span class="toc-number">1.4.</span> <span class="toc-text">2.3 安装kafka</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-运行kafka"><span class="toc-number">1.5.</span> <span class="toc-text">2.4 运行kafka</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-创建主题"><span class="toc-number">2.</span> <span class="toc-text">3. 创建主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-创建生产者、消费者"><span class="toc-number">2.1.</span> <span class="toc-text">3.1 创建生产者、消费者</span></a></li></ol></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
@@ -519,13 +511,11 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/12/01/Solidity基础语法/" title="上一篇: Solidity基础语法">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2018/11/27/Linux装机笔记/" title="下一篇: Linux+Go装机笔记">
+            <a href="/2019/02/27/HTTP幂等性/" title="下一篇: http幂等性">
                 <i class="fa fa-angle-right"></i>
             </a>
         
