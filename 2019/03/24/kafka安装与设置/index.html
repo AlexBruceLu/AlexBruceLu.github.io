@@ -7,14 +7,15 @@
   
   
   
-  <title>Hexo</title>
+  <title>kafka | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
+  <meta name="description" content="kafka：  windows 安装及配置kafka">
+<meta name="keywords" content="Windows">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="kafka">
 <meta property="og:url" content="https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
+<meta property="og:description" content="kafka：  windows 安装及配置kafka">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://img-blog.csdn.net/20170812132732633?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20170812132906662?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
@@ -25,10 +26,10 @@
 <meta property="og:image" content="https://img-blog.csdn.net/20170812133330959?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20170812133419255?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 <meta property="og:image" content="https://img-blog.csdn.net/20170812133447425?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
-<meta property="og:updated_time" content="2019-03-24T09:19:37.558Z">
+<meta property="og:updated_time" content="2019-03-24T09:26:55.678Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="[TOC] kafka安装与设置1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网2.环境搭建2.1 安装JDK​    下载地址：jre下载    默认安装文件夹，C:\Program Files\Java\jre1.8.0_202 2.1.1 设置环境变量新建系统变量JAVA_HOME：C:\Program Files\Java\jre1.8.0_202">
+<meta name="twitter:title" content="kafka">
+<meta name="twitter:description" content="kafka：  windows 安装及配置kafka">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20170812132732633?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdTAxMDI4Mzg5NA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -217,7 +218,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/共识算法/" style="font-size: 10px;">共识算法</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
+                        <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/共识算法/" style="font-size: 10px;">共识算法</a> <a href="/tags/微服务/" style="font-size: 16.67px;">微服务</a> <a href="/tags/数据结构/" style="font-size: 10px;">数据结构</a>
                     </div>
                 </section>
                 
@@ -320,10 +321,40 @@
       <input type="hidden" class="isFancy">
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      kafka
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/others/">others</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Windows/">Windows</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>[TOC]</p>
+        <p><strong> kafka：</strong> <excerpt in="" index="" |="" 首页摘要=""></excerpt></p>
+<p>windows 安装及配置kafka  </p>
+<a id="more"></a>
+<p>[TOC]</p>
 <h2 id="kafka安装与设置"><a href="#kafka安装与设置" class="headerlink" title="kafka安装与设置"></a>kafka安装与设置</h2><h3 id="1-Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网"><a href="#1-Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网" class="headerlink" title="1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网"></a>1. Kafka是一种高吞吐量的分布式发布订阅消息系统。详细介绍可查阅官网：kafka官网</h3><h3 id="2-环境搭建"><a href="#2-环境搭建" class="headerlink" title="2.环境搭建"></a>2.环境搭建</h3><h4 id="2-1-安装JDK"><a href="#2-1-安装JDK" class="headerlink" title="2.1 安装JDK"></a>2.1 安装JDK</h4><p>​    下载地址：<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">jre下载</a></p>
 <p>   默认安装文件夹，C:\Program Files\Java\jre1.8.0_202</p>
 <h4 id="2-1-1-设置环境变量"><a href="#2-1-1-设置环境变量" class="headerlink" title="2.1.1 设置环境变量"></a>2.1.1 设置环境变量</h4><p>新建系统变量<code>JAVA_HOME</code>：C:\Program Files\Java\jre1.8.0_202;</p>
@@ -407,12 +438,12 @@ dataDir=/tmp/zookeeper  to  D:/kafka/zookeeper-3.4.10/data或 D:\\kafka\\zookeep
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/03/24/kafka安装与设置/"></a></p>
+        <p><span>本文标题:</span><a href="/2019/03/24/kafka安装与设置/">kafka</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2019年03月24日 - 17时20分</p>
-        <p><span>最后更新:</span>2019年03月24日 - 17时19分</p>
+        <p><span>最后更新:</span>2019年03月24日 - 17时26分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/03/24/kafka安装与设置/" title="">https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/</a>
+            <span>原始链接:</span><a class="post-url" href="/2019/03/24/kafka安装与设置/" title="kafka">https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2019/03/24/kafka安装与设置/　　作者: AlexBruceLu" title=""></span>
         </p>
         <p>
@@ -520,7 +551,7 @@ dataDir=/tmp/zookeeper  to  D:/kafka/zookeeper-3.4.10/data或 D:\\kafka\\zookeep
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/kafka安装与设置/">kafka安装与设置</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/27/HTTP幂等性/">http幂等性</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/22/C程序的执行/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/golang性能优化/">golang性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/19/类型断言/">类型断言</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/19/go中函数和方法的区别/">函数和方法的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/go操作redis/">go操作Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/16/MySQL的常用命令/">MySQL的常用命令与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/12/gRPC官方文档/">gRPC官方文档</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/03/24/kafka安装与设置/">kafka</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/27/HTTP幂等性/">http幂等性</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/01/22/C程序的执行/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/21/golang性能优化/">golang性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/19/类型断言/">类型断言</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/19/go中函数和方法的区别/">函数和方法的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/18/go操作redis/">go操作Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/16/MySQL的常用命令/">MySQL的常用命令与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/12/gRPC官方文档/">gRPC官方文档</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/10/常见共识算法/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/09/数据结构/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解TCPIP协议/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/05/详解http协议/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/http网络/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/03/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/Solidity基础语法/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/12/01/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/Linux装机笔记/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/26/房屋租赁/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/Docker的安装与简介/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MySQL的安装与简介/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/MongoDB的安装与简介/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/http及其标准库/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/内建容器/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向接口/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/面向对象/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/基础语法/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/函数式编程/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/错误处理及资源管理/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/测试与性能调优/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/25/01/">微服务基础简介</a></li></ul>
     
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
 
