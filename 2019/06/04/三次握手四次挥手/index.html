@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/12234098-3754de754cbcf2af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/12234098-36b3c46688c685c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/12234098-e6b04f3e9bebdac4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-06-03T17:49:45.173Z">
+<meta property="og:updated_time" content="2019-06-03T17:55:26.740Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深度理解“三次握手，四次挥手”">
 <meta name="twitter:description" content="深度理解“三次握手，四次挥手”：  深度理解“三次握手，四次挥手”">
@@ -444,7 +444,7 @@
 <h3 id="连接队列"><a href="#连接队列" class="headerlink" title="连接队列"></a>连接队列</h3><p>在外部请求到达时，被服务程序最终感知到前，连接可能处于SYN_RCVD状态或是ESTABLISHED状态，但还未被应用程序接受。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/12234098-36b3c46688c685c7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="tcp queue"></p>
 <p>对应地，服务器端也会维护两种队列，处于SYN_RCVD状态的半连接队列，而处于ESTABLISHED状态但仍未被应用程序accept的为全连接队列。如果这两个队列满了之后，就会出现各种丢包的情形。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">查看是否有连接溢出</span><br><span class="line">netstat -s | grep LISTEN</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看是否有连接溢出</span></span><br><span class="line">netstat -s | grep LISTEN</span><br></pre></td></tr></table></figure>
 <h4 id="半连接队列满了"><a href="#半连接队列满了" class="headerlink" title="半连接队列满了"></a>半连接队列满了</h4><p>在三次握手协议中，服务器维护一个半连接队列，该队列为每个客户端的SYN包开设一个条目(服务端在接收到SYN包的时候，就已经创建了request_sock结构，存储在半连接队列中)，该条目表明服务器已收到SYN包，并向客户发出确认，正在等待客户的确认包。这些条目所标识的连接在服务器处于Syn_RECV状态，当服务器收到客户的确认包时，删除该条目，服务器进入ESTABLISHED状态。</p>
 <blockquote>
 <p>目前，Linux下默认会进行5次重发SYN-ACK包，重试的间隔时间从1s开始，下次的重试间隔时间是前一次的双倍，5次的重试时间间隔为1s, 2s, 4s, 8s, 16s, 总共31s, 称为<code>指数退避</code>，第5次发出后还要等32s才知道第5次也超时了，所以，总共需要 1s + 2s + 4s+ 8s+ 16s + 32s = 63s, TCP才会把断开这个连接。由于，SYN超时需要63秒，那么就给攻击者一个攻击服务器的机会，攻击者在短时间内发送大量的SYN包给Server(俗称SYN flood攻击)，用于耗尽Server的SYN队列。对于应对SYN 过多的问题，linux提供了几个TCP参数：tcp_syncookies、tcp_synack_retries、tcp_max_syn_backlog、tcp_abort_on_overflow 来调整应对。</p>
@@ -515,16 +515,16 @@
 <li>我在dev机器上部署redis服务，端口号为6379,</li>
 <li>通过tcpdump工具获取数据包，使用如下命令</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -w /tmp/a.cap port 6379 -s0</span><br><span class="line">-w把数据写入文件，-s0设置每个数据包的大小默认为68字节，如果用-S 0则会抓到完整数据包</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -w /tmp/a.cap port 6379 -s0</span><br><span class="line"><span class="comment"># -w把数据写入文件，-s0设置每个数据包的大小默认为68字节，如果用-S 0则会抓到完整数据包</span></span><br></pre></td></tr></table></figure>
 <ol>
 <li>在dev2机器上用redis-cli访问dev:6379, 发送一个ping, 得到回复pong</li>
 <li>停止抓包，用tcpdump读取捕获到的数据包</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -r /tmp/a.cap -n -nn -A -x| vim -</span><br><span class="line">（-x 以16进制形式展示，便于后面分析）</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcpdump -r /tmp/a.cap -n -nn -A -x| vim -</span><br><span class="line"><span class="comment">#（-x 以16进制形式展示，便于后面分析）</span></span><br></pre></td></tr></table></figure>
 <p>共收到了7个包。</p>
 <p>抓到的是IP数据包，IP数据包分为IP头部和IP数据部分，IP数据部分是TCP头部加TCP数据部分。</p>
 <p>IP的数据格式为：<br><img src="http://upload-images.jianshu.io/upload_images/12234098-e6b04f3e9bebdac4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ip head"><br>它由固定长度20B+可变长度构成。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10:55:45.662077 IP dev2.39070 &gt; dev.6379: Flags [S], seq 4133153791, win 29200, options [mss 1460,sackOK,TS val 2959270704 ecr 0,nop,wscale 7], length 0</span><br><span class="line">        0x0000:  4500 003c 08cf 4000 3606 14a5 0ab3 b561</span><br><span class="line">        0x0010:  0a60 5cd4 989e 18eb f65a ebff 0000 0000</span><br><span class="line">        0x0020:  a002 7210 872f 0000 0204 05b4 0402 080a</span><br><span class="line">        0x0030:  b062 e330 0000 0000 0103 0307</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10:55:45.662077 IP dev2.39070 &gt; dev.6379: Flags [S], seq 4133153791, win 29200, options [mss 1460,sackOK,TS val 2959270704 ecr 0,nop,wscale 7], length 0</span><br><span class="line">        0x0000:  4500 003c 08cf 4000 3606 14a5 0ab3 b561</span><br><span class="line">        0x0010:  0a60 5cd4 989e 18eb f65a ebff 0000 0000</span><br><span class="line">        0x0020:  a002 7210 872f 0000 0204 05b4 0402 080a</span><br><span class="line">        0x0030:  b062 e330 0000 0000 0103 0307</span><br></pre></td></tr></table></figure>
 <p>对着IP头部格式，来拆解数据包的具体含义。</p>
 <table>
 <thead>
@@ -666,7 +666,7 @@
 <p>第二个包，dev响应连接，ack=4133153792. 表明dev下次准备接收这个序号的包，用于tcp字节注的顺序控制。dev（也就是server端）的初始序号为seq=4264776963, syn=1.<br><code>SYN ack=seq(c)+1 seq(s)=4264776963</code></p>
 <p>第三个包，client包确认，这里使用了相对值应答。seq=4133153792, 等于第二个包的ack. ack=4264776964.<br><code>ack=seq(s)+1, seq=seq(c)+1</code><br>至此，三次握手完成。接下来就是发送ping和pong的数据了。</p>
 <p>接着第四个包。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">10:55:48.090073 IP dev2.39070 &gt; dev.6379: Flags [P.], seq 1:15, ack 1, win 229, options [nop,nop,TS val 2959273132 ecr 3132256230], length 14</span><br><span class="line">        0x0000:  4500 0042 08d1 4000 3606 149d 0ab3 b561</span><br><span class="line">        0x0010:  0a60 5cd4 989e 18eb f65a ec00 fe33 5504</span><br><span class="line">        0x0020:  8018 00e5 4b5f 0000 0101 080a b062 ecac</span><br><span class="line">        0x0030:  bab2 6fe6 2a31 0d0a 2434 0d0a 7069 6e67</span><br><span class="line">        0x0040:  0d0a</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">10:55:48.090073 IP dev2.39070 &gt; dev.6379: Flags [P.], seq 1:15, ack 1, win 229, options [nop,nop,TS val 2959273132 ecr 3132256230], length 14</span><br><span class="line">        0x0000:  4500 0042 08d1 4000 3606 149d 0ab3 b561</span><br><span class="line">        0x0010:  0a60 5cd4 989e 18eb f65a ec00 fe33 5504</span><br><span class="line">        0x0020:  8018 00e5 4b5f 0000 0101 080a b062 ecac</span><br><span class="line">        0x0030:  bab2 6fe6 2a31 0d0a 2434 0d0a 7069 6e67</span><br><span class="line">        0x0040:  0d0a</span><br></pre></td></tr></table></figure>
 <p>tcp首部长度为32B, 可选长度为12B. IP报文的总长度为66B, 首部长度为20B, 因此TCP数据部分长度为14B. seq=0xf65a ec00=4133153792<br>ACK, PSH. 数据部分为2a31 0d0a 2434 0d0a 7069 6e67 0d0a</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">0x2a31         -&gt; *1</span><br><span class="line">0x0d0a         -&gt; \r\n</span><br><span class="line">0x2434         -&gt; $4</span><br><span class="line">0x0d0a         -&gt; \r\n</span><br><span class="line">0x7069 0x6e67  -&gt; ping</span><br><span class="line">0x0d0a         -&gt; \r\n</span><br></pre></td></tr></table></figure>
 <p>dev2向dev发送了ping数据，第四个包完毕。</p>
@@ -697,7 +697,7 @@
         <p><span>本文标题:</span><a href="/2019/06/04/三次握手四次挥手/">深度理解“三次握手，四次挥手”</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 AlexBruceLu 的个人博客">AlexBruceLu</a></p>
         <p><span>发布时间:</span>2019年06月04日 - 00时19分</p>
-        <p><span>最后更新:</span>2019年06月04日 - 01时49分</p>
+        <p><span>最后更新:</span>2019年06月04日 - 01时55分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/06/04/三次握手四次挥手/" title="深度理解“三次握手，四次挥手”">https://alexbrucelu.github.io/2019/06/04/三次握手四次挥手/</a>
             <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2019/06/04/三次握手四次挥手/　　作者: AlexBruceLu" title=""></span>
