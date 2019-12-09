@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>AlexBruce</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="AlexBruce">
+  <title>Ubuntu 16.04 升级最新版本 nvidia-docker | AlexBruce</title>
+  <meta name="keywords" content=" ubuntu , nvidia-docker ">
+  <meta name="description" content="Ubuntu 16.04 升级最新版本 nvidia-docker | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="个人的博客，佛系博客">
 <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -275,12 +275,61 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Ubuntu16.04升级最新版本nvidia-docker" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Why-Blog"><span class="toc-text">Why Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对博客的理解"><span class="toc-text">对博客的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于叶落阁"><span class="toc-text">关于叶落阁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
+        <h1 class="article-title">Ubuntu 16.04 升级最新版本 nvidia-docker</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="Linux">Linux</a>/
+            
+                <a  data-rel="docker">docker</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color2">ubuntu</a>
+            
+            <a class="color4">nvidia-docker</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-12-09 18:38:30'>2019-12-09 17:18</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:783</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Uninstall-old-versions"><span class="toc-text">Uninstall old versions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Supported-storage-drivers"><span class="toc-text">Supported storage drivers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-Docker-Engine-Community"><span class="toc-text">Install Docker Engine - Community</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-using-the-repository"><span class="toc-text">Install using the repository</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET-UP-THE-REPOSITORY"><span class="toc-text">SET UP THE REPOSITORY</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#INSTALL-DOCKER-ENGINE-COMMUNITY"><span class="toc-text">INSTALL DOCKER ENGINE - COMMUNITY</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -293,36 +342,118 @@
     }
 </style>
 </div>
-            <h1 id="Why-Blog"><a href="#Why-Blog" class="headerlink" title="Why Blog"></a>Why Blog</h1><h2 id="对博客的理解"><a href="#对博客的理解" class="headerlink" title="对博客的理解"></a>对博客的理解</h2><p>喜欢写Blog的人，会经历三个阶段。</p>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Uninstall-old-versions"><span class="toc-text">Uninstall old versions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Supported-storage-drivers"><span class="toc-text">Supported storage drivers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-Docker-Engine-Community"><span class="toc-text">Install Docker Engine - Community</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-using-the-repository"><span class="toc-text">Install using the repository</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SET-UP-THE-REPOSITORY"><span class="toc-text">SET UP THE REPOSITORY</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#INSTALL-DOCKER-ENGINE-COMMUNITY"><span class="toc-text">INSTALL DOCKER ENGINE - COMMUNITY</span></a></li></ol></li></ol></div></p>
+<h3 id="Uninstall-old-versions"><a href="#Uninstall-old-versions" class="headerlink" title="Uninstall old versions"></a>Uninstall old versions</h3><p>Older versions of Docker were called <code>docker</code>, <code>docker.io</code>, or <code>docker-engine</code>. If these are installed, uninstall them:</p>
+<pre><code>$ sudo apt-get remove docker docker-engine docker.io containerd runc</code></pre><p>It’s OK if <code>apt-get</code> reports that none of these packages are installed.</p>
+<p>The contents of <code>/var/lib/docker/</code>, including images, containers, volumes, and networks, are preserved. The Docker Engine - Community package is now called <code>docker-ce</code>.</p>
+<h3 id="Supported-storage-drivers"><a href="#Supported-storage-drivers" class="headerlink" title="Supported storage drivers"></a>Supported storage drivers</h3><p>Docker Engine - Community on Ubuntu supports <code>overlay2</code>, <code>aufs</code> and <code>btrfs</code> storage drivers.</p>
 <blockquote>
-<p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。</p>
+<p><strong>Note</strong>: In Docker Engine - Enterprise, <code>btrfs</code> is only supported on SLES. See the documentation on <a href="https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/" target="_blank" rel="noopener">btrfs</a> for more details.</p>
 </blockquote>
-<blockquote>
-<p>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。</p>
-</blockquote>
-<blockquote>
-<p>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
-</blockquote>
-<p>我们每个人的在网络上产生的数据越来越多，这些信息是我们在互联网上存在过的痕迹，值得我们认真对待。但是它们被分散分布在各个网站上。很多时候我们很难将它们聚合在一起，而且各个网站的信息排布方式也没有办法自由控制，所以我们需要一个可以由自己主宰的空间——博客。</p>
-<p>通过博客，我们可以记录自己的生活和成长的轨迹。它不像 Twitter 那样碎片化，也不像 Facebook 那样关系化，它是私人的空间。</p>
-<h2 id="关于叶落阁"><a href="#关于叶落阁" class="headerlink" title="关于叶落阁"></a>关于叶落阁</h2><p><strong>叶落阁</strong> 是阿杰（杨玉杰）的个人站。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
+<p>For new installations on version 4 and higher of the Linux kernel, <code>overlay2</code> is supported and preferred over <code>aufs</code>. Docker Engine - Community uses the <code>overlay2</code> storage driver by default. If you need to use <code>aufs</code> instead, you need to configure it manually. See <a href="https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/" target="_blank" rel="noopener">aufs</a></p>
+<h3 id="Install-Docker-Engine-Community"><a href="#Install-Docker-Engine-Community" class="headerlink" title="Install Docker Engine - Community"></a>Install Docker Engine - Community</h3><p>You can install Docker Engine - Community in different ways, depending on your needs:</p>
 <ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad/手机等移动端适配</li>
-<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
+<li>Most users <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-repository" target="_blank" rel="noopener">set up Docker’s repositories</a> and install from them, for ease of installation and upgrade tasks. This is the recommended approach.</li>
+<li>Some users download the DEB package and <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-from-a-package" target="_blank" rel="noopener">install it manually</a> and manage upgrades completely manually. This is useful in situations such as installing Docker on air-gapped systems with no access to the internet.</li>
+<li>In testing and development environments, some users choose to use automated <a href="https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-using-the-convenience-script" target="_blank" rel="noopener">convenience scripts</a> to install Docker.</li>
 </ul>
+<h3 id="Install-using-the-repository"><a href="#Install-using-the-repository" class="headerlink" title="Install using the repository"></a>Install using the repository</h3><p>Before you install Docker Engine - Community for the first time on a new host machine, you need to set up the Docker repository. Afterward, you can install and update Docker from the repository.</p>
+<h4 id="SET-UP-THE-REPOSITORY"><a href="#SET-UP-THE-REPOSITORY" class="headerlink" title="SET UP THE REPOSITORY"></a>SET UP THE REPOSITORY</h4><ol>
+<li><p>Update the <code>apt</code> package index:</p>
+<pre><code>$ sudo apt-get update</code></pre></li>
+<li><p>Install packages to allow <code>apt</code> to use a repository over HTTPS:</p>
+<pre><code>$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common</code></pre></li>
+<li><p>Add Docker’s official GPG key:</p>
+<pre><code>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -</code></pre><p>Verify that you now have the key with the fingerprint <code>9DC8 5822 9FC7 DD38 854A E2D8 8D81 803C 0EBF CD88</code>, by searching for the last 8 characters of the fingerprint.</p>
+<pre><code>$ sudo apt-key fingerprint 0EBFCD88
 
-        </article>
-        
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
+pub   rsa4096 2017-02-22 [SCEA]
+      9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88
+uid           [ unknown] Docker Release (CE deb) &lt;docker@docker.com&gt;
+sub   rsa4096 2017-02-22 [S]</code></pre></li>
+<li><p>Use the following command to set up the <strong>stable</strong> repository. To add the <strong>nightly</strong> or <strong>test</strong> repository, add the word <code>nightly</code> or <code>test</code> (or both) after the word <code>stable</code> in the commands below. <a href="https://docs.docker.com/install/" target="_blank" rel="noopener">Learn about <strong>nightly</strong> and <strong>test</strong> channels</a>.</p>
+<blockquote>
+<p><strong>Note</strong>: The <code>lsb_release -cs</code> sub-command below returns the name of your Ubuntu distribution, such as <code>xenial</code>. Sometimes, in a distribution like Linux Mint, you might need to change <code>$(lsb_release -cs)</code> to your parent Ubuntu distribution. For example, if you are using <code>Linux Mint Tessa</code>, you could use <code>bionic</code>. Docker does not offer any guarantees on untested and unsupported Ubuntu distributions.</p>
+</blockquote>
+</li>
+</ol>
+<ul>
+<li><ul>
+<li>x86_64 / amd64</li>
+<li>armhf</li>
+<li>arm64</li>
+<li>ppc64le (IBM Power)</li>
+<li>s390x (IBM Z)</li>
+</ul>
+</li>
+</ul>
+<pre><code>   $ sudo add-apt-repository \
+      &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) \
+      stable&quot;</code></pre><h4 id="INSTALL-DOCKER-ENGINE-COMMUNITY"><a href="#INSTALL-DOCKER-ENGINE-COMMUNITY" class="headerlink" title="INSTALL DOCKER ENGINE - COMMUNITY"></a>INSTALL DOCKER ENGINE - COMMUNITY</h4><ol>
+<li><p>Update the <code>apt</code> package index.</p>
+<pre><code>$ sudo apt-get update</code></pre></li>
+<li><p>Install the <em>latest version</em> of Docker Engine - Community and containerd, or go to the next step to install a specific version:</p>
+<pre><code>$ sudo apt-get install docker-ce docker-ce-cli containerd.io</code></pre><blockquote>
+<p><strong></strong> Got multiple Docker repositories?</p>
+<p>If you have multiple Docker repositories enabled, installing or updating without specifying a version in the <code>apt-get install</code> or <code>apt-get update</code> command always installs the highest possible version, which may not be appropriate for your stability needs.</p>
+</blockquote>
+</li>
+<li><p>To install a <em>specific version</em> of Docker Engine - Community, list the available versions in the repo, then select and install:</p>
+<p>a. List the versions available in your repo:</p>
+<pre><code>$ apt-cache madison docker-ce
+
+  docker-ce | 5:18.09.1~3-0~ubuntu-xenial | https://download.docker.com/linux/ubuntu  xenial/stable amd64 Packages
+  docker-ce | 5:18.09.0~3-0~ubuntu-xenial | https://download.docker.com/linux/ubuntu  xenial/stable amd64 Packages
+  docker-ce | 18.06.1~ce~3-0~ubuntu       | https://download.docker.com/linux/ubuntu  xenial/stable amd64 Packages
+  docker-ce | 18.06.0~ce~3-0~ubuntu       | https://download.docker.com/linux/ubuntu  xenial/stable amd64 Packages
+  ...</code></pre><p>b. Install a specific version using the version string from the second column, for example, <code>5:18.09.1~3-0~ubuntu-xenial</code>.</p>
+<pre><code>$ sudo apt-get install docker-ce=&lt;VERSION_STRING&gt; docker-ce-cli=&lt;VERSION_STRING&gt; containerd.io</code></pre></li>
+<li><p>Verify that Docker Engine - Community is installed correctly by running the <code>hello-world</code> image.</p>
+<pre><code class="shell">$ sudo docker run hello-world</code></pre>
+</li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件. </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Ubuntu 16.04 升级最新版本 nvidia-docker</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">801</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="AlexBruce Lu">AlexBruce Lu</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-12-09, 17:18:48</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-09, 18:38:30</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/09/Ubuntu16.04%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACnvidia-docker/" title="Ubuntu 16.04 升级最新版本 nvidia-docker">https://alexbrucelu.github.io/2019/12/09/Ubuntu16.04%E5%8D%87%E7%BA%A7%E6%9C%80%E6%96%B0%E7%89%88%E6%9C%ACnvidia-docker/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2016-2019 AlexBruce</p>
