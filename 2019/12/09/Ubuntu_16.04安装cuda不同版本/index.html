@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>AlexBruce</title>
-  <meta name="keywords" content="">
-  <meta name="description" content="AlexBruce">
+  <title>Ubuntu 16.04 安装 CUDA | AlexBruce</title>
+  <meta name="keywords" content=" ubuntu , CUDA ">
+  <meta name="description" content="Ubuntu 16.04 安装 CUDA | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[TOC] 准备开启go mod 把 golang 升级到 1.11（现在1.13 已经发布了，建议使用1.13） 设置 GO111MODULE  GO111MODULE GO111MODULE 有三个值：off, on和auto（默认值）。  GO111MODULE&#x3D;off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。">
 <meta property="og:type" content="article">
@@ -54,7 +54,7 @@
 </div>
 
 <body>
-<aside class="nav mobile">
+<aside class="nav">
     <div class="nav-left">
         <a href="/" class="avatar_target">
     <img class="avatar" src="/img/avatar.jpg" />
@@ -335,12 +335,61 @@
         </div>
     </div>
 </aside>
-<div class="post index">
+<div class="post">
     <div class="pjax">
-        <article class="index">
-            <div class="toc-ref">
+        <article id="post-Ubuntu_16.04安装cuda不同版本" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Why-Blog"><span class="toc-text">Why Blog</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对博客的理解"><span class="toc-text">对博客的理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于叶落阁"><span class="toc-text">关于叶落阁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#博客平台"><span class="toc-text">博客平台</span></a></li></ol></li></ol>
+        <h1 class="article-title">Ubuntu 16.04 安装 CUDA</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a  data-rel="Linux">Linux</a>/
+            
+                <a  data-rel="NVIDIA">NVIDIA</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color2">ubuntu</a>
+            
+            <a class="color5">CUDA</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title='更新时间: 2019-12-09 19:42:54'>2019-12-09 19:05</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        <span>字数:800</span>
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、操作系统"><span class="toc-text">一、操作系统:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、卸载原有的驱动和cuda"><span class="toc-text">二、卸载原有的驱动和cuda:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、cuda安装：包含显卡驱动和相关软件包"><span class="toc-text">三、cuda安装：包含显卡驱动和相关软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载cuda软件"><span class="toc-text">1.下载cuda软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-下载NVIDIA显卡驱动"><span class="toc-text">2.下载NVIDIA显卡驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-添加安装程序的可执行权限："><span class="toc-text">3.添加安装程序的可执行权限：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-禁用默认的nouveau开源显卡驱动："><span class="toc-text">4.禁用默认的nouveau开源显卡驱动：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）"><span class="toc-text">5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-安装显卡驱动程序，命令："><span class="toc-text">6.安装显卡驱动程序，命令：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"><span class="toc-text">7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）"><span class="toc-text">8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-下载cudnn"><span class="toc-text">9.下载cudnn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-安装cudnn"><span class="toc-text">10.安装cudnn</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -353,36 +402,82 @@
     }
 </style>
 </div>
-            <h1 id="Why-Blog"><a href="#Why-Blog" class="headerlink" title="Why Blog"></a>Why Blog</h1><h2 id="对博客的理解"><a href="#对博客的理解" class="headerlink" title="对博客的理解"></a>对博客的理解</h2><p>喜欢写Blog的人，会经历三个阶段。</p>
-<blockquote>
-<p>第一阶段，刚接触Blog，觉得很新鲜，试着选择一个免费空间来写。</p>
-</blockquote>
-<blockquote>
-<p>第二阶段，发现免费空间限制太多，就自己购买域名和空间，搭建独立博客。</p>
-</blockquote>
-<blockquote>
-<p>第三阶段，觉得独立博客的管理太麻烦，最好在保留控制权的前提下，让别人来管，自己只负责写文章。</p>
-</blockquote>
-<p>我们每个人的在网络上产生的数据越来越多，这些信息是我们在互联网上存在过的痕迹，值得我们认真对待。但是它们被分散分布在各个网站上。很多时候我们很难将它们聚合在一起，而且各个网站的信息排布方式也没有办法自由控制，所以我们需要一个可以由自己主宰的空间——博客。</p>
-<p>通过博客，我们可以记录自己的生活和成长的轨迹。它不像 Twitter 那样碎片化，也不像 Facebook 那样关系化，它是私人的空间。</p>
-<h2 id="关于叶落阁"><a href="#关于叶落阁" class="headerlink" title="关于叶落阁"></a>关于叶落阁</h2><p><strong>叶落阁</strong> 是阿杰（杨玉杰）的个人站。</p>
-<p>到目前为止已经写了<code class="article_number"></code>篇文章， 共<code class="site_word_count"></code>字。</p>
-<p>本站访问人数：<code class="site_uv"></code>人次 ， 访问量：<code class="site_pv"></code>次</p>
-<h2 id="博客平台"><a href="#博客平台" class="headerlink" title="博客平台"></a>博客平台</h2><p>这个博客通过 <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> 生成，部署在 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a>，主题 <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank" rel="noopener">3-hexo</a> 已经在github上开源</p>
-<p>主要功能：</p>
-<ul>
-<li>搜索支持文章标题、标签(#标签)、作者(@作者)</li>
-<li>pad/手机等移动端适配</li>
-<li>页面全局快捷键 <a href='http://yelog.org/2017/03/24/3-hexo-shortcuts/' target="_blank" rel="noopener">3-hexo快捷键说明</a></li>
-</ul>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、操作系统"><span class="toc-text">一、操作系统:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、卸载原有的驱动和cuda"><span class="toc-text">二、卸载原有的驱动和cuda:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、cuda安装：包含显卡驱动和相关软件包"><span class="toc-text">三、cuda安装：包含显卡驱动和相关软件包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-下载cuda软件"><span class="toc-text">1.下载cuda软件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-下载NVIDIA显卡驱动"><span class="toc-text">2.下载NVIDIA显卡驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-添加安装程序的可执行权限："><span class="toc-text">3.添加安装程序的可执行权限：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-禁用默认的nouveau开源显卡驱动："><span class="toc-text">4.禁用默认的nouveau开源显卡驱动：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）"><span class="toc-text">5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-安装显卡驱动程序，命令："><span class="toc-text">6.安装显卡驱动程序，命令：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"><span class="toc-text">7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）"><span class="toc-text">8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-下载cudnn"><span class="toc-text">9.下载cudnn</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-安装cudnn"><span class="toc-text">10.安装cudnn</span></a></li></ol></li></ol></div></p>
+<h2 id="一、操作系统"><a href="#一、操作系统" class="headerlink" title="一、操作系统:"></a><strong>一、操作系统:</strong></h2><p>研发工程师默认都是台式机，安装ubuntu16.04操作系统，默认我们安装好cuda和显卡驱动相关软件。如果需要重装系统请联系各属地IT，目前采用USB自动安装的方式，10分钟内可以安装完成</p>
+<h2 id="二、卸载原有的驱动和cuda"><a href="#二、卸载原有的驱动和cuda" class="headerlink" title="二、卸载原有的驱动和cuda:"></a><strong>二、卸载原有的驱动和cuda:</strong></h2><p>sudo su root</p>
+<p>service lightdm stop</p>
+<p>nvidia-uninstall</p>
+<p>apt-get install autoremove –purge nvidia*</p>
+<p>/usr/local/cuda-8.0/bin/uninstall_cuda-8.0.pl(根据版本号有差别，此处以8.0为例子)</p>
+<p>rm -rf /usr/local/cuda-8.0(!!!执行这一步时切勿误操作，否则容易导致系统崩溃)</p>
+<h2 id="三、cuda安装：包含显卡驱动和相关软件包"><a href="#三、cuda安装：包含显卡驱动和相关软件包" class="headerlink" title="三、cuda安装：包含显卡驱动和相关软件包"></a><strong>三、cuda安装：包含显卡驱动和相关软件包</strong></h2><h3 id="1-下载cuda软件"><a href="#1-下载cuda软件" class="headerlink" title="1.下载cuda软件"></a>1.下载cuda软件</h3><p><strong>（8.0版本）</strong> wget <a href="https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run</a></p>
+<p><strong>（9.0版本）</strong> wget <a href="https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run</a></p>
+<p><strong>（10.0版本）</strong>wget <a href="https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux</a></p>
+<p><strong>（10.1版本）</strong> </p>
+<p>​        wget <a href="http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run" target="_blank" rel="noopener">http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run</a></p>
+<p><strong>（10.2版本）</strong></p>
+<p>​         wget <a href="http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run" target="_blank" rel="noopener">http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run</a></p>
+<h3 id="2-下载NVIDIA显卡驱动"><a href="#2-下载NVIDIA显卡驱动" class="headerlink" title="2.下载NVIDIA显卡驱动"></a>2.下载NVIDIA显卡驱动</h3><p>wget <a href="http://cn.download.nvidia.com/XFree86/Linux-x86_64/440.36/NVIDIA-Linux-x86_64-440.36.run" target="_blank" rel="noopener">http://cn.download.nvidia.com/XFree86/Linux-x86_64/440.36/NVIDIA-Linux-x86_64-440.36.run</a></p>
+<h3 id="3-添加安装程序的可执行权限："><a href="#3-添加安装程序的可执行权限：" class="headerlink" title="3.添加安装程序的可执行权限："></a>3.添加安装程序的可执行权限：</h3><p>chmod +x *.run</p>
+<h3 id="4-禁用默认的nouveau开源显卡驱动："><a href="#4-禁用默认的nouveau开源显卡驱动：" class="headerlink" title="4.禁用默认的nouveau开源显卡驱动："></a>4.禁用默认的nouveau开源显卡驱动：</h3><p>echo “blacklist nouveau” &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</p>
+<p>之后建议重启下系统</p>
+<h3 id="5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）"><a href="#5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）" class="headerlink" title="5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）"></a>5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）</h3><pre><code>sudo su root
 
-        </article>
-        
-        <p>
-            <a  class="dashang" onclick="dashangToggle()">赏</a>
-        </p>
-        
-        
+service lightdm stop</code></pre><h3 id="6-安装显卡驱动程序，命令："><a href="#6-安装显卡驱动程序，命令：" class="headerlink" title="6.安装显卡驱动程序，命令："></a>6.安装显卡驱动程序，命令：</h3><pre><code>./NVIDIA-Linux-x86_64-410.78.run -a -s -Z --no-opengl-files</code></pre><h3 id="7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"><a href="#7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）" class="headerlink" title="7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"></a>7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）</h3><pre><code>./cuda_9.0.176_384.81_linux.run --no-opengl-libs --toolkit --samples --samplespath=/usr/local/cuda-9.0 -silent</code></pre><h3 id="8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）"><a href="#8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）" class="headerlink" title="8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:"></a>8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:</h3><pre><code>echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda/lib:/usr/local/cuda/lib64/:/usr/local/cuda-9.0/lib:/usr/local/cuda-9.0/lib64/:$LD_LIBRARY_PATH&#39; &gt;&gt; /etc/profile
+echo &#39;export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/cuda-9.0/bin:/usr/local/cuda/bin:$PATH&#39; &gt;&gt; /etc/profile
+echo &#39;/usr/local/cuda/lib64&#39; &gt;&gt; /etc/ld.so.conf.d/cuda.conf
+
+ldconfig</code></pre><h3 id="9-下载cudnn"><a href="#9-下载cudnn" class="headerlink" title="9.下载cudnn"></a>9.下载cudnn</h3><ul>
+<li><p><strong>Download cuDNN v7.6.5 (November 18th, 2019), for CUDA 10.2</strong></p>
+<pre><code class="bash"> wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.5.32/Production/10.2_20191118/cudnn-10.2-linux-x64-v7.6.5.32.tgz</code></pre>
+</li>
+<li><p><strong>Download cuDNN v7.6.5 (November 5th, 2019), for CUDA 10.1</strong></p>
+<pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.5.32/Production/10.1_20191031/cudnn-10.1-linux-x64-v7.6.5.32.tgz</code></pre></li>
+<li><p><strong>Download cuDNN v7.6.4 (September 27, 2019), for CUDA 10.0</strong></p>
+<pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.4.38/Production/10.0_20190923/cudnn-10.0-linux-x64-v7.6.4.38.tgz</code></pre></li>
+<li><p><strong>Download cuDNN v7.6.3 (August 23, 2019), for CUDA 9.0</strong></p>
+<pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.3.30/Production/9.0_20190822/cudnn-9.0-linux-x64-v7.6.3.30.tgz</code></pre></li>
+<li><p><strong>Download cuDNN v7.1.3 (April 17, 2018), for CUDA 8.0</strong></p>
+<pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.1.3/prod/8.0_20180414/cudnn-8.0-linux-x64-v7.1</code></pre></li>
+</ul>
+<h3 id="10-安装cudnn"><a href="#10-安装cudnn" class="headerlink" title="10.安装cudnn"></a>10.安装cudnn</h3><pre><code>tar xf cudnn-9.0-linux-x64-v7.tar
+mv cuda/lib64/libcudnn* /usr/local/cuda-9.0/lib64/
+mv cuda/include/cudnn.h /usr/local/cuda-9.0/include/</code></pre>
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件. </span>
+    </div>
+</article>
+
+
+<p>
+    <a  class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>Ubuntu 16.04 安装 CUDA</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">989</span></p>
+    <p><span class="copy-title">本文作者:</span><a  title="AlexBruce Lu">AlexBruce Lu</a></p>
+    <p><span class="copy-title">发布时间:</span>2019-12-09, 19:05:23</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-09, 19:42:54</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/09/Ubuntu_16.04%E5%AE%89%E8%A3%85cuda%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC/" title="Ubuntu 16.04 安装 CUDA">https://alexbrucelu.github.io/2019/12/09/Ubuntu_16.04%E5%AE%89%E8%A3%85cuda%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
     </div>
     <div class="copyright">
         <p class="footer-entry">©2016-2019 AlexBruce</p>

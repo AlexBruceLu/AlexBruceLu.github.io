@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alexbrucelu.github.io/"/>
-  <updated>2019-12-09T11:00:06.449Z</updated>
+  <updated>2019-12-09T11:42:54.768Z</updated>
   <id>https://alexbrucelu.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu 16.04 安装 CUDA</title>
+    <link href="https://alexbrucelu.github.io/2019/12/09/Ubuntu_16.04%E5%AE%89%E8%A3%85cuda%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC/"/>
+    <id>https://alexbrucelu.github.io/2019/12/09/Ubuntu_16.04%E5%AE%89%E8%A3%85cuda%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC/</id>
+    <published>2019-12-09T11:05:23.000Z</published>
+    <updated>2019-12-09T11:42:54.768Z</updated>
+    
+    <content type="html"><![CDATA[<p>@[TOC]</p><h2 id="一、操作系统"><a href="#一、操作系统" class="headerlink" title="一、操作系统:"></a><strong>一、操作系统:</strong></h2><p>研发工程师默认都是台式机，安装ubuntu16.04操作系统，默认我们安装好cuda和显卡驱动相关软件。如果需要重装系统请联系各属地IT，目前采用USB自动安装的方式，10分钟内可以安装完成</p><h2 id="二、卸载原有的驱动和cuda"><a href="#二、卸载原有的驱动和cuda" class="headerlink" title="二、卸载原有的驱动和cuda:"></a><strong>二、卸载原有的驱动和cuda:</strong></h2><p>sudo su root</p><p>service lightdm stop</p><p>nvidia-uninstall</p><p>apt-get install autoremove –purge nvidia*</p><p>/usr/local/cuda-8.0/bin/uninstall_cuda-8.0.pl(根据版本号有差别，此处以8.0为例子)</p><p>rm -rf /usr/local/cuda-8.0(!!!执行这一步时切勿误操作，否则容易导致系统崩溃)</p><h2 id="三、cuda安装：包含显卡驱动和相关软件包"><a href="#三、cuda安装：包含显卡驱动和相关软件包" class="headerlink" title="三、cuda安装：包含显卡驱动和相关软件包"></a><strong>三、cuda安装：包含显卡驱动和相关软件包</strong></h2><h3 id="1-下载cuda软件"><a href="#1-下载cuda软件" class="headerlink" title="1.下载cuda软件"></a>1.下载cuda软件</h3><p><strong>（8.0版本）</strong> wget <a href="https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run</a></p><p><strong>（9.0版本）</strong> wget <a href="https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/9.0/Prod/local_installers/cuda_9.0.176_384.81_linux-run</a></p><p><strong>（10.0版本）</strong>wget <a href="https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux" target="_blank" rel="noopener">https://developer.nvidia.com/compute/cuda/10.0/Prod/local_installers/cuda_10.0.130_410.48_linux</a></p><p><strong>（10.1版本）</strong> </p><p>​        wget <a href="http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run" target="_blank" rel="noopener">http://developer.download.nvidia.com/compute/cuda/10.1/Prod/local_installers/cuda_10.1.243_418.87.00_linux.run</a></p><p><strong>（10.2版本）</strong></p><p>​         wget <a href="http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run" target="_blank" rel="noopener">http://developer.download.nvidia.com/compute/cuda/10.2/Prod/local_installers/cuda_10.2.89_440.33.01_linux.run</a></p><h3 id="2-下载NVIDIA显卡驱动"><a href="#2-下载NVIDIA显卡驱动" class="headerlink" title="2.下载NVIDIA显卡驱动"></a>2.下载NVIDIA显卡驱动</h3><p>wget <a href="http://cn.download.nvidia.com/XFree86/Linux-x86_64/440.36/NVIDIA-Linux-x86_64-440.36.run" target="_blank" rel="noopener">http://cn.download.nvidia.com/XFree86/Linux-x86_64/440.36/NVIDIA-Linux-x86_64-440.36.run</a></p><h3 id="3-添加安装程序的可执行权限："><a href="#3-添加安装程序的可执行权限：" class="headerlink" title="3.添加安装程序的可执行权限："></a>3.添加安装程序的可执行权限：</h3><p>chmod +x *.run</p><h3 id="4-禁用默认的nouveau开源显卡驱动："><a href="#4-禁用默认的nouveau开源显卡驱动：" class="headerlink" title="4.禁用默认的nouveau开源显卡驱动："></a>4.禁用默认的nouveau开源显卡驱动：</h3><p>echo “blacklist nouveau” &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf</p><p>之后建议重启下系统</p><h3 id="5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）"><a href="#5-关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl-Alt-F2-进入命令行模式）" class="headerlink" title="5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）"></a>5.关闭系统图形界面，显卡驱动安装过程需要在命令行模式下进行（Ctrl + Alt + F2 进入命令行模式）</h3><pre><code>sudo su rootservice lightdm stop</code></pre><h3 id="6-安装显卡驱动程序，命令："><a href="#6-安装显卡驱动程序，命令：" class="headerlink" title="6.安装显卡驱动程序，命令："></a>6.安装显卡驱动程序，命令：</h3><pre><code>./NVIDIA-Linux-x86_64-410.78.run -a -s -Z --no-opengl-files</code></pre><h3 id="7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"><a href="#7-安装CUDA-9-0-驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）" class="headerlink" title="7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）"></a>7.安装CUDA-9.0 驱动（请把cuda安装程序和安装目标目录替换为自己需要安装的对应版本）</h3><pre><code>./cuda_9.0.176_384.81_linux.run --no-opengl-libs --toolkit --samples --samplespath=/usr/local/cuda-9.0 -silent</code></pre><h3 id="8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）"><a href="#8-添加安装的环境变量（将红色部分替换为自己安装的对应版本）" class="headerlink" title="8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:"></a>8.添加安装的环境变量（将红色部分替换为自己安装的对应版本）:</h3><pre><code>echo &#39;export LD_LIBRARY_PATH=/usr/local/cuda/lib:/usr/local/cuda/lib64/:/usr/local/cuda-9.0/lib:/usr/local/cuda-9.0/lib64/:$LD_LIBRARY_PATH&#39; &gt;&gt; /etc/profileecho &#39;export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/cuda-9.0/bin:/usr/local/cuda/bin:$PATH&#39; &gt;&gt; /etc/profileecho &#39;/usr/local/cuda/lib64&#39; &gt;&gt; /etc/ld.so.conf.d/cuda.confldconfig</code></pre><h3 id="9-下载cudnn"><a href="#9-下载cudnn" class="headerlink" title="9.下载cudnn"></a>9.下载cudnn</h3><ul><li><p><strong>Download cuDNN v7.6.5 (November 18th, 2019), for CUDA 10.2</strong></p><pre><code class="bash"> wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.5.32/Production/10.2_20191118/cudnn-10.2-linux-x64-v7.6.5.32.tgz</code></pre></li><li><p><strong>Download cuDNN v7.6.5 (November 5th, 2019), for CUDA 10.1</strong></p><pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.5.32/Production/10.1_20191031/cudnn-10.1-linux-x64-v7.6.5.32.tgz</code></pre></li><li><p><strong>Download cuDNN v7.6.4 (September 27, 2019), for CUDA 10.0</strong></p><pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.4.38/Production/10.0_20190923/cudnn-10.0-linux-x64-v7.6.4.38.tgz</code></pre></li><li><p><strong>Download cuDNN v7.6.3 (August 23, 2019), for CUDA 9.0</strong></p><pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/7.6.3.30/Production/9.0_20190822/cudnn-9.0-linux-x64-v7.6.3.30.tgz</code></pre></li><li><p><strong>Download cuDNN v7.1.3 (April 17, 2018), for CUDA 8.0</strong></p><pre><code>wget https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v7.1.3/prod/8.0_20180414/cudnn-8.0-linux-x64-v7.1</code></pre></li></ul><h3 id="10-安装cudnn"><a href="#10-安装cudnn" class="headerlink" title="10.安装cudnn"></a>10.安装cudnn</h3><pre><code>tar xf cudnn-9.0-linux-x64-v7.tarmv cuda/lib64/libcudnn* /usr/local/cuda-9.0/lib64/mv cuda/include/cudnn.h /usr/local/cuda-9.0/include/</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;@[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;一、操作系统&quot;&gt;&lt;a href=&quot;#一、操作系统&quot; class=&quot;headerlink&quot; title=&quot;一、操作系统:&quot;&gt;&lt;/a&gt;&lt;strong&gt;一、操作系统:&lt;/strong&gt;&lt;/h2&gt;&lt;p&gt;研发工程师默认都是台式机，安装ubuntu
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://alexbrucelu.github.io/categories/Linux/"/>
+    
+      <category term="NVIDIA" scheme="https://alexbrucelu.github.io/categories/Linux/NVIDIA/"/>
+    
+    
+      <category term="ubuntu" scheme="https://alexbrucelu.github.io/tags/ubuntu/"/>
+    
+      <category term="CUDA" scheme="https://alexbrucelu.github.io/tags/CUDA/"/>
+    
+  </entry>
   
   <entry>
     <title>git 新建仓库，添加远程分之到本地</title>
