@@ -143,6 +143,14 @@
 <ul>
     <li><div class="all active">全部文章<small>(1)</small></div></li>
     
+        
+            
+            <li><div data-rel="Linux&gt;docker">Linux&gt;docker<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
 </ul>
 <div class="left-bottom">
     <div class="menus">
@@ -187,6 +195,10 @@
     </form>
     <div class="tags-list">
     
+    <li class="article-tag-list-item">
+        <a class="color1">ubuntu nvidia-docker</a>
+    </li>
+    
     <div class="clearfix"></div>
 </div>
 
@@ -197,12 +209,12 @@
     
     <nav id="title-list-nav">
         
-        <a  class=""
-           href="/2013/07/13/01/"
-           data-tag=""
+        <a  class="Linux&gt;docker "
+           href="/2019/12/09/01/"
+           data-tag="ubuntu nvidia-docker"
            data-author="" >
             <span class="post-title" title="Hello World">Hello World</span>
-            <span class="post-date" title="2013-07-13 20:46:25">2013/07/13</span>
+            <span class="post-date" title="2019-12-09 17:18:48">2019/12/09</span>
         </a>
         
     </nav>
@@ -310,7 +322,7 @@
     /*作者、标签的自动补全*/
     $(function () {
         $('.search').AutoComplete({
-            'data': [],
+            'data': ['#ubuntu nvidia-docker',],
             'itemHeight': 20,
             'width': 418
         }).AutoComplete('show');

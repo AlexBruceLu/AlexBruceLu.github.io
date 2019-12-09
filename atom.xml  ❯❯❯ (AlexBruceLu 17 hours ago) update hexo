@@ -6,7 +6,7 @@
   <link href="/atom.xml%20%20%E2%9D%AF%E2%9D%AF%E2%9D%AF%20(AlexBruceLu%2017%20hours%20ago)%20update%20hexo" rel="self"/>
   
   <link href="https://alexbrucelu.github.io/"/>
-  <updated>2019-12-09T09:11:02.381Z</updated>
+  <updated>2019-12-09T09:24:26.764Z</updated>
   <id>https://alexbrucelu.github.io/</id>
   
   <author>
@@ -18,10 +18,10 @@
   
   <entry>
     <title>Hello World</title>
-    <link href="https://alexbrucelu.github.io/2013/07/13/01/"/>
-    <id>https://alexbrucelu.github.io/2013/07/13/01/</id>
-    <published>2013-07-13T12:46:25.000Z</published>
-    <updated>2019-12-09T09:11:02.381Z</updated>
+    <link href="https://alexbrucelu.github.io/2019/12/09/01/"/>
+    <id>https://alexbrucelu.github.io/2019/12/09/01/</id>
+    <published>2019-12-09T09:18:48.000Z</published>
+    <updated>2019-12-09T09:24:26.764Z</updated>
     
     <content type="html"><![CDATA[<p>@[TOC]</p><h1 id="dfnwp"><a href="#dfnwp" class="headerlink" title="dfnwp"></a>dfnwp</h1>]]></content>
     
@@ -36,6 +36,10 @@
     </summary>
     
     
+      <category term="Linux&gt;docker" scheme="https://alexbrucelu.github.io/categories/Linux-docker/"/>
+    
+    
+      <category term="ubuntu nvidia-docker" scheme="https://alexbrucelu.github.io/tags/ubuntu-nvidia-docker/"/>
     
   </entry>
   
