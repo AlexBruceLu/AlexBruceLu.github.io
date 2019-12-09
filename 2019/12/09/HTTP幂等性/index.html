@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>http幂等性 | AlexBruce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="** http幂等性：** &lt;Excerpt in index | 首页摘要&gt; 编程中的幂等性-http幂等性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="http幂等性">
+<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;09&#x2F;HTTP%E5%B9%82%E7%AD%89%E6%80%A7&#x2F;index.html">
+<meta property="og:site_name" content="AlexBruce">
+<meta property="og:description" content="** http幂等性：** &lt;Excerpt in index | 首页摘要&gt; 编程中的幂等性-http幂等性">
+<meta property="og:image" content="http:&#x2F;&#x2F;cdn.i3geek.com&#x2F;wp-content&#x2F;uploads&#x2F;auto_save_image&#x2F;2015&#x2F;07&#x2F;033717ZKv.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;cdn.i3geek.com&#x2F;wp-content&#x2F;uploads&#x2F;auto_save_image&#x2F;2015&#x2F;07&#x2F;033718EYW.png">
+<meta property="article:published_time" content="2019-12-09T07:14:27.738Z">
+<meta property="article:modified_time" content="2019-12-09T07:14:27.738Z">
+<meta property="article:author" content="AlexBruce Lu">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;cdn.i3geek.com&#x2F;wp-content&#x2F;uploads&#x2F;auto_save_image&#x2F;2015&#x2F;07&#x2F;033717ZKv.png">
+  
+    <link rel="alternative" href="/atom.xml" title="AlexBruce" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AlexBruce Lu</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">消遣阁</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/categories/digital">玩转数码</a></li>
+                        
+                            <li><a  href="/categories/algorithm">算法学习</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="/xxxxx" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 10px;">共识算法</a> <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 16.67px;">微服务</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AlexBruce Lu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AlexBruce Lu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">消遣阁</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">玩转开发工具</a></li>
+                
+                    <li><a href="/categories/digital">玩转数码</a></li>
+                
+                    <li><a href="/categories/algorithm">算法学习</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="/xxxxx" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-HTTP幂等性" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/" class="article-date">
+      <time datetime="2019-12-09T07:14:27.738Z" itemprop="datePublished">2019-12-09</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      http幂等性
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/others/">others</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/http/" rel="tag">http</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>** http幂等性：** &lt;Excerpt in index | 首页摘要&gt;</p>
+<p>编程中的幂等性-http幂等性</p>
+<a id="more"></a>
+
+<h1 id="编程中的幂等性-—-HTTP幂等性"><a href="#编程中的幂等性-—-HTTP幂等性" class="headerlink" title="编程中的幂等性 — HTTP幂等性"></a><a href="https://www.cnblogs.com/duhuo/p/4245202.html" target="_blank" rel="noopener">编程中的幂等性 — HTTP幂等性</a></h1><p>幂等（idempotent、idempotence）是一个数学与计算机学概念，常见于抽象代数中。</p>
+<p>在编程中.<strong>一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同</strong>。幂等函数，或幂等方法，是指可以使用相同参数重复执行，并能获得相同结果的函数。这些函数不会影响系统状态，也不用担心重复执行会对系统造成改变。例如，“getUsername()和setTrue()”函数就是一个幂等函数.更复杂的操作幂等保证是利用唯一交易号(流水号)实现.</p>
+<p>——百度百科</p>
+<h2 id="什么是幂等性-Idempotence-？"><a href="#什么是幂等性-Idempotence-？" class="headerlink" title="什么是幂等性(Idempotence)？"></a>什么是幂等性(Idempotence)？</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Methods can also have the property of “idempotence” in that (aside from error or expiration issues) the side-effects of N &gt; 0 identical requests is the same as for a single request.</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">——HTTP&#x2F;1.1规范中幂等性的定义</span></pre></td></tr></table></figure>
+
+<p>从定义上看，HTTP方法的幂等性是指一次和多次请求某一个资源应该具有同样的副作用。说白了就是，<strong>同一个请求，发送一次和发送N次效果是一样的！</strong>幂等性是分布式系统设计中十分重要的概念，而HTTP的分布式本质也决定了它在HTTP中具有重要地位。下面将以HTTP中的幂等性做例子加以介绍。</p>
+<h2 id="简单示例"><a href="#简单示例" class="headerlink" title="简单示例"></a>简单示例</h2><p>假设有一个从账户取钱的远程API（可以是HTTP的，也可以不是），我们暂时用类函数的方式记为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">bool withdraw(account_id, amount)</span></pre></td></tr></table></figure>
+
+<p>withdraw的语义是从account_id对应的账户中扣除amount数额的钱；如果扣除成功则返回true，账户余额减少amount；如果扣除失败则返回false，账户余额不变。</p>
+<p>值得注意的是：和本地环境相比，<strong>我们不能轻易假设分布式环境的可靠性</strong>。</p>
+<p>所以问题来了，一种典型的情况是withdraw请求已经被服务器端正确处理，但服务器端的返回结果由于网络等原因被掉丢了，导致客户端无法得知处理结果。如果是在网页上，一些不恰当的设计可能会使用户认为上一次操作失败了，然后刷新页面，这就导致了withdraw被调用两次，账户也被多扣了一次钱。如图所示：</p>
+<p><img src="http://cdn.i3geek.com/wp-content/uploads/auto_save_image/2015/07/033717ZKv.png" alt="non-idempotent"></p>
+<p>解决方案一：采用分布式事务，通过引入支持分布式事务的中间件来保证withdraw功能的事务性。分布式事务的优点是对于调用者很简单，复杂性都交给了中间件来管理。缺点则是一方面架构太重量级，容易被绑在特定的中间件上，不利于异构系统的集成；另一方面分布式事务虽然能保证事务的ACID性质，而但却无法提供性能和可用性的保证。</p>
+<p>解决方案二：幂等设计。我们可以通过一些技巧把withdraw变成幂等的，比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">int create_ticket() </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">bool idempotent_withdraw(ticket_id, account_id, amount)</span></pre></td></tr></table></figure>
+
+<p>create_ticket的语义是<strong>获取一个服务器端生成的唯一的处理号ticket_id，它将用于标识后续的操作</strong>。idempotent_withdraw和withdraw的区别在于关联了一个ticket_id，一个ticket_id表示的操作至多只会被处理一次，每次调用都将返回第一次调用时的处理结果。这样，idempotent_withdraw就符合幂等性了，客户端就可以放心地多次调用。</p>
+<p>基于幂等性的解决方案中一个完整的取钱流程被分解成了两个步骤：1.调用create_ticket()获取ticket_id；2.调用idempotent_withdraw(ticket_id, account_id, amount)。虽然create_ticket不是幂等的，但在这种设计下，它对系统状态的影响可以忽略，加上idempotent_withdraw是幂等的，所以任何一步由于网络等原因失败或超时，客户端都可以重试，直到获得结果。如图所示：</p>
+<p><img src="http://cdn.i3geek.com/wp-content/uploads/auto_save_image/2015/07/033718EYW.png" alt="idempotent"></p>
+<p>和分布式事务相比，幂等设计的优势在于它的轻量级，容易适应异构环境，以及性能和可用性方面。在某些性能要求比较高的应用，幂等设计往往是唯一的选择。</p>
+<h2 id="HTTP的幂等性"><a href="#HTTP的幂等性" class="headerlink" title="HTTP的幂等性"></a>HTTP的幂等性</h2><p>本文主要以HTTP GET、DELETE、PUT、POST四种方法为主进行语义和幂等性的介绍。</p>
+<p><strong>HTTP GET方法用于获取资源，不应有副作用，所以是幂等的。</strong>比如：GET <a href="http://www.bank.com/account/123456，不会改变资源的状态，不论调用一次还是N次都没有副作用。请注意，这里强调的是一次和N次具有相同的副作用，而不是每次GET的结果相同。GET" target="_blank" rel="noopener">http://www.bank.com/account/123456，不会改变资源的状态，不论调用一次还是N次都没有副作用。请注意，这里强调的是一次和N次具有相同的副作用，而不是每次GET的结果相同。GET</a> <a href="http://www.news.com/latest-news这个HTTP请求可能会每次得到不同的结果，但它本身并没有产生任何副作用，因而是满足幂等性的。" target="_blank" rel="noopener">http://www.news.com/latest-news这个HTTP请求可能会每次得到不同的结果，但它本身并没有产生任何副作用，因而是满足幂等性的。</a></p>
+<p><strong>HTTP DELETE方法用于删除资源，有副作用，但它应该满足幂等性。</strong>比如：DELETE <a href="http://www.forum.com/article/4231，调用一次和N次对系统产生的副作用是相同的，即删掉id为4231的帖子；因此，调用者可以多次调用或刷新页面而不必担心引起错误。" target="_blank" rel="noopener">http://www.forum.com/article/4231，调用一次和N次对系统产生的副作用是相同的，即删掉id为4231的帖子；因此，调用者可以多次调用或刷新页面而不必担心引起错误。</a></p>
+<p><strong>HTTP POST方法用于创建资源，所对应的URI并非创建的资源本身，而是去执行创建动作的操作者，有副作用，不满足幂等性。</strong>比如：POST <a href="http://www.forum.com/articles的语义是在http://www.forum.com/articles下创建一篇帖子，HTTP响应中应包含帖子的创建状态以及帖子的URI。两次相同的POST请求会在服务器端创建两份资源，它们具有不同的URI；所以，POST方法不具备幂等性。" target="_blank" rel="noopener">http://www.forum.com/articles的语义是在http://www.forum.com/articles下创建一篇帖子，HTTP响应中应包含帖子的创建状态以及帖子的URI。两次相同的POST请求会在服务器端创建两份资源，它们具有不同的URI；所以，POST方法不具备幂等性。</a></p>
+<p><strong>HTTP PUT方法用于创建或更新操作，所对应的URI是要创建或更新的资源本身，有副作用，它应该满足幂等性。</strong>比如：PUT <a href="http://www.forum/articles/4231的语义是创建或更新ID为4231的帖子。对同一URI进行多次PUT的副作用和一次PUT是相同的；因此，PUT方法具有幂等性。" target="_blank" rel="noopener">http://www.forum/articles/4231的语义是创建或更新ID为4231的帖子。对同一URI进行多次PUT的副作用和一次PUT是相同的；因此，PUT方法具有幂等性。</a></p>
+<h3 id="对前文示例进行改进"><a href="#对前文示例进行改进" class="headerlink" title="对前文示例进行改进"></a>对前文示例进行改进</h3><p>利用Web API的形式实现前面所提到的取款功能。</p>
+<p>1、用POST /tickets来实现create_ticket；</p>
+<p>2、用PUT /accounts/account_id/ticket_id&amp;amount=xxx来实现idempotent_withdraw。</p>
+<p>值得注意的是严格来讲amount参数不应该作为URI的一部分，真正的URI应该是/accounts/account_id/ticket_id，而amount应该放在请求的body中。这种模式可以应用于很多场合，比如：论坛网站中防止意外的重复发帖。</p>
+<h2 id="电商中遇到的问题"><a href="#电商中遇到的问题" class="headerlink" title="电商中遇到的问题"></a>电商中遇到的问题</h2><h3 id="如何防范-POST-重复提交"><a href="#如何防范-POST-重复提交" class="headerlink" title="如何防范 POST 重复提交"></a>如何防范 POST 重复提交</h3><p>HTTP POST 操作既不是安全的，也不是幂等的（至少在HTTP规范里没有保证）。当我们因为反复刷新浏览器导致多次提交表单，多次发出同样的POST请求，导致远端服务器重复创建出了资源。</p>
+<p>所以，对于电商应用来说，第一对应的后端 WebService 一定要做到<strong>幂等性</strong>，第二服务器端收到 POST 请求，在操作成功后<strong>必须302跳转到另外一个页面</strong>，这样即使用户刷新页面，也不会重复提交表单。</p>
+<h3 id="把分布式事务分解为具有幂等性的异步消息处理"><a href="#把分布式事务分解为具有幂等性的异步消息处理" class="headerlink" title="把分布式事务分解为具有幂等性的异步消息处理"></a>把分布式事务分解为具有幂等性的异步消息处理</h3><p>电商的很多业务，考虑更多的是 BASE（即Basically Available、Soft state、和Eventually consistent），而不是 ACID（Atomicity、Consistency、Isolation和 Durability）。即为了满足高负载的用户访问，我们可以容忍短暂的数据不一致。那怎么做呢？</p>
+<p>第一，不做分布式事务，代价太大。<br>第二，不一定需要实时一致性，只需要保证最终的一致性即可。<br>第三，“通过状态机和严格的有序操作，来最大限度地降低不一致性”。<br>第四，最终一致性（Eventually Consistent）通过异步事件做到。</p>
+<p>如果消息具有操作幂等性，也就是一个消息被应用多次与应用一次产生的效果是一样的话，那么把不需要同步执行的事务交给异步消息推送和订阅者集群来处理即可。假如消息处理失败，那么就消息重播，由于幂等性，应用多次也能产生正确的结果。</p>
+<p>实际情况下，消息很难具有幂等性，解决方法是使用另一个表记录已经被成功应用的消息，即消息队列和消息应用状态表一起来解决问题。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面简单介绍了幂等性的概念，用幂等设计取代分布式事务的方法，以及HTTP主要方法的语义和幂等性特征。其实，如果要追根溯源，幂等性是数学中的一个概念，表达的是N次变换与1次变换的结果相同，有兴趣的读者可以从Wikipedia上进一步了解。</p>
+<p>转自：<a href="http://www.i3geek.com/archives/841" target="_blank" rel="noopener">http://www.i3geek.com/archives/841</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/">http幂等性</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 AlexBruce Lu 的个人博客">AlexBruce Lu</a></p>
+        <p><span>发布时间:</span>2019年12月09日 - 15时14分</p>
+        <p><span>最后更新:</span>2019年12月09日 - 15时14分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/" title="http幂等性">https://alexbrucelu.github.io/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/　　作者: AlexBruce Lu" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/2019/12/09/Golang%E4%B9%8B%E8%BD%BB%E6%9D%BE%E5%8C%96%E8%A7%A3defer%E7%9A%84%E6%B8%A9%E6%9F%94%E9%99%B7%E9%98%B1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Golang之轻松化解defer的温柔陷阱
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/2019/12/09/HyperledgerFabric01/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HyperLedger Fabric</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#编程中的幂等性-—-HTTP幂等性"><span class="toc-number">1.</span> <span class="toc-text">编程中的幂等性 — HTTP幂等性</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是幂等性-Idempotence-？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是幂等性(Idempotence)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#简单示例"><span class="toc-number">1.2.</span> <span class="toc-text">简单示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP的幂等性"><span class="toc-number">1.3.</span> <span class="toc-text">HTTP的幂等性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#对前文示例进行改进"><span class="toc-number">1.3.1.</span> <span class="toc-text">对前文示例进行改进</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电商中遇到的问题"><span class="toc-number">1.4.</span> <span class="toc-text">电商中遇到的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何防范-POST-重复提交"><span class="toc-number">1.4.1.</span> <span class="toc-text">如何防范 POST 重复提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#把分布式事务分解为具有幂等性的异步消息处理"><span class="toc-number">1.4.2.</span> <span class="toc-text">把分布式事务分解为具有幂等性的异步消息处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-number">1.5.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/2019/12/09/Golang%E4%B9%8B%E8%BD%BB%E6%9D%BE%E5%8C%96%E8%A7%A3defer%E7%9A%84%E6%B8%A9%E6%9F%94%E9%99%B7%E9%98%B1/" title="上一篇: Golang之轻松化解defer的温柔陷阱">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2019/12/09/HyperledgerFabric01/" title="下一篇: HyperLedger Fabric">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Linux%E8%A3%85%E6%9C%BA%E7%AC%94%E8%AE%B0/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MySQL%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">MySQL的常用命令与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Solidity%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/kafka%E5%AE%89%E8%A3%85%E4%B8%8E%E8%AE%BE%E7%BD%AE/">kafka</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/">深度理解“三次握手，四次挥手”</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%86%85%E5%BB%BA%E5%AE%B9%E5%99%A8/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%88%BF%E5%B1%8B%E7%A7%9F%E8%B5%81/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%9B%BE%E8%A7%A3Go%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">Go语言内存分配</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%B8%B8%E8%A7%81%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/">类型断言</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86Go%E8%AF%AD%E8%A8%80%E4%B9%8Bunsafe/">Go语言unsafe</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%8F%8A%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E8%AF%A6%E8%A7%A3TCPIP%E5%8D%8F%E8%AE%AE/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86Go%E8%AF%AD%E8%A8%80%E4%B9%8B%E5%85%B3%E4%BA%8E%20interface%20%E7%9A%8410%E4%B8%AA%E9%97%AE%E9%A2%98/">Go语言interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E8%AF%A6%E8%A7%A3http%E5%8D%8F%E8%AE%AE/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/C%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%89%A7%E8%A1%8C/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Docker%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Golang%E4%B9%8B%E8%BD%BB%E6%9D%BE%E5%8C%96%E8%A7%A3defer%E7%9A%84%E6%B8%A9%E6%9F%94%E9%99%B7%E9%98%B1/">Golang之轻松化解defer的温柔陷阱</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/">http幂等性</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gRPC%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/">gRPC官方文档</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/golang%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">golang性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gotest/">Go Test</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/go%E4%B8%AD%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/">函数和方法的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/go%E6%93%8D%E4%BD%9Credis/">go操作Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/http%E5%8F%8A%E5%85%B6%E6%A0%87%E5%87%86%E5%BA%93/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/http%E7%BD%91%E7%BB%9C/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/01/">微服务基础简介</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 AlexBruce Lu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>

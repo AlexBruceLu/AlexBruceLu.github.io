@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl"/>
+  
+  
+  
+  
+  <title>go操作Redis | AlexBruce</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="** go操作Redis：** &lt;Excerpt in index | 首页摘要&gt; Redis的简介及golang简易操作redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="go操作Redis">
+<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;09&#x2F;go%E6%93%8D%E4%BD%9Credis&#x2F;index.html">
+<meta property="og:site_name" content="AlexBruce">
+<meta property="og:description" content="** go操作Redis：** &lt;Excerpt in index | 首页摘要&gt; Redis的简介及golang简易操作redis">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;AlexBruceLu&#x2F;DAPP&#x2F;wiki&#x2F;rd1.png">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;AlexBruceLu&#x2F;DAPP&#x2F;wiki&#x2F;rd2.png">
+<meta property="article:published_time" content="2019-12-09T07:14:27.738Z">
+<meta property="article:modified_time" content="2019-12-09T07:14:27.738Z">
+<meta property="article:author" content="AlexBruce Lu">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;AlexBruceLu&#x2F;DAPP&#x2F;wiki&#x2F;rd1.png">
+  
+    <link rel="alternative" href="/atom.xml" title="AlexBruce" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 4.1.0"></head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">AlexBruce Lu</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">消遣阁</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a  href="/archives/">所有文章</a></li>
+                        
+                            <li><a  href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">玩转开发工具</a></li>
+                        
+                            <li><a  href="/categories/digital">玩转数码</a></li>
+                        
+                            <li><a  href="/categories/algorithm">算法学习</a></li>
+                        
+                            <li><a  href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github"  target="_blank" href="/xxxxx" title="github">github</a>
+                            
+                                <a class="fl weibo"  target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
+                            
+                                <a class="fl rss"  target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/C/" style="font-size: 10px;">C</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Fabric/" style="font-size: 10px;">Fabric</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.33px;">MySQL</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Windows/" style="font-size: 10px;">Windows</a> <a href="/tags/golang/" style="font-size: 20px;">golang</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/http-https/" style="font-size: 13.33px;">http/https</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/solidity/" style="font-size: 10px;">solidity</a> <a href="/tags/%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/" style="font-size: 10px;">共识算法</a> <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" style="font-size: 16.67px;">微服务</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 10px;">数据结构</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank"  class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">AlexBruce Lu</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">AlexBruce Lu</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">消遣阁</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/">玩转开发工具</a></li>
+                
+                    <li><a href="/categories/digital">玩转数码</a></li>
+                
+                    <li><a href="/categories/algorithm">算法学习</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="/xxxxx" title="github">github</a>
+                    
+                        <a class="weibo" target="_blank" href="/xxxxxxxx" title="weibo">weibo</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-go操作redis" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a  href="/2019/12/09/go%E6%93%8D%E4%BD%9Credis/" class="article-date">
+      <time datetime="2019-12-09T07:14:27.738Z" itemprop="datePublished">2019-12-09</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      go操作Redis
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/database/">database</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/" rel="tag">Redis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>** go操作Redis：** &lt;Excerpt in index | 首页摘要&gt;</p>
+<p>Redis的简介及golang简易操作redis</p>
+<a id="more"></a>
+
+<p>[TOC]</p>
+<h2 id="redis简介"><a href="#redis简介" class="headerlink" title="redis简介"></a>redis简介</h2><p>redis（REmote DIctionary Server）是一个由Salvatore Sanfilippo 写的<code>Key-value</code>存储系统，由<code>C</code>语言编写、遵守<code>BSD协议</code>、支持网络、可基于内存亦可持久化的日志型、<code>Key-Value</code>类型的数据库，并提供多种语言的API。和Memcached类似，它支持存储的value类型相对更多，包括<code>string(字符串)</code>、<code>list(链表)</code>、<code>set(集合)</code>、<code>zset(sorted set --有序集合)</code>和<code>hash（哈希类型）</code>。这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步，redis在3.0版本推出集群模式。</p>
+<p>官方网站：<a href="https://redis.io/" target="_blank" rel="noopener">https://redis.io/</a></p>
+<h2 id="源码部署"><a href="#源码部署" class="headerlink" title="源码部署"></a>源码部署</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ yum install gcc -y  <span class="comment">#安装C依赖</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ wget http://download.redis.io/redis-stable.tar.gz  <span class="comment">#下载稳定版本</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ tar zxvf redis-stable.tar.gz  <span class="comment">#解压</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> redis-stable</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">$ make PREFIX=/opt/app/redis install   <span class="comment">#指定目录编译</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">$ make install</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">$ mkdir /etc/redis   <span class="comment">#建立配置目录</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">$ cp redis.conf /etc/redis/6379.conf <span class="comment"># 拷贝配置文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">$ cp utils/redis_init_script /etc/init.d/redis  <span class="comment">#拷贝init启动脚本针对6.X系统</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">$ chmod a+x  /etc/init.d/redis  <span class="comment">#添加执行权限</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改配置文件：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">$ vi /etc/redis/6379.conf</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="built_in">bind</span> 0.0.0.0      <span class="comment">#监听地址</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">maxmemory 4294967296   <span class="comment">#限制最大内存（4G）：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">daemonize yes   <span class="comment">#后台运行</span></span></pre></td></tr></table></figure>
+
+<h3 id="启动与停止"><a href="#启动与停止" class="headerlink" title="启动与停止"></a>启动与停止</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">####启动与停止</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/redis start</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">$ /etc/init.d/redis stop</span></pre></td></tr></table></figure>
+
+<h3 id="查看版本信息"><a href="#查看版本信息" class="headerlink" title="查看版本信息"></a>查看版本信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#执行客户端工具</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ redis-cli </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#输入命令info</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt; info</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># Server</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">redis_version:4.0.10</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">redis_git_sha1:00000000</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">redis_git_dirty:0</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">redis_build_id:cf83e9c690dbed33</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">redis_mode:standalone</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">os:Linux 2.6.32-642.el6.x86_64 x86_64</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">arch_bits:64</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">multiplexing_api:epoll</span></pre></td></tr></table></figure>
+
+<h2 id="golang操作redis"><a href="#golang操作redis" class="headerlink" title="golang操作redis"></a>golang操作redis</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>golang操作redis的客户端包有多个比如<code>redigo</code>、<code>go-redis</code>，github上Star最多的莫属<code>redigo</code>。</p>
+<p>github地址：<a href="https://github.com/garyburd/redigo" target="_blank" rel="noopener">https://github.com/garyburd/redigo</a>  </p>
+<p>目前已经迁移到：<a href="https://github.com/gomodule/redigo" target="_blank" rel="noopener">https://github.com/gomodule/redigo</a> </p>
+<p>文档：<a href="https://godoc.org/github.com/garyburd/redigo/redis" target="_blank" rel="noopener">https://godoc.org/github.com/garyburd/redigo/redis</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ go get github.com/garyburd/redigo/redis</span></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr></table></figure>
+
+<h3 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h3><p><code>Conn</code>接口是与<code>Redis</code>协作的主要接口，可以使用<code>Dial</code>,<code>DialWithTimeout</code>或者<code>NewConn</code>函数来创建连接，当任务完成时，应用程序必须调用<code>Close</code>函数来完成操作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h3 id="命令操作"><a href="#命令操作" class="headerlink" title="命令操作"></a>命令操作</h3><p>通过使用Conn接口中的do方法执行redis命令，redis命令大全参考：<a href="http://doc.redisfans.com/" target="_blank" rel="noopener">http://doc.redisfans.com/</a></p>
+<p>go中发送与响应对应类型：</p>
+<p><code>Do</code>函数会必要时将参数转化为二进制字符串</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Go Type</strong></th>
+<th align="center"><strong>Conversion</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">[]byte</td>
+<td align="center">Sent as is</td>
+</tr>
+<tr>
+<td align="left">string</td>
+<td align="center">Sent as is</td>
+</tr>
+<tr>
+<td align="left">int, int64</td>
+<td align="center">strconv.FormatInt(v)</td>
+</tr>
+<tr>
+<td align="left">float64</td>
+<td align="center">strconv.FormatFloat(v, ‘g’, -1, 64)</td>
+</tr>
+<tr>
+<td align="left">bool</td>
+<td align="center">true -&gt; “1”, false -&gt; “0”</td>
+</tr>
+<tr>
+<td align="left">nil</td>
+<td align="center">“”</td>
+</tr>
+<tr>
+<td align="left">all other types</td>
+<td align="center">fmt.Print(v)</td>
+</tr>
+</tbody></table>
+<p>Redis 命令响应会用以下Go类型表示：</p>
+<table>
+<thead>
+<tr>
+<th>Redis Type</th>
+<th>Go Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>error</td>
+<td>redis.Error</td>
+</tr>
+<tr>
+<td>interger</td>
+<td>int64</td>
+</tr>
+<tr>
+<td>simple string</td>
+<td>string</td>
+</tr>
+<tr>
+<td>bulk string</td>
+<td>[]byte or nil if value not present</td>
+</tr>
+<tr>
+<td>arrary</td>
+<td>[]interface{} or nil if value not present</td>
+</tr>
+</tbody></table>
+<p>可以使用GO的类型断言或者<code>reply</code>辅助函数将返回的<code>interface{}</code>转换为对应类型。</p>
+<h4 id="操作示例：get、set"><a href="#操作示例：get、set" class="headerlink" title="操作示例：get、set"></a>操作示例：<strong><code>get</code>、<code>set</code></strong></h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    _, err = conn.Do(<span class="string">"SET"</span>, <span class="string">"name"</span>, <span class="string">"wd"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis set error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    name, err := redis.String(conn.Do(<span class="string">"GET"</span>, <span class="string">"name"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis get error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"Got name: %s \n"</span>, name)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="设置key过期时间"><a href="#设置key过期时间" class="headerlink" title="设置key过期时间"></a>设置key过期时间</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">_, err = conn.Do(<span class="string">"expire"</span>, <span class="string">"name"</span>, <span class="number">10</span>) <span class="comment">//10秒过期</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"set expire error: "</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr></table></figure>
+
+<h4 id="批量获取mget、批量设置mset"><a href="#批量获取mget、批量设置mset" class="headerlink" title="批量获取mget、批量设置mset"></a>批量获取mget、批量设置mset</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">_, err = conn.Do(<span class="string">"MSET"</span>, <span class="string">"name"</span>, <span class="string">"wd"</span>,<span class="string">"age"</span>,<span class="number">22</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis mset error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    res, err := redis.Strings(conn.Do(<span class="string">"MGET"</span>, <span class="string">"name"</span>,<span class="string">"age"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis get error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        res_type := reflect.TypeOf(res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"res type : %s \n"</span>, res_type)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"MGET name: %s \n"</span>, res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="built_in">len</span>(res))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//结果：</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res type : []string </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//MGET name: [wd 22] </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//2</span></span></pre></td></tr></table></figure>
+
+<h4 id="列表操作"><a href="#列表操作" class="headerlink" title="列表操作"></a>列表操作</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"reflect"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    _, err = conn.Do(<span class="string">"LPUSH"</span>, <span class="string">"list1"</span>, <span class="string">"ele1"</span>,<span class="string">"ele2"</span>,<span class="string">"ele3"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis mset error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    res, err := redis.String(conn.Do(<span class="string">"LPOP"</span>, <span class="string">"list1"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis POP error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        res_type := reflect.TypeOf(res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"res type : %s \n"</span>, res_type)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"res  : %s \n"</span>, res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res type : string </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res  : ele3</span></span></pre></td></tr></table></figure>
+
+<h4 id="hash操作"><a href="#hash操作" class="headerlink" title="hash操作"></a>hash操作</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"reflect"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    _, err = conn.Do(<span class="string">"HSET"</span>, <span class="string">"student"</span>,<span class="string">"name"</span>, <span class="string">"wd"</span>,<span class="string">"age"</span>,<span class="number">22</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis mset error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    res, err := redis.Int64(conn.Do(<span class="string">"HGET"</span>, <span class="string">"student"</span>,<span class="string">"age"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"redis HGET error:"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        res_type := reflect.TypeOf(res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"res type : %s \n"</span>, res_type)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">        fmt.Printf(<span class="string">"res  : %d \n"</span>, res)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res type : int64 </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res  : 22</span></span></pre></td></tr></table></figure>
+
+<h4 id="Pipelining-管道"><a href="#Pipelining-管道" class="headerlink" title="Pipelining(管道)"></a>Pipelining(管道)</h4><p>管道操作可以理解为并发操作，并通过<code>Send()</code>，<code>Flush()</code>，<code>Receive()</code>三个方法实现。客户端可以使用<code>send()</code>方法一次性向服务器发送一个或多个命令，命令发送完毕时，使用<code>flush()</code>方法将缓冲区的命令输入一次性发送到服务器，客户端再使用<code>Receive()</code>方法依次按照先进先出的顺序读取所有命令操作结果。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Send(commandName <span class="keyword">string</span>, args ...<span class="keyword">interface</span>&#123;&#125;) error</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">Flush() error</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">Receive() (reply <span class="keyword">interface</span>&#123;&#125;, err error)</span></pre></td></tr></table></figure>
+
+<ul>
+<li><code>Send</code>：发送命令至缓冲区</li>
+<li><code>Flush</code>:  清空缓冲区，将命令一次性发送至服务器</li>
+<li><code>Recevie</code>:  依次读取服务器响应结果，当读取的命令未响应时，该操作会阻塞</li>
+</ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"HSET"</span>, <span class="string">"student"</span>,<span class="string">"name"</span>, <span class="string">"wd"</span>,<span class="string">"age"</span>,<span class="string">"22"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"HSET"</span>, <span class="string">"student"</span>,<span class="string">"Score"</span>,<span class="string">"100"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"HGET"</span>, <span class="string">"student"</span>,<span class="string">"age"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    conn.Flush()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    res1, err := conn.Receive()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    fmt.Printf(<span class="string">"Receive res1:%v \n"</span>, res1)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    res2, err := conn.Receive()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    fmt.Printf(<span class="string">"Receive res2:%v\n"</span>,res2)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    res3, err := conn.Receive()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    fmt.Printf(<span class="string">"Receive res3:%s\n"</span>,res3)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Receive res1:0 </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Receive res2:0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//Receive res3:22</span></span></pre></td></tr></table></figure>
+
+<h4 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h4><p>redis本身具有发布订阅的功能，其发布订阅功能通过命令SUBSCRIBE(订阅)／PUBLISH(发布)实现，并且发布订阅模式可以是多对多模式还可支持正则表达式，发布者可以向一个或多个频道发送消息，订阅者可订阅一个或者多个频道接受消息。</p>
+<blockquote>
+<ul>
+<li><p>示意图：</p>
+<ul>
+<li><p>发布者：</p>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/rd1.png" alt=""></p>
+</li>
+<li><p>订阅者：</p>
+<p><img src="https://github.com/AlexBruceLu/DAPP/wiki/rd2.png" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>操作示例，示例中将使用两个<code>goroutine</code>分别担任发布者和订阅者角色进行演示：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"time"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Subs</span><span class="params">()</span></span> &#123;  <span class="comment">//订阅者</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    conn, err := redis.Dial(<span class="string">"tcp"</span>, <span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    psc := redis.PubSubConn&#123;conn&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    psc.Subscribe(<span class="string">"channel1"</span>) <span class="comment">//订阅channel1频道</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">switch</span> v := psc.Receive().(<span class="keyword">type</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> redis.Message:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">            fmt.Printf(<span class="string">"%s: message: %s\n"</span>, v.Channel, v.Data)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> redis.Subscription:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">            fmt.Printf(<span class="string">"%s: %s %d\n"</span>, v.Channel, v.Kind, v.Count)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> error:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">            fmt.Println(v)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Push</span><span class="params">(message <span class="keyword">string</span>)</span></span>  &#123; <span class="comment">//发布者</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">    conn, _ := redis.Dial(<span class="string">"tcp"</span>, <span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">    _,err1 := conn.Do(<span class="string">"PUBLISH"</span>, <span class="string">"channel1"</span>, message)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err1 != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">    	fmt.Println(<span class="string">"pub err: "</span>, err1)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">go</span> Subs()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">go</span> Push(<span class="string">"this is wd"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">    time.Sleep(time.Second*<span class="number">3</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//channel1: subscribe 1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//channel1: message: this is wd</span></span></pre></td></tr></table></figure>
+
+<h4 id="事务操作"><a href="#事务操作" class="headerlink" title="事务操作"></a>事务操作</h4><p><code>MULTI</code>, <code>EXEC</code>,<code>DISCARD</code>和<code>WATCH</code>是构成Redis事务的基础，当然我们使用go语言对redis进行事务操作的时候本质也是使用这些命令。</p>
+<p><code>MULTI</code>：开启事务</p>
+<p><code>EXEC</code>：执行事务</p>
+<p><code>DISCARD</code>：取消事务</p>
+<p><code>WATCH</code>：监视事务中的键变化，一旦有改变则取消事务</p>
+<p><font color="red"><strong>示例：</strong></font></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    conn,err := redis.Dial(<span class="string">"tcp"</span>,<span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        fmt.Println(<span class="string">"connect redis error :"</span>,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">defer</span> conn.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"MULTI"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"INCR"</span>, <span class="string">"foo"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    conn.Send(<span class="string">"INCR"</span>, <span class="string">"bar"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    r, err := conn.Do(<span class="string">"EXEC"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(r)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//[1, 1]</span></span></pre></td></tr></table></figure>
+
+<h4 id="连接池使用"><a href="#连接池使用" class="headerlink" title="连接池使用"></a>连接池使用</h4><p><code>redis</code>连接池是通过<code>pool</code>结构体实现，以下是源码定义，相关参数说明已经备注：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Pool <span class="keyword">struct</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Dial is an application supplied function for creating and configuring a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// connection.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">//</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// The connection returned from Dial must not be in a special state</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// (subscribed to pubsub channel, transaction started, ...).</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    Dial <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="params">(Conn, error)</span> //连接方法</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// TestOnBorrow is an optional application supplied function for checking</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// the health of an idle connection before the connection is used again by</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// the application. Argument t is the time that the connection was returned</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// to the pool. If the function returns an error, then the connection is</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// closed.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    TestOnBorrow <span class="function"><span class="keyword">func</span><span class="params">(c Conn, t time.Time)</span> <span class="title">error</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Maximum number of idle connections in the pool.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    MaxIdle <span class="keyword">int</span>  <span class="comment">//最大的空闲连接数，即使没有redis连接时依然可以保持N个空闲的连接，而不被清除，随时处于待命状态</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Maximum number of connections allocated by the pool at a given time.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// When zero, there is no limit on the number of connections in the pool.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    MaxActive <span class="keyword">int</span> <span class="comment">//最大的激活连接数，同时最多有N个连接</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Close connections after remaining idle for this duration. If the value</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// is zero, then idle connections are not closed. Applications should set</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// the timeout to a value less than the server's timeout.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    IdleTimeout time.Duration  <span class="comment">//空闲连接等待时间，超过此时间后，空闲连接将被关闭</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// If Wait is true and the pool is at the MaxActive limit, then Get() waits</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// for a connection to be returned to the pool before returning.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">    Wait <span class="keyword">bool</span>  <span class="comment">//当配置项为true并且MaxActive参数有限制时候，使用Get方法等待一个连接返回给连接池</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Close connections older than this duration. If the value is zero, then</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// the pool does not close connections based on age.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">    MaxConnLifetime time.Duration</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">// contains filtered or unexported fields</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p><font color="red"><strong>示例：</strong></font></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"github.com/garyburd/redigo/redis"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Pool redis.Pool</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span>  &#123;      <span class="comment">//init 用于初始化一些参数，先于main执行</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    Pool = redis.Pool&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        MaxIdle:     <span class="number">16</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        MaxActive:   <span class="number">32</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        IdleTimeout: <span class="number">120</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        Dial: <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="params">(redis.Conn, error)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">return</span> redis.Dial(<span class="string">"tcp"</span>, <span class="string">"10.1.210.69:6379"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">        &#125;,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">    conn :=Pool.Get()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    res,err := conn.Do(<span class="string">"HSET"</span>,<span class="string">"student"</span>,<span class="string">"name"</span>,<span class="string">"jack"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">    fmt.Println(res,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    res1,err := redis.String(conn.Do(<span class="string">"HGET"</span>,<span class="string">"student"</span>,<span class="string">"name"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    fmt.Printf(<span class="string">"res:%s,error:%v"</span>,res1,err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//0 &lt;nil&gt;</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//res:jack,error:&lt;nil&gt;</span></span></pre></td></tr></table></figure>
+
+<h2 id="Golang-redis-学习指南"><a href="#Golang-redis-学习指南" class="headerlink" title="Golang redis 学习指南"></a>Golang redis 学习指南</h2><h3 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h3><h4 id="创建客户端"><a href="#创建客户端" class="headerlink" title="创建客户端"></a>创建客户端</h4><p>通过 redis.NewClient 函数即可创建一个 redis 客户端, 这个方法接收一个 <code>redis.Options</code>对象参数, 通过这个参数, 我们可以配置 redis 相关的属性, 例如 redis 服务器地址, 数据库名, 数据库密码等.<br>下面是一个连接的例子:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 redis 客户端</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createClient</span><span class="params">()</span> *<span class="title">redis</span>.<span class="title">Client</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	client := redis.NewClient(&amp;redis.Options&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">		Addr:     <span class="string">"localhost:6379"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">		Password: <span class="string">""</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">		DB:       <span class="number">0</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过 cient.Ping() 来检查是否成功连接到了 redis 服务器</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">pong, err := client.Ping().Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(pong, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">return</span> client</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="String-操作"><a href="#String-操作" class="headerlink" title="String 操作"></a>String 操作</h4><p><code>redis</code>的<code>String</code>操作有:</p>
+<blockquote>
+<p>set(key, value)：给数据库中名称为key的string赋予值value</p>
+<p>get(key)：返回数据库中名称为key的string的value</p>
+<p>getset(key, value)：给名称为key的string赋予上一次的value</p>
+<p>mget(key1, key2,…, key N)：返回库中多个string的value</p>
+<p>setnx(key, value)：添加string，名称为key，值为value</p>
+<p>setex(key, time, value)：向库中添加string，设定过期时间time</p>
+<p>mset(key N, value N)：批量设置多个string的值</p>
+<p>msetnx(key N, value N)：如果所有名称为key i的string都不存在</p>
+<p>incr(key)：名称为key的string增1操作</p>
+<p>incrby(key, integer)：名称为key的string增加integer</p>
+<p>decr(key)：名称为key的string减1操作</p>
+<p>decrby(key, integer)：名称为key的string减少integer</p>
+<p>append(key, value)：名称为key的string的值附加value</p>
+<p>substr(key, start, end)：返回名称为key的string的value的子串</p>
+</blockquote>
+<p>在 <code>go-redis</code> 中, 我们可以直接找到对应的操作方法, 直接上代码:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// String 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">stringOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 第三个参数是过期时间, 如果是0, 则表示没有过期时间.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	err := client.Set(<span class="string">"name"</span>, <span class="string">"xys"</span>, <span class="number">0</span>).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	val, err := client.Get(<span class="string">"name"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">		 <span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"name"</span>, val)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 这里设置过期时间.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">	err = client.Set(<span class="string">"age"</span>, <span class="string">"20"</span>, <span class="number">1</span> * time.Second).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">	client.Incr(<span class="string">"age"</span>) <span class="comment">// 自增</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">	client.Incr(<span class="string">"age"</span>) <span class="comment">// 自增</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">	client.Decr(<span class="string">"age"</span>) <span class="comment">// 自减</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">	val, err = client.Get(<span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"age"</span>, val) <span class="comment">// age 的值为21</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 因为 key "age" 的过期时间是一秒钟, 因此当一秒后, 此 key 会自动被删除了.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">	time.Sleep(<span class="number">1</span> * time.Second)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">	val, err = client.Get(<span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">		<span class="comment">// 因为 key "age" 已经过期了, 因此会有一个 redis: nil 的错误.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">		fmt.Printf(<span class="string">"error: %v\n"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"age"</span>, val)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="list-操作"><a href="#list-操作" class="headerlink" title="list 操作"></a>list 操作</h4><p>redis 的 list 操作有:</p>
+<blockquote>
+<p>rpush(key, value)：在名称为key的list尾添加一个值为value的元素</p>
+<p>lpush(key, value)：在名称为key的list头添加一个值为value的 元素</p>
+<p>llen(key)：返回名称为key的list的长度</p>
+<p>lrange(key, start, end)：返回名称为key的list中start至end之间的元素</p>
+<p>ltrim(key, start, end)：截取名称为key的list</p>
+<p>lindex(key, index)：返回名称为key的list中index位置的元素</p>
+<p>lset(key, index, value)：给名称为key的list中index位置的元素赋值</p>
+<p>lrem(key, count, value)：删除count个key的list中值为value的元素</p>
+<p>lpop(key)：返回并删除名称为key的list中的首元素</p>
+<p>rpop(key)：返回并删除名称为key的list中的尾元素</p>
+<p>blpop(key1, key2,… key N, timeout)：lpop命令的block版本。</p>
+<p>brpop(key1, key2,… key N, timeout)：rpop的block版本。</p>
+<p>rpoplpush(srckey, dstkey)：返回并删除名称为srckey的list的尾元素，并将该元素添加到名称为dstkey的list的头部</p>
+</blockquote>
+<p>同样地, 在 go-redis 中也可以找到对应的方法, 下面是一个简单的示例:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// list 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	client.RPush(<span class="string">"fruit"</span>, <span class="string">"apple"</span>) <span class="comment">//在名称为 fruit 的list尾添加一个值为value的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	client.LPush(<span class="string">"fruit"</span>, <span class="string">"banana"</span>) <span class="comment">//在名称为 fruit 的list头添加一个值为value的 元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	length, err := client.LLen(<span class="string">"fruit"</span>).Result() <span class="comment">//返回名称为 fruit 的list的长度</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"length: "</span>, length) <span class="comment">// 长度为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	value, err := client.LPop(<span class="string">"fruit"</span>).Result() <span class="comment">//返回并删除名称为 fruit 的list中的首元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fruit: "</span>, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	value, err = client.RPop(<span class="string">"fruit"</span>).Result() <span class="comment">// 返回并删除名称为 fruit 的list中的尾元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fruit: "</span>, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="set-操作"><a href="#set-操作" class="headerlink" title="set 操作"></a>set 操作</h4><blockquote>
+<p>redis 的 set 操作:</p>
+<p>sadd(key, member)：向名称为key的set中添加元素member</p>
+<p>srem(key, member) ：删除名称为key的set中的元素member</p>
+<p>spop(key) ：随机返回并删除名称为key的set中一个元素</p>
+<p>smove(srckey, dstkey, member) ：移到集合元素</p>
+<p>scard(key) ：返回名称为key的set的基数</p>
+<p>sismember(key, member) ：member是否是名称为key的set的元素</p>
+<p>sinter(key1, key2,…key N) ：求交集</p>
+<p>sinterstore(dstkey, (keys)) ：求交集并将交集保存到dstkey的集合</p>
+<p>sunion(key1, (keys)) ：求并集</p>
+<p>sunionstore(dstkey, (keys)) ：求并集并将并集保存到dstkey的集合</p>
+<p>sdiff(key1, (keys)) ：求差集</p>
+<p>sdiffstore(dstkey, (keys)) ：求差集并将差集保存到dstkey的集合</p>
+<p>smembers(key) ：返回名称为key的set的所有元素</p>
+<p>srandmember(key) ：随机返回名称为key的set的一个元素</p>
+</blockquote>
+<p>接下来是 go-redis 的 set 操作:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// set 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"Obama"</span>) <span class="comment">// 向 blacklist 中添加元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"Hillary"</span>) <span class="comment">// 再次添加</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"the Elder"</span>) <span class="comment">// 添加新元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"whitelist"</span>, <span class="string">"the Elder"</span>) <span class="comment">// 向 whitelist 添加元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 判断元素是否在集合中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	isMember, err := client.SIsMember(<span class="string">"blacklist"</span>, <span class="string">"Bush"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"Is Bush in blacklist: "</span>, isMember)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 求交集, 即既在黑名单中, 又在白名单中的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	names, err := client.SInter(<span class="string">"blacklist"</span>, <span class="string">"whitelist"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取到的元素是 "the Elder"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"Inter result: "</span>, names)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取指定集合的所有元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">	all, err := client.SMembers(<span class="string">"blacklist"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"All member: "</span>, all)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="hash-操作"><a href="#hash-操作" class="headerlink" title="hash 操作"></a>hash 操作</h4><p>redis 的 hash 操作:</p>
+<blockquote>
+<p>hset(key, field, value)：向名称为key的hash中添加元素field</p>
+<p>hget(key, field)：返回名称为key的hash中field对应的value</p>
+<p>hmget(key, (fields))：返回名称为key的hash中field i对应的value</p>
+<p>hmset(key, (fields))：向名称为key的hash中添加元素field </p>
+<p>hincrby(key, field, integer)：将名称为key的hash中field的value增加integer</p>
+<p>hexists(key, field)：名称为key的hash中是否存在键为field的域</p>
+<p>hdel(key, field)：删除名称为key的hash中键为field的域</p>
+<p>hlen(key)：返回名称为key的hash中元素个数</p>
+<p>hkeys(key)：返回名称为key的hash中所有键</p>
+<p>hvals(key)：返回名称为key的hash中所有键对应的value</p>
+<p>hgetall(key)：返回名称为key的hash中所有的键（field）及其对应的value</p>
+</blockquote>
+<p><code>go-redis</code> 中的 hash 操作:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// hash 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hashOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	client.HSet(<span class="string">"user_xys"</span>, <span class="string">"name"</span>, <span class="string">"xys"</span>); <span class="comment">// 向名称为 user_xys 的 hash 中添加元素 name</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	client.HSet(<span class="string">"user_xys"</span>, <span class="string">"age"</span>, <span class="string">"18"</span>); <span class="comment">// 向名称为 user_xys 的 hash 中添加元素 age</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 批量地向名称为 user_test 的 hash 中添加元素 name 和 age</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	client.HMSet(<span class="string">"user_test"</span>, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;<span class="string">"name"</span>: <span class="string">"test"</span>, <span class="string">"age"</span>:<span class="string">"20"</span>&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 批量获取名为 user_test 的 hash 中的指定字段的值.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">	fields, err := client.HMGet(<span class="string">"user_test"</span>, <span class="string">"name"</span>, <span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fields in user_test: "</span>, fields)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取名为 user_xys 的 hash 中的字段个数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">	length, err := client.HLen(<span class="string">"user_xys"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"field count in user_xys: "</span>, length) <span class="comment">// 字段个数为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 删除名为 user_test 的 age 字段</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">	client.HDel(<span class="string">"user_test"</span>, <span class="string">"age"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">	age, err := client.HGet(<span class="string">"user_test"</span>, <span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">		fmt.Printf(<span class="string">"Get user_test age error: %v\n"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">	&#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">		fmt.Println(<span class="string">"user_test age is: "</span>, age) <span class="comment">// 字段个数为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="关于连接池"><a href="#关于连接池" class="headerlink" title="关于连接池"></a>关于连接池</h4><p>redis.v4 包实现了 redis 的连接池管理, 因此我们就不需要自己手动管理 redis 的连接了. 默认情况下, redis.v4 的 redis 连接池大小是10, 不过我们可以在初始化 redis 客户端时自行设置连接池的大小, 例如:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">client := redis.NewClient(&amp;redis.Options&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">	Addr:     <span class="string">"localhost:6379"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	Password: <span class="string">""</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	DB:       <span class="number">0</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">	PoolSize: <span class="number">5</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;)</span></pre></td></tr></table></figure>
+
+<p>通过 redis.Options 的 PoolSize 属性, 我们设置了 redis 连接池的大小为5.那么接下来我们来看一下这个设置有什么效果吧:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// redis.v4 的连接池管理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connectPool</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">	wg := sync.WaitGroup&#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">	wg.Add(<span class="number">10</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">			<span class="keyword">defer</span> wg.Done()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">			<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">				client.Set(fmt.Sprintf(<span class="string">"name%d"</span>, j), fmt.Sprintf(<span class="string">"xys%d"</span>, j), <span class="number">0</span>).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">				client.Get(fmt.Sprintf(<span class="string">"name%d"</span>, j)).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">			&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">			fmt.Printf(<span class="string">"PoolStats, TotalConns: %d, FreeConns: %d\n"</span>, client.PoolStats().TotalConns, client.PoolStats().FreeConns);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">		&#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">	wg.Wait()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<p>上面的例子启动了10个 routine 来不断向 redis 读写数据, 然后我们通过 client.PoolStats() 获取连接池的信息. 运行这个例子, 输出如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 3</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 4</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">PoolStats, TotalConns: 5, FreeConns: 5</span></pre></td></tr></table></figure>
+
+<p>通过输出可以看到, 此时最大的连接池数量确实是 5 了, 并且一开始时, 因为 coroutine 的数量大于5, 会造成 redis 连接不足的情况(反映在 FreeConns 上就是前几次的输出 FreeConns 一直是1), 当某个 coroutine 结束后, 会释放此 redis 连接, 因此 FreeConns 会增加.</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">//完整示例</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// author xiongyongshun</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// project go_redis</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// version 1.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// created 16/10/6 03:49</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"fmt"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"gopkg.in/redis.v4"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"time"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">	<span class="string">"sync"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">	client := createClient()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">defer</span> client.Close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">	stringOperation(client)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">	listOperation(client)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">	setOperation(client)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">	hashOperation(client)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">	connectPool(client)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建 redis 客户端</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createClient</span><span class="params">()</span> *<span class="title">redis</span>.<span class="title">Client</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">	client := redis.NewClient(&amp;redis.Options&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">		Addr:     <span class="string">"localhost:6379"</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">		Password: <span class="string">""</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line">		DB:       <span class="number">0</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">		PoolSize: <span class="number">5</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line">	&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">	pong, err := client.Ping().Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(pong, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">return</span> client</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// String 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">stringOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 第三个参数是过期时间, 如果是0, 则表示没有过期时间.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line">	err := client.Set(<span class="string">"name"</span>, <span class="string">"xys"</span>, <span class="number">0</span>).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line">	val, err := client.Get(<span class="string">"name"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"name"</span>, val)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 这里设置过期时间.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line">	err = client.Set(<span class="string">"age"</span>, <span class="string">"20"</span>, <span class="number">1</span> * time.Second).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line">	client.Incr(<span class="string">"age"</span>) <span class="comment">// 自增</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line">	client.Incr(<span class="string">"age"</span>) <span class="comment">// 自增</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">58</span></pre></td><td class="code"><pre><span class="line">	client.Decr(<span class="string">"age"</span>) <span class="comment">// 自减</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">59</span></pre></td><td class="code"><pre><span class="line">	val, err = client.Get(<span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">60</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">61</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">62</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">63</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"age"</span>, val) <span class="comment">// age 的值为21</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">64</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 因为 key "age" 的过期时间是一秒钟, 因此当一秒后, 此 key 会自动被删除了.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">65</span></pre></td><td class="code"><pre><span class="line">	time.Sleep(<span class="number">1</span> * time.Second)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">66</span></pre></td><td class="code"><pre><span class="line">	val, err = client.Get(<span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">67</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">68</span></pre></td><td class="code"><pre><span class="line">		<span class="comment">// 因为 key "age" 已经过期了, 因此会有一个 redis: nil 的错误.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">69</span></pre></td><td class="code"><pre><span class="line">		fmt.Printf(<span class="string">"error: %v\n"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">70</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">71</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"age"</span>, val)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">72</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">73</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">74</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// list 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">75</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">listOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">76</span></pre></td><td class="code"><pre><span class="line">	client.RPush(<span class="string">"fruit"</span>, <span class="string">"apple"</span>) <span class="comment">//在名称为 fruit 的list尾添加一个值为value的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">77</span></pre></td><td class="code"><pre><span class="line">	client.LPush(<span class="string">"fruit"</span>, <span class="string">"banana"</span>) <span class="comment">//在名称为 fruit 的list头添加一个值为value的 元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">78</span></pre></td><td class="code"><pre><span class="line">	length, err := client.LLen(<span class="string">"fruit"</span>).Result() <span class="comment">//返回名称为 fruit 的list的长度</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">79</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">80</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">81</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">82</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"length: "</span>, length) <span class="comment">// 长度为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">83</span></pre></td><td class="code"><pre><span class="line">	value, err := client.LPop(<span class="string">"fruit"</span>).Result() <span class="comment">//返回并删除名称为 fruit 的list中的首元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">84</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">85</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">86</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">87</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fruit: "</span>, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">88</span></pre></td><td class="code"><pre><span class="line">	value, err = client.RPop(<span class="string">"fruit"</span>).Result() <span class="comment">// 返回并删除名称为 fruit 的list中的尾元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">89</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">90</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">91</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">92</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fruit: "</span>, value)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">93</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">94</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">95</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// set 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">96</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">97</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"Obama"</span>) <span class="comment">// 向 blacklist 中添加元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">98</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"Hillary"</span>) <span class="comment">// 再次添加</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">99</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"blacklist"</span>, <span class="string">"the Elder"</span>) <span class="comment">// 添加新元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">100</span></pre></td><td class="code"><pre><span class="line">	client.SAdd(<span class="string">"whitelist"</span>, <span class="string">"the Elder"</span>) <span class="comment">// 向 whitelist 添加元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">101</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 判断元素是否在集合中</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">102</span></pre></td><td class="code"><pre><span class="line">	isMember, err := client.SIsMember(<span class="string">"blacklist"</span>, <span class="string">"Bush"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">103</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">104</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">105</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">106</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"Is Bush in blacklist: "</span>, isMember)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">107</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 求交集, 即既在黑名单中, 又在白名单中的元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">108</span></pre></td><td class="code"><pre><span class="line">	names, err := client.SInter(<span class="string">"blacklist"</span>, <span class="string">"whitelist"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">109</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">110</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">111</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">112</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">113</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取到的元素是 "the Elder"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">114</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"Inter result: "</span>, names)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">115</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取指定集合的所有元素</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">116</span></pre></td><td class="code"><pre><span class="line">	all, err := client.SMembers(<span class="string">"blacklist"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">117</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">118</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">119</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">120</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"All member: "</span>, all)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">121</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">122</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">123</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">124</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// hash 操作</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">125</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">hashOperation</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">126</span></pre></td><td class="code"><pre><span class="line">	client.HSet(<span class="string">"user_xys"</span>, <span class="string">"name"</span>, <span class="string">"xys"</span>); <span class="comment">// 向名称为 user_xys 的 hash 中添加元素 name</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">127</span></pre></td><td class="code"><pre><span class="line">	client.HSet(<span class="string">"user_xys"</span>, <span class="string">"age"</span>, <span class="string">"18"</span>); <span class="comment">// 向名称为 user_xys 的 hash 中添加元素 age</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">128</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 批量地向名称为 user_test 的 hash 中添加元素 name 和 age</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">129</span></pre></td><td class="code"><pre><span class="line">	client.HMSet(<span class="string">"user_test"</span>, <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;<span class="string">"name"</span>: <span class="string">"test"</span>, <span class="string">"age"</span>:<span class="string">"20"</span>&#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">130</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 批量获取名为 user_test 的 hash 中的指定字段的值.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">131</span></pre></td><td class="code"><pre><span class="line">	fields, err := client.HMGet(<span class="string">"user_test"</span>, <span class="string">"name"</span>, <span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">132</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">133</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">134</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">135</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"fields in user_test: "</span>, fields)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">136</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">137</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 获取名为 user_xys 的 hash 中的字段个数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">138</span></pre></td><td class="code"><pre><span class="line">	length, err := client.HLen(<span class="string">"user_xys"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">139</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">140</span></pre></td><td class="code"><pre><span class="line">		<span class="built_in">panic</span>(err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">141</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">142</span></pre></td><td class="code"><pre><span class="line">	fmt.Println(<span class="string">"field count in user_xys: "</span>, length) <span class="comment">// 字段个数为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">143</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">144</span></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 删除名为 user_test 的 age 字段</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">145</span></pre></td><td class="code"><pre><span class="line">	client.HDel(<span class="string">"user_test"</span>, <span class="string">"age"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">146</span></pre></td><td class="code"><pre><span class="line">	age, err := client.HGet(<span class="string">"user_test"</span>, <span class="string">"age"</span>).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">147</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">148</span></pre></td><td class="code"><pre><span class="line">		fmt.Printf(<span class="string">"Get user_test age error: %v\n"</span>, err)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">149</span></pre></td><td class="code"><pre><span class="line">	&#125; <span class="keyword">else</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">150</span></pre></td><td class="code"><pre><span class="line">		fmt.Println(<span class="string">"user_test age is: "</span>, age) <span class="comment">// 字段个数为2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">151</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">152</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">153</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">154</span></pre></td><td class="code"><pre><span class="line"><span class="comment">// redis.v4 的连接池管理</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">155</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">connectPool</span><span class="params">(client *redis.Client)</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">156</span></pre></td><td class="code"><pre><span class="line">	wg := sync.WaitGroup&#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">157</span></pre></td><td class="code"><pre><span class="line">	wg.Add(<span class="number">10</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">158</span></pre></td><td class="code"><pre><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">159</span></pre></td><td class="code"><pre><span class="line">		<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">160</span></pre></td><td class="code"><pre><span class="line">			<span class="keyword">defer</span> wg.Done()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">161</span></pre></td><td class="code"><pre><span class="line">			<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; <span class="number">100</span>; j++ &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">162</span></pre></td><td class="code"><pre><span class="line">				client.Set(fmt.Sprintf(<span class="string">"name%d"</span>, j), fmt.Sprintf(<span class="string">"xys%d"</span>, j), <span class="number">0</span>).Err()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">163</span></pre></td><td class="code"><pre><span class="line">				client.Get(fmt.Sprintf(<span class="string">"name%d"</span>, j)).Result()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">164</span></pre></td><td class="code"><pre><span class="line">			&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">165</span></pre></td><td class="code"><pre><span class="line">			fmt.Printf(<span class="string">"PoolStats, TotalConns: %d, FreeConns: %d\n"</span>,client.PoolStats().TotalConns,client.PoolStats().FreeConns)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">166</span></pre></td><td class="code"><pre><span class="line">		&#125;()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">167</span></pre></td><td class="code"><pre><span class="line">	&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">168</span></pre></td><td class="code"><pre><span class="line">	wg.Wait()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">169</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a  href="/2019/12/09/go%E6%93%8D%E4%BD%9Credis/">go操作Redis</a></p>
+        <p><span>文章作者:</span><a  href="/" title="访问 AlexBruce Lu 的个人博客">AlexBruce Lu</a></p>
+        <p><span>发布时间:</span>2019年12月09日 - 15时14分</p>
+        <p><span>最后更新:</span>2019年12月09日 - 15时14分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/12/09/go%E6%93%8D%E4%BD%9Credis/" title="go操作Redis">https://alexbrucelu.github.io/2019/12/09/go%E6%93%8D%E4%BD%9Credis/</a>
+            <span class="copy-path" data-clipboard-text="原文: https://alexbrucelu.github.io/2019/12/09/go%E6%93%8D%E4%BD%9Credis/　　作者: AlexBruce Lu" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" target="_blank" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a  href="/2019/12/09/go%E4%B8%AD%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          函数和方法的区别
+        
+      </div>
+    </a>
+  
+  
+    <a  href="/2019/12/09/http%E5%8F%8A%E5%85%B6%E6%A0%87%E5%87%86%E5%BA%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">http及其标准库</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#redis简介"><span class="toc-number">1.</span> <span class="toc-text">redis简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#源码部署"><span class="toc-number">2.</span> <span class="toc-text">源码部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#启动与停止"><span class="toc-number">2.1.</span> <span class="toc-text">启动与停止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看版本信息"><span class="toc-number">2.2.</span> <span class="toc-text">查看版本信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#golang操作redis"><span class="toc-number">3.</span> <span class="toc-text">golang操作redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">3.1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接"><span class="toc-number">3.2.</span> <span class="toc-text">连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#命令操作"><span class="toc-number">3.3.</span> <span class="toc-text">命令操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#操作示例：get、set"><span class="toc-number">3.3.1.</span> <span class="toc-text">操作示例：get、set</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#设置key过期时间"><span class="toc-number">3.3.2.</span> <span class="toc-text">设置key过期时间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#批量获取mget、批量设置mset"><span class="toc-number">3.3.3.</span> <span class="toc-text">批量获取mget、批量设置mset</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#列表操作"><span class="toc-number">3.3.4.</span> <span class="toc-text">列表操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash操作"><span class="toc-number">3.3.5.</span> <span class="toc-text">hash操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pipelining-管道"><span class="toc-number">3.3.6.</span> <span class="toc-text">Pipelining(管道)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#发布-订阅"><span class="toc-number">3.3.7.</span> <span class="toc-text">发布&#x2F;订阅</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#事务操作"><span class="toc-number">3.3.8.</span> <span class="toc-text">事务操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接池使用"><span class="toc-number">3.3.9.</span> <span class="toc-text">连接池使用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Golang-redis-学习指南"><span class="toc-number">4.</span> <span class="toc-text">Golang redis 学习指南</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本操作"><span class="toc-number">4.1.</span> <span class="toc-text">基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建客户端"><span class="toc-number">4.1.1.</span> <span class="toc-text">创建客户端</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#String-操作"><span class="toc-number">4.1.2.</span> <span class="toc-text">String 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#list-操作"><span class="toc-number">4.1.3.</span> <span class="toc-text">list 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#set-操作"><span class="toc-number">4.1.4.</span> <span class="toc-text">set 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#hash-操作"><span class="toc-number">4.1.5.</span> <span class="toc-text">hash 操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关于连接池"><span class="toc-number">4.1.6.</span> <span class="toc-text">关于连接池</span></a></li></ol></li></ol></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a  href="/2019/12/09/go%E4%B8%AD%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/" title="上一篇: 函数和方法的区别">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a  href="/2019/12/09/http%E5%8F%8A%E5%85%B6%E6%A0%87%E5%87%86%E5%BA%93/" title="下一篇: http及其标准库">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MySQL%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">MySQL的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MongoDB%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">MongoDB的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Linux%E8%A3%85%E6%9C%BA%E7%AC%94%E8%AE%B0/">Linux+Go装机笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/MySQL%E7%9A%84%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">MySQL的常用命令与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Solidity%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">Solidity基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/kafka%E5%AE%89%E8%A3%85%E4%B8%8E%E8%AE%BE%E7%BD%AE/">kafka</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/k8s/">Kubernetes（K8s）</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/micro/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B/">深度理解“三次握手，四次挥手”</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%86%85%E5%BB%BA%E5%AE%B9%E5%99%A8/">内建容器</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/protobuf/">protobuf</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/">基础语法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%88%BF%E5%B1%8B%E7%A7%9F%E8%B5%81/">Micro</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%9B%BE%E8%A7%A3Go%E8%AF%AD%E8%A8%80%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D/">Go语言内存分配</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B5%8B%E8%AF%95%E4%B8%8E%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E5%B8%B8%E8%A7%81%E5%85%B1%E8%AF%86%E7%AE%97%E6%B3%95/">常见的共识算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E7%B1%BB%E5%9E%8B%E6%96%AD%E8%A8%80/">类型断言</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86Go%E8%AF%AD%E8%A8%80%E4%B9%8Bunsafe/">Go语言unsafe</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E5%8F%8A%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">错误处理及资源管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/">面向对象</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E8%AF%A6%E8%A7%A3TCPIP%E5%8D%8F%E8%AE%AE/">详解TCP/IP协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E9%9D%A2%E5%90%91%E6%8E%A5%E5%8F%A3/">面向接口</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E6%B7%B1%E5%BA%A6%E8%A7%A3%E5%AF%86Go%E8%AF%AD%E8%A8%80%E4%B9%8B%E5%85%B3%E4%BA%8E%20interface%20%E7%9A%8410%E4%B8%AA%E9%97%AE%E9%A2%98/">Go语言interface</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/%E8%AF%A6%E8%A7%A3http%E5%8D%8F%E8%AE%AE/">详解http协议</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/C%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%89%A7%E8%A1%8C/">测试与性能调优</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Docker%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%80%E4%BB%8B/">Docker的安装与简介</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/GRPC/">GRPC</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/Golang%E4%B9%8B%E8%BD%BB%E6%9D%BE%E5%8C%96%E8%A7%A3defer%E7%9A%84%E6%B8%A9%E6%9F%94%E9%99%B7%E9%98%B1/">Golang之轻松化解defer的温柔陷阱</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/HTTP%E5%B9%82%E7%AD%89%E6%80%A7/">http幂等性</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/HyperledgerFabric01/">HyperLedger Fabric</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/consul/">Consul</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gRPC%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/">gRPC官方文档</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/golang%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">golang性能优化</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/channel/">channel</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gorountine/">gorountine</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/gotest/">Go Test</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/go%E4%B8%AD%E5%87%BD%E6%95%B0%E5%92%8C%E6%96%B9%E6%B3%95%E7%9A%84%E5%8C%BA%E5%88%AB/">函数和方法的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/go%E6%93%8D%E4%BD%9Credis/">go操作Redis</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/http%E5%8F%8A%E5%85%B6%E6%A0%87%E5%87%86%E5%BA%93/">http及其标准库</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/http%E7%BD%91%E7%BB%9C/">http与https协议的区别</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/12/09/01/">微服务基础简介</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 AlexBruce Lu
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div>
+</body>
+</html>
