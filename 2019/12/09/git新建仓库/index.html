@@ -6,17 +6,17 @@
   <meta name="keywords" content=" git ">
   <meta name="description" content="git 新建仓库，添加远程分之到本地 | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="@[TOC] 准备开启go mod 把 golang 升级到 1.11（现在1.13 已经发布了，建议使用1.13） 设置 GO111MODULE  GO111MODULE GO111MODULE 有三个值：off, on和auto（默认值）。  GO111MODULE&#x3D;off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。">
+<meta name="description" content="@[TOC] 一、操作系统:研发工程师默认都是台式机，安装ubuntu16.04操作系统，默认我们安装好cuda和显卡驱动相关软件。如果需要重装系统请联系各属地IT，目前采用USB自动安装的方式，10分钟内可以安装完成 二、卸载原有的驱动和cuda:sudo su root service lightdm stop nvidia-uninstall apt-get install autoremo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git 新建仓库，添加远程分之到本地">
-<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;09&#x2F;go_mod%E5%9F%BA%E7%A1%80%E7%AF%87&#x2F;index.html">
+<meta property="og:title" content="Ubuntu 16.04 安装 CUDA">
+<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;09&#x2F;Ubuntu_16.04%E5%AE%89%E8%A3%85cuda%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%AC&#x2F;index.html">
 <meta property="og:site_name" content="AlexBruce">
-<meta property="og:description" content="@[TOC] 准备开启go mod 把 golang 升级到 1.11（现在1.13 已经发布了，建议使用1.13） 设置 GO111MODULE  GO111MODULE GO111MODULE 有三个值：off, on和auto（默认值）。  GO111MODULE&#x3D;off，go命令行将不会支持module功能，寻找依赖包的方式将会沿用旧版本那种通过vendor目录或者GOPATH模式来查找。">
-<meta property="article:published_time" content="2019-12-09T10:56:13.000Z">
-<meta property="article:modified_time" content="2019-12-09T11:00:06.449Z">
+<meta property="og:description" content="@[TOC] 一、操作系统:研发工程师默认都是台式机，安装ubuntu16.04操作系统，默认我们安装好cuda和显卡驱动相关软件。如果需要重装系统请联系各属地IT，目前采用USB自动安装的方式，10分钟内可以安装完成 二、卸载原有的驱动和cuda:sudo su root service lightdm stop nvidia-uninstall apt-get install autoremo">
+<meta property="article:published_time" content="2019-12-09T11:05:23.000Z">
+<meta property="article:modified_time" content="2019-12-09T11:42:54.768Z">
 <meta property="article:author" content="AlexBruce Lu">
-<meta property="article:tag" content="go">
-<meta property="article:tag" content="go mod">
+<meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="CUDA">
 <meta name="twitter:card" content="summary">
 
 
@@ -383,6 +383,17 @@
         </span>
         
         
+        <span class="top-comment" title="跳转至评论区">
+            <a href="#comments">
+                评论:<span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </a>
+        </span>
+        
     </div>
     
     <div class="toc-ref">
@@ -434,6 +445,27 @@ git push -u origin master</code></pre>
     </p>
 </div>
 
+
+
+    <div id="comments"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
+<script type="text/javascript">
+    $.getScript('/js/gitalk.js', function () {
+        var gitalk = new Gitalk({
+            clientID: '',
+            clientSecret: '',
+            repo: 'AlexBruceLu.github.io',
+            owner: 'AlexBruceLu',
+            admin: ['AlexBruceLu'],
+            id: decodeURI(location.pathname),
+            distractionFreeMode: 'true',
+            language: 'zh-CN',
+            perPage: parseInt('10',10)
+        })
+        gitalk.render('comments')
+    })
+</script>
 
 
 
