@@ -6,21 +6,17 @@
   <meta name="keywords" content=" 金融 ">
   <meta name="description" content="毒丸计划：防止恶意收购 | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="@[TOC] Git commit message 规范  git是现在市面上最流行的版本控制工具，书写良好的commit message能大大提高代码维护的效率。但是在日常开发中由于缺少对于commit message的约束，导致填写内容随意、质量参差不齐，可读性低亦难以维护。在项目中引入commit message规范已是迫在眉睫。  用什么规范？现在市面上比较流行的方案是约定式提交规范（Co">
+<meta name="description" content="@[TOC] Q&amp;A1. 找不到libcuda.so.1 error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or director  solution： find &#x2F; -name libcuda.so.1 #寻找该动态库的位置  # Ubuntu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git commit 规范">
-<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;10&#x2F;git_commit%E8%A7%84%E8%8C%83&#x2F;index.html">
+<meta property="og:title" content="cuda多版本切换可能会出现的问题">
+<meta property="og:url" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;11&#x2F;cuda%E5%A4%9A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98&#x2F;index.html">
 <meta property="og:site_name" content="AlexBruce">
-<meta property="og:description" content="@[TOC] Git commit message 规范  git是现在市面上最流行的版本控制工具，书写良好的commit message能大大提高代码维护的效率。但是在日常开发中由于缺少对于commit message的约束，导致填写内容随意、质量参差不齐，可读性低亦难以维护。在项目中引入commit message规范已是迫在眉睫。  用什么规范？现在市面上比较流行的方案是约定式提交规范（Co">
-<meta property="og:image" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;10&#x2F;img&#x2F;16b.jepg">
-<meta property="og:image" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;10&#x2F;img&#x2F;16b7.jepg">
-<meta property="og:image" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;10&#x2F;img&#x2F;16b73.jepg">
-<meta property="article:published_time" content="2019-12-10T05:29:36.000Z">
-<meta property="article:modified_time" content="2019-12-10T05:44:51.816Z">
+<meta property="og:description" content="@[TOC] Q&amp;A1. 找不到libcuda.so.1 error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or director  solution： find &#x2F; -name libcuda.so.1 #寻找该动态库的位置  # Ubuntu">
+<meta property="article:published_time" content="2019-12-11T03:45:00.000Z">
+<meta property="article:modified_time" content="2019-12-11T06:07:06.787Z">
 <meta property="article:author" content="AlexBruce Lu">
-<meta property="article:tag" content="git">
+<meta property="article:tag" content="CUDA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;alexbrucelu.github.io&#x2F;2019&#x2F;12&#x2F;10&#x2F;img&#x2F;16b.jepg">
 
 
 <link rel="icon" href="/img/avatar.jpg">
@@ -162,11 +158,11 @@
 
 
 <ul>
-    <li><div class="all active">全部文章<small>(8)</small></div></li>
+    <li><div class="all active">全部文章<small>(9)</small></div></li>
     
         
             
-            <li><div data-rel="Linux"><i class="fold iconfont icon-right"></i>Linux<small>(2)</small></div>
+            <li><div data-rel="Linux"><i class="fold iconfont icon-right"></i>Linux<small>(3)</small></div>
                 
                     <ul class="sub hide">
                         
@@ -174,7 +170,7 @@
                             
                         </li>
                             
-                        <li><div data-rel="NVIDIA">NVIDIA<small>(1)</small></div>
+                        <li><div data-rel="NVIDIA">NVIDIA<small>(2)</small></div>
                             
                         </li>
                             
@@ -270,8 +266,8 @@
     </div>
     <div><a class="about  hasFriend  site_url"  href="/about">关于</a><a style="width: 50%"  class="friends">友链</a></div>
 </div>
-<input type="hidden" id="yelog_site_posts_number" value="8">
-<input type="hidden" id="yelog_site_word_count" value="5k">
+<input type="hidden" id="yelog_site_posts_number" value="9">
+<input type="hidden" id="yelog_site_word_count" value="5.3k">
 <div style="display: none">
     <span id="busuanzi_value_site_uv"></span>
     <span id="busuanzi_value_site_pv"></span>
@@ -408,6 +404,14 @@
            data-author="" >
             <span class="post-title" title="程序员的自我修养--注重时效的哲学">程序员的自我修养--注重时效的哲学</span>
             <span class="post-date" title="2019-12-10 16:25:56">2019/12/10</span>
+        </a>
+        
+        <a  class="Linux NVIDIA "
+           href="/2019/12/11/cuda%E5%A4%9A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/"
+           data-tag="CUDA"
+           data-author="" >
+            <span class="post-title" title="cuda多版本切换可能会出现的问题">cuda多版本切换可能会出现的问题</span>
+            <span class="post-date" title="2019-12-11 11:45:00">2019/12/11</span>
         </a>
         
     </nav>

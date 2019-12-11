@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>git commit 规范 | AlexBruce</title>
-  <meta name="keywords" content=" git ">
-  <meta name="description" content="git commit 规范 | AlexBruce">
+  <title>cuda多版本切换可能会出现的问题 | AlexBruce</title>
+  <meta name="keywords" content=" CUDA ">
+  <meta name="description" content="cuda多版本切换可能会出现的问题 | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[TOC] Q&amp;A1. 找不到libcuda.so.1 error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or director  solution： find &#x2F; -name libcuda.so.1 #寻找该动态库的位置  # Ubuntu">
 <meta property="og:type" content="article">
@@ -426,9 +426,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-git_commit规范" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-cuda多版本切换可能会出现的问题" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">git commit 规范</h1>
+        <h1 class="article-title">cuda多版本切换可能会出现的问题</h1>
     
     <div class="article-meta">
         
@@ -436,28 +436,28 @@
         
         <span class="book">
             
-                <a  data-rel="工具">工具</a>/
+                <a  data-rel="Linux">Linux</a>/
             
-                <a  data-rel="git">git</a>
+                <a  data-rel="NVIDIA">NVIDIA</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color4">git</a>
+            <a class="color5">CUDA</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-10 13:44:51'>2019-12-10 13:29</time>
+        创建时间:<time class="date" title='更新时间: 2019-12-11 14:07:06'>2019-12-11 11:45</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.4k</span>
+        <span>字数:268</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -487,7 +487,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-commit-message-规范"><span class="toc-text">Git commit message 规范</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用什么规范？"><span class="toc-text">用什么规范？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-全局安装commitizen-amp-cz-conventional-changelog"><span class="toc-text">1. 全局安装commitizen &amp; cz-conventional-changelog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-项目内安装commitlint-amp-husky"><span class="toc-text">2. 项目内安装commitlint &amp; husky</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-添加相应配置"><span class="toc-text">3. 添加相应配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用"><span class="toc-text">4. 使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Commit-message规范在rrd-fe落地使用情况"><span class="toc-text">Commit message规范在rrd-fe落地使用情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-type"><span class="toc-text">1. type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-scope"><span class="toc-text">2. scope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-body"><span class="toc-text">3. body</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-break-changes"><span class="toc-text">4. break changes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-affect-issues"><span class="toc-text">5. affect issues</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展阅读"><span class="toc-text">扩展阅读</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-amp-A"><span class="toc-text">Q&amp;A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-找不到libcuda-so-1"><span class="toc-text">1. 找不到libcuda.so.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-不同版本之间的切换"><span class="toc-text">2. 不同版本之间的切换</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -503,99 +503,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-commit-message-规范"><span class="toc-text">Git commit message 规范</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用什么规范？"><span class="toc-text">用什么规范？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-全局安装commitizen-amp-cz-conventional-changelog"><span class="toc-text">1. 全局安装commitizen &amp; cz-conventional-changelog</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-项目内安装commitlint-amp-husky"><span class="toc-text">2. 项目内安装commitlint &amp; husky</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-添加相应配置"><span class="toc-text">3. 添加相应配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-使用"><span class="toc-text">4. 使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Commit-message规范在rrd-fe落地使用情况"><span class="toc-text">Commit message规范在rrd-fe落地使用情况</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-type"><span class="toc-text">1. type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-scope"><span class="toc-text">2. scope</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-body"><span class="toc-text">3. body</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-break-changes"><span class="toc-text">4. break changes</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-affect-issues"><span class="toc-text">5. affect issues</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#扩展阅读"><span class="toc-text">扩展阅读</span></a></li></ol></li></ol></div></p>
-<h1 id="Git-commit-message-规范"><a href="#Git-commit-message-规范" class="headerlink" title="Git commit message 规范"></a>Git commit message 规范</h1><p><img src="../img/16b.jepg" alt="img"></p>
-<blockquote>
-<p>git是现在市面上最流行的版本控制工具，书写良好的commit message能大大提高代码维护的效率。但是在日常开发中由于缺少对于commit message的约束，导致填写内容随意、质量参差不齐，可读性低亦难以维护。在项目中引入commit message规范已是迫在眉睫。</p>
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Q-amp-A"><span class="toc-text">Q&amp;A</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-找不到libcuda-so-1"><span class="toc-text">1. 找不到libcuda.so.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-不同版本之间的切换"><span class="toc-text">2. 不同版本之间的切换</span></a></li></ol></li></ol></div></p>
+<h2 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h2><h3 id="1-找不到libcuda-so-1"><a href="#1-找不到libcuda-so-1" class="headerlink" title="1. 找不到libcuda.so.1"></a>1. 找不到libcuda.so.1</h3><blockquote>
+<p>error while loading shared libraries: libcuda.so.1: cannot open shared object file: No such file or director</p>
 </blockquote>
-<h2 id="用什么规范？"><a href="#用什么规范？" class="headerlink" title="用什么规范？"></a>用什么规范？</h2><p>现在市面上比较流行的方案是<code>约定式提交规范</code>（<code>Conventional Commits</code>），它受到了<code>Angular提交准则</code>的启发，并在很大程度上以其为依据。<code>约定式提交规范</code>是一种基于提交消息的轻量级约定。 它提供了一组用于创建清晰的提交历史的简单规则；这使得编写基于规范的自动化工具变得更容易。这个约定与<code>SemVer</code>相吻合，在提交信息中描述新特性、bug 修复和破坏性变更。它的 message 格式如下:</p>
-<pre><code>&lt;类型&gt;[可选的作用域]: &lt;描述&gt;
+<p>solution：</p>
+<pre><code class="bash">find / -name libcuda.so.1 #寻找该动态库的位置
 
-[可选的正文]
+# Ubuntu 下一般会在/usr/lib/x86_64-linux-gnu/libcuda.so.1
 
-[可选的脚注]
-复制代码</code></pre><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="1-全局安装commitizen-amp-cz-conventional-changelog"><a href="#1-全局安装commitizen-amp-cz-conventional-changelog" class="headerlink" title="1. 全局安装commitizen &amp; cz-conventional-changelog"></a>1. 全局安装commitizen &amp; cz-conventional-changelog</h3><p><code>commitizen</code>是一个撰写合格<code>commit message</code>的工具，用于代替<code>git commit</code> 指令，而<code>cz-conventional-changelog</code>适配器提供<a href="https://github.com/conventional-changelog/conventional-changelog" target="_blank" rel="noopener">conventional-changelog</a>标准（约定式提交标准）。基于不同需求，也可以使用不同适配器。</p>
-<pre><code>npm install -g commitizen cz-conventional-changelog
-echo &#39;{ &quot;path&quot;: &quot;cz-conventional-changelog&quot; }&#39; &gt; ~/.czrc
-复制代码</code></pre><p>安装完毕后，可直接使用<code>git cz</code>来取代<code>git commit</code>。</p>
-<p>全局模式下，需要 <code>~/.czrc</code> 配置文件, 为<code>commitizen</code>指定<code>Adapter</code>。</p>
-<h3 id="2-项目内安装commitlint-amp-husky"><a href="#2-项目内安装commitlint-amp-husky" class="headerlink" title="2. 项目内安装commitlint &amp; husky"></a>2. 项目内安装commitlint &amp; husky</h3><p><code>commitlint</code>负责用于对<code>commit message</code>进行格式校验，<code>husky</code>负责提供更易用的<code>git hook</code>。</p>
-<pre><code>Use npm
-npm i -D husky @commitlint/config-conventional @commitlint/cli
-复制代码
-Use yarn
-yarn add husky @commitlint/config-conventional @commitlint/cli -D
-复制代码</code></pre><p><code>commitlint</code>只能做格式规范，无法触及内容。对于内容质量的把控只能靠我们自己。</p>
-<h3 id="3-添加相应配置"><a href="#3-添加相应配置" class="headerlink" title="3. 添加相应配置"></a>3. 添加相应配置</h3><p>创建<code>commitlint.config.js</code></p>
-<pre><code># In the same path as package.json
+# 添加路径
+sudo echo &#39;/usr/lib/x86_64-linux-gnu/libcuda.so.1&#39; &gt;&gt; /etc/ld.so.conf.d/cuda.conf
+sudo ldconfig</code></pre>
+<h3 id="2-不同版本之间的切换"><a href="#2-不同版本之间的切换" class="headerlink" title="2. 不同版本之间的切换"></a>2. 不同版本之间的切换</h3><blockquote>
+<p>​    fatal error: cuda.h: No such file or directory</p>
+<p><strong><font color=red>可能是要切换版本的环境变量没有添加，所以首先添加环境变量</font></strong></p>
+</blockquote>
+<p>solution：</p>
+<pre><code class="bash">#添加环境变量 
+export PATH=/usr/local/cuda-8.0/bin:/usr/local/cuda-10.0/bin:/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64/:/usr/local/cuda-8.0/lib64/:/usr/local/cuda-10.0/lib64/:$LD_LIBRARY_PATH
 
-echo &#39;module.exports = {extends: [&quot;@commitlint/config-conventional&quot;]};&#39; &gt; ./commitlint.config.js
-复制代码</code></pre><p>引入<code>husky</code></p>
-<pre><code># package.json
+#在切换cuda版本时
+rm -rf /usr/local/cuda#删除之前创建的软链接
+sudo ln -s /usr/local/cuda-8.0/ /usr/local/cuda/
+nvcc --version #查看当前 cuda 版本
 
-...,
-&quot;husky&quot;: {
-    &quot;hooks&quot;: {
-      &quot;commit-msg&quot;: &quot;commitlint -e $GIT_PARAMS&quot;
-    }
-}
-复制代码</code></pre><h3 id="4-使用"><a href="#4-使用" class="headerlink" title="4. 使用"></a>4. 使用</h3><p>执行<code>git cz</code>进入interactive模式，根据提示依次填写</p>
-<pre><code>1.Select the type of change that you&#39;re committing 选择改动类型 (&lt;type&gt;)
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2016 NVIDIA Corporation
+Built on Mon_Jan_23_12:24:11_CST_2017
+Cuda compilation tools, release 8.0, V8.0.62
 
-2.What is the scope of this change (e.g. component or file name)? 填写改动范围 (&lt;scope&gt;)
-
-3.Write a short, imperative tense description of the change: 写一个精简的描述 (&lt;subject&gt;)
-
-4.Provide a longer description of the change: (press enter to skip) 对于改动写一段长描述 (&lt;body&gt;)
-
-5.Are there any breaking changes? (y/n) 是破坏性修改吗？默认n (&lt;footer&gt;)
-
-6.Does this change affect any openreve issues? (y/n) 改动修复了哪个问题？默认n (&lt;footer&gt;)
-复制代码</code></pre><p>生成的commit message格式如下：</p>
-<pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
-&lt;BLANK LINE&gt;
-&lt;body&gt;
-&lt;BLANK LINE&gt;
-&lt;footer&gt;
-复制代码</code></pre><p>填写完毕后，<code>husky</code>会调用<code>commitlint</code>对message进行格式校验，默认规定<code>type</code>及<code>subject</code>为必填项。</p>
-<p>任何<code>git commit</code>指令的<code>option</code>都能用在 <code>git cz</code>指令上, 例如<code>git cz -a</code></p>
-<h2 id="Commit-message规范在rrd-fe落地使用情况"><a href="#Commit-message规范在rrd-fe落地使用情况" class="headerlink" title="Commit message规范在rrd-fe落地使用情况"></a>Commit message规范在rrd-fe落地使用情况</h2><p>针对团队目前使用的情况，我们讨论后拟定了<code>commit message</code>每一部分的填写规则。</p>
-<h3 id="1-type"><a href="#1-type" class="headerlink" title="1. type"></a>1. type</h3><p><code>type</code>为必填项，用于指定commit的类型，约定了<code>feat</code>、<code>fix</code>两个<code>主要type</code>，以及docs、style、build、refactor、revert五个<code>特殊type</code>，<code>其余type</code>暂不使用。</p>
-<pre><code># 主要type
-feat:     增加新功能
-fix:      修复bug
-
-# 特殊type
-docs:     只改动了文档相关的内容
-style:    不影响代码含义的改动，例如去掉空格、改变缩进、增删分号
-build:    构造工具的或者外部依赖的改动，例如webpack，npm
-refactor: 代码重构时使用
-revert:   执行git revert打印的message
-
-# 暂不使用type
-test:     添加测试或者修改现有测试
-perf:     提高性能的改动
-ci:       与CI（持续集成服务）有关的改动
-chore:    不修改src或者test的其余修改，例如构建过程或辅助工具的变动
-复制代码</code></pre><p>当一次改动包括<code>主要type</code>与<code>特殊type</code>时，统一采用<code>主要type</code>。</p>
-<h3 id="2-scope"><a href="#2-scope" class="headerlink" title="2. scope"></a>2. scope</h3><p><code>scope</code>也为必填项，用于描述改动的范围，格式为项目名/模块名，例如： <code>node-pc/common</code> <code>rrd-h5/activity</code>，而<code>we-sdk</code>不需指定模块名。如果一次commit修改多个模块，建议拆分成多次commit，以便更好追踪和维护。</p>
-<h3 id="3-body"><a href="#3-body" class="headerlink" title="3. body"></a>3. body</h3><p><code>body</code>填写详细描述，主要描述<code>改动之前的情况</code>及<code>修改动机</code>，对于小的修改不作要求，但是重大需求、更新等必须添加body来作说明。</p>
-<h3 id="4-break-changes"><a href="#4-break-changes" class="headerlink" title="4. break changes"></a>4. break changes</h3><p><code>break changes</code>指明是否产生了破坏性修改，涉及break changes的改动必须指明该项，类似版本升级、接口参数减少、接口删除、迁移等。</p>
-<h3 id="5-affect-issues"><a href="#5-affect-issues" class="headerlink" title="5. affect issues"></a>5. affect issues</h3><p><code>affect issues</code>指明是否影响了某个问题。例如我们使用jira时，我们在<code>commit message</code>中可以填写其影响的<code>JIRA_ID</code>，若要开启该功能需要先打通<code>jira</code>与<code>gitlab</code>。参考文档：<a href="https://docs.gitlab.com/ee/user/project/integrations/jira.html" target="_blank" rel="noopener">docs.gitlab.com/ee/user/pro…</a></p>
-<p>填写方式例如：</p>
-<pre><code>re #JIRA_ID
-fix #JIRA_ID
-复制代码</code></pre><h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><ul>
-<li><p>完整的commit message示例</p>
-<p><img src="../img/16b7.jepg" alt="img"></p>
-</li>
-<li><p>相应的git log</p>
-<p><img src="../img/16b73.jepg" alt="img"></p>
-</li>
-</ul>
-<h2 id="扩展阅读"><a href="#扩展阅读" class="headerlink" title="扩展阅读"></a>扩展阅读</h2><p><a href="https://www.conventionalcommits.org/zh/v1.0.0-beta.3/" target="_blank" rel="noopener">conventional commits</a> <code>必读</code> 介绍约定式提交标准。</p>
-<p><a href="https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines" target="_blank" rel="noopener">Angular规范</a> <code>必读</code> 介绍Angular标准每个部分该写什么、该怎么写。</p>
-<p><a href="https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional#type-enum" target="_blank" rel="noopener">@commitlint/config-conventional</a> <code>必读</code> 介绍commitlint的校验规则config-conventional，以及一些常见passes/fails情况。</p>
+#cuda8.0 切换到 cuda9.0 
+rm -rf /usr/local/cuda
+sudo ln -s /usr/local/cuda-9.0/ /usr/local/cuda/
+nvcc --version</code></pre>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件. </span>
@@ -609,12 +551,12 @@ fix #JIRA_ID
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>git commit 规范</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.4k</span></p>
+    <p><span class="copy-title">文章标题:</span>cuda多版本切换可能会出现的问题</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">287</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="AlexBruce Lu">AlexBruce Lu</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-10, 13:29:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-10, 13:44:51</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/10/git_commit%E8%A7%84%E8%8C%83/" title="git commit 规范">https://alexbrucelu.github.io/2019/12/10/git_commit%E8%A7%84%E8%8C%83/</a>
+    <p><span class="copy-title">发布时间:</span>2019-12-11, 11:45:00</p>
+    <p><span class="copy-title">最后更新:</span>2019-12-11, 14:07:06</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/11/cuda%E5%A4%9A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/" title="cuda多版本切换可能会出现的问题">https://alexbrucelu.github.io/2019/12/11/cuda%E5%A4%9A%E7%89%88%E6%9C%AC%E5%88%87%E6%8D%A2%E5%8F%AF%E8%83%BD%E4%BC%9A%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
