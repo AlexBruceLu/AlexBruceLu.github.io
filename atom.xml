@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alexbrucelu.github.io/"/>
-  <updated>2019-12-11T06:07:06.787Z</updated>
+  <updated>2019-12-13T07:28:45.991Z</updated>
   <id>https://alexbrucelu.github.io/</id>
   
   <author>
@@ -15,6 +15,50 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>golang Runtime</title>
+    <link href="https://alexbrucelu.github.io/2019/12/13/golangRuntime/"/>
+    <id>https://alexbrucelu.github.io/2019/12/13/golangRuntime/</id>
+    <published>2019-12-13T06:29:45.000Z</published>
+    <updated>2019-12-13T07:28:45.991Z</updated>
+    
+    <content type="html"><![CDATA[<p>@[TOC]</p><h1 id="Golang-Runtime"><a href="#Golang-Runtime" class="headerlink" title="Golang Runtime"></a>Golang Runtime</h1><h2 id="什么是Golang-Runtime"><a href="#什么是Golang-Runtime" class="headerlink" title="什么是Golang Runtime"></a>什么是Golang Runtime</h2><blockquote><p>Golang Runtime 是go语言运行时所需要的基础设施</p><ol><li>协程调度、内存分配、GC</li><li>操作系统和CPU相关操作的封装（信号处理、系统调用、寄存器操作、原子操作等）、CGO</li><li>pprof、trace、race检测的支持</li><li>map、channel、string等内置类型及反射的实现</li></ol></blockquote><h3 id="与其他语言的不同"><a href="#与其他语言的不同" class="headerlink" title="与其他语言的不同"></a>与其他语言的不同</h3><ol><li><p>Go是没有虚拟机的概念的，所以runtime也被直接编译成native code</p></li><li><p>go 语言<code>Runtime</code> 代码和<code>用户代码</code> 是直接打包在一个可执行文件中</p></li><li><p><code>Runtime</code> 代码和<code>用户代码</code>在执行的时候并没有明显的界限，就是函数调用关系</p></li><li><p>go对系统调用的函数进行了封装，可不依赖于glibc</p></li><li><p>一些go的关键字被编译器编译成了runtime包下的函数</p><table><thead><tr><th>关键字</th><th>函数</th></tr></thead><tbody><tr><td>go</td><td>newproc</td></tr><tr><td>new</td><td>newobject</td></tr><tr><td>&lt;-        -&gt;</td><td>chansend1，chanrecv1</td></tr></tbody></table></li></ol><h3 id="协程结构体和切换函数"><a href="#协程结构体和切换函数" class="headerlink" title="协程结构体和切换函数"></a>协程结构体和切换函数</h3><pre><code class="go">type g struct {    goid   int64  // 协程id    status uint32 // 协程状态    stack  struct {        lo uintptr // 该协程拥有的栈低位        hi uintptr // 该协程拥有的栈高位    }    sched     gobuf   // 切换时保存的上下文信息    startfunc uintptr // 程序地址}type gobuf struct {    sp uintptr // 栈指针位置    pc uintptr // 运行到的程序位置}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;@[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;Golang-Runtime&quot;&gt;&lt;a href=&quot;#Golang-Runtime&quot; class=&quot;headerlink&quot; title=&quot;Golang Runtime&quot;&gt;&lt;/a&gt;Golang Runtime&lt;/h1&gt;&lt;h2 id=&quot;什么是
+      
+    
+    </summary>
+    
+    
+      <category term="编程语言" scheme="https://alexbrucelu.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+      <category term="GO" scheme="https://alexbrucelu.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/GO/"/>
+    
+    
+      <category term="go" scheme="https://alexbrucelu.github.io/tags/go/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ini配置库评析</title>
+    <link href="https://alexbrucelu.github.io/2019/12/13/ini%E9%85%8D%E7%BD%AE%E5%BA%93%E8%AF%84%E6%9E%90/"/>
+    <id>https://alexbrucelu.github.io/2019/12/13/ini%E9%85%8D%E7%BD%AE%E5%BA%93%E8%AF%84%E6%9E%90/</id>
+    <published>2019-12-13T06:12:03.000Z</published>
+    <updated>2019-12-13T06:12:03.613Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>cuda多版本切换可能会出现的问题</title>
@@ -228,16 +272,16 @@
     <link href="https://alexbrucelu.github.io/2019/12/09/git%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93/"/>
     <id>https://alexbrucelu.github.io/2019/12/09/git%E6%96%B0%E5%BB%BA%E4%BB%93%E5%BA%93/</id>
     <published>2019-12-09T10:40:43.000Z</published>
-    <updated>2019-12-09T10:44:12.272Z</updated>
+    <updated>2019-12-16T11:44:41.406Z</updated>
     
-    <content type="html"><![CDATA[<p>@[TOC]</p><h3 id="本地不存在仓库拉取远程分之"><a href="#本地不存在仓库拉取远程分之" class="headerlink" title="本地不存在仓库拉取远程分之"></a>本地不存在仓库拉取远程分之</h3><pre><code>echo &quot;# gin-web&quot; &gt;&gt; README.mdgit initgit add README.mdgit commit -m &quot;first commit&quot;git remote add origin https://github.com/AlexBruceLu/gin-web.gitgit push -u origin master</code></pre><h3 id="本地已有的仓库添加到远程"><a href="#本地已有的仓库添加到远程" class="headerlink" title="本地已有的仓库添加到远程"></a>本地已有的仓库添加到远程</h3><pre><code>git remote add origin https://github.com/AlexBruceLu/gin-web.gitgit push -u origin master</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>@[TOC]</p><h3 id="本地不存在仓库拉取远程分之"><a href="#本地不存在仓库拉取远程分之" class="headerlink" title="本地不存在仓库拉取远程分之"></a>本地不存在仓库拉取远程分之</h3><pre><code class="bash">$ echo &quot;# gin-web&quot; &gt;&gt; README.md$ git init$ git add README.md$ git commit -m &quot;first commit&quot;$ git remote add origin https://github.com/AlexBruceLu/gin-web.git$ git push -u origin master</code></pre><h3 id="本地已有的仓库添加到远程"><a href="#本地已有的仓库添加到远程" class="headerlink" title="本地已有的仓库添加到远程"></a>本地已有的仓库添加到远程</h3><pre><code class="bash">$ git remote add origin https://github.com/AlexBruceLu/gin-web.git$ git push -u origin master</code></pre><h3 id="git本地分支和远程分支改名"><a href="#git本地分支和远程分支改名" class="headerlink" title="git本地分支和远程分支改名"></a>git本地分支和远程分支改名</h3><pre><code class="bash">#1 将本地分支进行改名$ git branch -m old_branch new_branch#2 将远程分支的老分支删除$ git push origin :old_branch#3 将改名后的分支push到远程$ git push origin new_branch</code></pre>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;@[TOC]&lt;/p&gt;
-&lt;h3 id=&quot;本地不存在仓库拉取远程分之&quot;&gt;&lt;a href=&quot;#本地不存在仓库拉取远程分之&quot; class=&quot;headerlink&quot; title=&quot;本地不存在仓库拉取远程分之&quot;&gt;&lt;/a&gt;本地不存在仓库拉取远程分之&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;echo
+&lt;h3 id=&quot;本地不存在仓库拉取远程分之&quot;&gt;&lt;a href=&quot;#本地不存在仓库拉取远程分之&quot; class=&quot;headerlink&quot; title=&quot;本地不存在仓库拉取远程分之&quot;&gt;&lt;/a&gt;本地不存在仓库拉取远程分之&lt;/h3&gt;&lt;pre&gt;&lt;code clas
       
     
     </summary>
