@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://alexbrucelu.github.io/"/>
-  <updated>2020-01-07T07:09:39.618Z</updated>
+  <updated>2020-01-07T07:46:23.686Z</updated>
   <id>https://alexbrucelu.github.io/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>kubernetes组件</title>
+    <link href="https://alexbrucelu.github.io/2020/01/07/kubernetes%E7%BB%84%E4%BB%B6/"/>
+    <id>https://alexbrucelu.github.io/2020/01/07/kubernetes%E7%BB%84%E4%BB%B6/</id>
+    <published>2020-01-07T07:10:58.000Z</published>
+    <updated>2020-01-07T07:46:23.686Z</updated>
+    
+    <content type="html"><![CDATA[<p>@[TOC]</p><h1 id="kubernetes组件"><a href="#kubernetes组件" class="headerlink" title="kubernetes组件"></a>kubernetes组件</h1><h2 id="Master组件"><a href="#Master组件" class="headerlink" title="Master组件"></a>Master组件</h2><p><code>master</code>组件提供集群管理控制中心。</p><p><code>master</code>组件可以在集群任意节点运行。但是为了简单起见，通常在一台VM/机器上启动所有Master组件，并且不会在此VM/机器上运行用户容器。请参考 <a href="https://kubernetes.io/docs/admin/high-availability" target="_blank" rel="noopener">构建高可用群集</a>以来构建multi-master-VM。</p><h3 id="kube-apiserver"><a href="#kube-apiserver" class="headerlink" title="kube-apiserver"></a>kube-apiserver</h3><p><a href="https://kubernetes.io/docs/admin/kube-apiserver" target="_blank" rel="noopener">kube-apiserver</a>用于暴露Kubernetes API。任何的资源请求/调用操作都是通过kube-apiserver提供的接口进行。请参阅<a href="https://kubernetes.io/docs/admin/high-availability" target="_blank" rel="noopener">构建高可用群集</a>。</p><h3 id="ETCD"><a href="#ETCD" class="headerlink" title="ETCD"></a>ETCD</h3><p><a href="https://kubernetes.io/docs/admin/etcd" target="_blank" rel="noopener">etcd</a>是Kubernetes提供默认的存储系统，保存所有集群数据，使用时需要为etcd数据提供备份计划。</p><h3 id="kube-controller-manager"><a href="#kube-controller-manager" class="headerlink" title="kube-controller-manager"></a>kube-controller-manager</h3><p><a href="https://kubernetes.io/docs/admin/kube-controller-manager" target="_blank" rel="noopener">kube-controller-manager</a>运行管理控制器，它们是集群中处理常规任务的后台线程。逻辑上，每个控制器是一个单独的进程，但为了降低复杂性，它们都被编译成单个二进制文件，并在单个进程中运行。</p><p>这些控制器包括：</p><ul><li><a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">节点（Node）控制器</a>。</li><li>副本（Replication）控制器：负责维护系统中每个副本中的pod。</li><li>端点（Endpoints）控制器：填充Endpoints对象（即连接Services＆Pods）。</li><li><a href="http://docs.kubernetes.org.cn/84.html" target="_blank" rel="noopener">Service Account</a>和Token控制器：为新的<a href="http://docs.kubernetes.org.cn/242.html" target="_blank" rel="noopener">Namespace</a> 创建默认帐户访问API Token。</li></ul><h3 id="cloud-controller-manager"><a href="#cloud-controller-manager" class="headerlink" title="cloud-controller-manager"></a>cloud-controller-manager</h3><p>云控制器管理器负责与底层云提供商的平台交互。云控制器管理器是Kubernetes版本1.6中引入的，目前还是Alpha的功能。</p><p>云控制器管理器仅运行云提供商特定的（controller loops）控制器循环。可以通过将<code>--cloud-provider</code> flag设置为external启动kube-controller-manager ，来禁用控制器循环。</p><p><code>cloud-controller-manager</code> 具体功能：</p><ul><li>节点（Node）控制器</li><li>路由（Route）控制器</li><li>Service控制器</li><li>卷（Volume）控制器</li></ul><h3 id="kube-scheduler"><a href="#kube-scheduler" class="headerlink" title="kube-scheduler"></a>kube-scheduler</h3><p><code>kube-scheduler</code> 监视新创建没有分配到<a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">Node</a>的<a href="http://docs.kubernetes.org.cn/312.html" target="_blank" rel="noopener">Pod</a>，为Pod选择一个Node。</p><h3 id="插件addons"><a href="#插件addons" class="headerlink" title="插件addons"></a>插件addons</h3><p>插件（addon）是实现集群pod和Services功能的 。Pod由<a href="http://docs.kubernetes.org.cn/317.html" target="_blank" rel="noopener">Deployments</a>，ReplicationController等进行管理。Namespace 插件对象是在kube-system Namespace中创建。</p><h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>虽然不严格要求使用插件，但Kubernetes集群都应该具有集群 DNS。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                群集 DNS是一个DNS服务器，能够为 Kubernetes services提供 DNS记录。由Kubernetes启动的容器自动将这个DNS服务器包含在他们的DNS searches中。</p><p>了解<a href="https://www.kubernetes.org.cn/542.html" target="_blank" rel="noopener">更多详情</a></p><h4 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h4><p>kube-ui提供集群状态基础信息查看。更多详细信息，请参阅<a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/" target="_blank" rel="noopener">使用HTTP代理访问Kubernetes API</a></p><h4 id="容器资源监测"><a href="#容器资源监测" class="headerlink" title="容器资源监测"></a>容器资源监测</h4><p><a href="https://kubernetes.io/docs/user-guide/monitoring" target="_blank" rel="noopener">容器资源监控</a>提供一个UI浏览监控数据。</p><h4 id="cluster-level-logging"><a href="#cluster-level-logging" class="headerlink" title="cluster-level logging"></a>cluster-level logging</h4><p><a href="https://kubernetes.io/docs/user-guide/logging/overview" target="_blank" rel="noopener">Cluster-level logging</a>，负责保存容器日志，搜索/查看日志。<a href="https://kubernetes.io/docs/user-guide/logging/overview" target="_blank" rel="noopener">Cluster-level logging</a>，负责保存容器日志，搜索/查看日志。</p><h2 id="Node组件"><a href="#Node组件" class="headerlink" title="Node组件"></a>Node组件</h2><p>节点组件运行在<a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">Node</a>，提供Kubernetes运行时环境，以及维护Pod。</p><h3 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h3><p><a href="https://kubernetes.io/docs/admin/kubelet" target="_blank" rel="noopener">kubelet</a>是主要的节点代理，它会监视已分配给节点的pod，具体功能：</p><ul><li>安装Pod所需的volume。</li><li>下载Pod的Secrets。</li><li>Pod中运行的 docker（或experimentally，rkt）容器。</li><li>定期执行容器健康检查。</li><li>Reports the status of the pod back to the rest of the system, by creating a <em>mirror pod</em> if necessary.</li><li>Reports the status of the node back to the rest of the system.                                                                                                                                                                                                                                                                                                                                                                                                                            </li></ul><h3 id="kube-proxy"><a href="#kube-proxy" class="headerlink" title="kube-proxy"></a>kube-proxy</h3><p><a href="https://kubernetes.io/docs/admin/kube-proxy" target="_blank" rel="noopener">kube-proxy</a>通过在主机上维护网络规则并执行连接转发来实现Kubernetes服务抽象。</p><h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><p>docker用于运行容器。</p><h3 id="RKT"><a href="#RKT" class="headerlink" title="RKT"></a>RKT</h3><p>rkt运行容器，作为docker工具的替代方案。</p><h3 id="supervisord"><a href="#supervisord" class="headerlink" title="supervisord"></a>supervisord</h3><p>supervisord是一个轻量级的监控系统，用于保障kubelet和docker运行。</p><h3 id="fluentd"><a href="#fluentd" class="headerlink" title="fluentd"></a>fluentd</h3><p>fluentd是一个守护进程，可提供<a href="https://kubernetes.io/docs/concepts/overview/components/#cluster-level-logging" target="_blank" rel="noopener">cluster-level logging</a>。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;@[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;kubernetes组件&quot;&gt;&lt;a href=&quot;#kubernetes组件&quot; class=&quot;headerlink&quot; title=&quot;kubernetes组件&quot;&gt;&lt;/a&gt;kubernetes组件&lt;/h1&gt;&lt;h2 id=&quot;Master组件&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="https://alexbrucelu.github.io/categories/Linux/"/>
+    
+      <category term="k8s" scheme="https://alexbrucelu.github.io/categories/Linux/k8s/"/>
+    
+    
+      <category term="kubernetes" scheme="https://alexbrucelu.github.io/tags/kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>kubernetes</title>

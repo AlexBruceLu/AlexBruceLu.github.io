@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>cuda常见问题解决办法 | AlexBruce</title>
-  <meta name="keywords" content=" CUDA ">
-  <meta name="description" content="cuda常见问题解决办法 | AlexBruce">
+  <title>kubernetes组件 | AlexBruce</title>
+  <meta name="keywords" content=" kubernetes ">
+  <meta name="description" content="kubernetes组件 | AlexBruce">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="description" content="@[TOC] 概念k8s是什么kubernetes 的名字来自希腊语，意思是“舵手”或者“领航员”。k8s是将kubernetes 中间8个字母ubernete替换为8的缩写。 kubernetes 是容器集群管理系统，是一个开源的平台，可以实现容器集群化的自动化部署、自动扩缩容、维护等功能。通过kubernetes 你可以实现：  快速部署应用 快速扩展应用 无缝对接新的应用功能 节省资源，优化">
 <meta property="og:type" content="article">
@@ -480,9 +480,9 @@
 </aside>
 <div class="post">
     <div class="pjax">
-        <article id="post-cuda常见问题解决办法" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-kubernetes组件" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">cuda常见问题解决办法</h1>
+        <h1 class="article-title">kubernetes组件</h1>
     
     <div class="article-meta">
         
@@ -492,26 +492,26 @@
             
                 <a  data-rel="Linux">Linux</a>/
             
-                <a  data-rel="NVIDIA">NVIDIA</a>
+                <a  data-rel="k8s">k8s</a>
             
         </span>
         
         
         <span class="tag">
             
-            <a class="color5">CUDA</a>
+            <a class="color1">kubernetes</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-        创建时间:<time class="date" title='更新时间: 2019-12-18 17:05:18'>2019-12-18 11:25</time>
+        创建时间:<time class="date" title='更新时间: 2020-01-07 15:46:23'>2020-01-07 15:10</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:1.4k</span>
+        <span>字数:854</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -541,7 +541,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-libnvinfer-so-5-cannot-open-shared-object-file-No-such-file-or-directory"><span class="toc-text">1. libnvinfer.so.5: cannot open shared object file: No such file or directory</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kubernetes组件"><span class="toc-text">kubernetes组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Master组件"><span class="toc-text">Master组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-apiserver"><span class="toc-text">kube-apiserver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETCD"><span class="toc-text">ETCD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-controller-manager"><span class="toc-text">kube-controller-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cloud-controller-manager"><span class="toc-text">cloud-controller-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-scheduler"><span class="toc-text">kube-scheduler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插件addons"><span class="toc-text">插件addons</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户界面"><span class="toc-text">用户界面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#容器资源监测"><span class="toc-text">容器资源监测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cluster-level-logging"><span class="toc-text">cluster-level logging</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node组件"><span class="toc-text">Node组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kubelet"><span class="toc-text">kubelet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-proxy"><span class="toc-text">kube-proxy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-text">docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RKT"><span class="toc-text">RKT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#supervisord"><span class="toc-text">supervisord</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fluentd"><span class="toc-text">fluentd</span></a></li></ol></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -557,110 +557,51 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-libnvinfer-so-5-cannot-open-shared-object-file-No-such-file-or-directory"><span class="toc-text">1. libnvinfer.so.5: cannot open shared object file: No such file or directory</span></a></li></ol></div></p>
-<h3 id="1-libnvinfer-so-5-cannot-open-shared-object-file-No-such-file-or-directory"><a href="#1-libnvinfer-so-5-cannot-open-shared-object-file-No-such-file-or-directory" class="headerlink" title="1. libnvinfer.so.5: cannot open shared object file: No such file or directory"></a>1. libnvinfer.so.5: cannot open shared object file: No such file or directory</h3><pre><code class="bash"># Add NVIDIA package repositories
-# Add HTTPS support for apt-key
-sudo apt-get install gnupg-curl
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu1604_10.0.130-1_amd64.deb
-sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
-sudo apt-get update
-wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
-sudo apt install ./nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
-sudo apt-get update
-
-# Install NVIDIA driver
-# Issue with driver install requires creating /usr/lib/nvidia
-sudo mkdir /usr/lib/nvidia
-sudo apt-get install --no-install-recommends nvidia-418
-# Reboot. Check that GPUs are visible using the command: nvidia-smi
-
-# Install development and runtime libraries (~4GB)
-sudo apt-get install --no-install-recommends \
-    cuda-10-0 \
-    libcudnn7=7.6.2.24-1+cuda10.0  \
-    libcudnn7-dev=7.6.2.24-1+cuda10.0
-
-
-# Install TensorRT. Requires that libcudnn7 is installed above.
-sudo apt-get install -y --no-install-recommends libnvinfer5=5.1.5-1+cuda10.0 \
-    libnvinfer-dev=5.1.5-1+cuda10.0</code></pre>
-<p>GPU support</p>
-<p><strong>Note:</strong> GPU support is available for Ubuntu and Windows with CUDA®-enabled cards.</p>
-<p>TensorFlow GPU support requires an assortment of drivers and libraries. To simplify installation and avoid library conflicts, we recommend using a <a href="https://www.tensorflow.org/install/docker" target="_blank" rel="noopener">TensorFlow Docker image with GPU support</a> (Linux only). This setup only requires the <a href="https://www.nvidia.com/drivers" target="_blank" rel="noopener">NVIDIA® GPU drivers</a>.</p>
-<p>These install instructions are for the latest release of TensorFlow. See the <a href="https://www.tensorflow.org/install/source#linux" target="_blank" rel="noopener">tested build configurations</a> for CUDA and cuDNN versions to use with older TensorFlow releases.</p>
-<p>Pip package</p>
-<p>See the <a href="https://www.tensorflow.org/install/pip" target="_blank" rel="noopener">pip install guide</a> for available packages, systems requirements, and instructions. To <code>pip</code> install a TensorFlow package with GPU support, choose a stable or development package:</p>
-<pre><code class="bash">pip install tensorflow-gpu  # stable
-
-pip install tf-nightly      # preview</code></pre>
-<p>Older versions of TensorFlow</p>
-<p>For the 1.15 release, CPU and GPU support are included in a single package:</p>
-<pre><code class="bsh">pip install --pre &quot;tensorflow==1.15.*&quot;</code></pre>
-<p>For releases 1.14 and older, CPU and GPU packages are separate:</p>
-<pre><code class="bsh">pip install tensorflow==1.14      
-# CPU
-pip install tensorflow-gpu==1.14  
-# GPU</code></pre>
-<p>Hardware requirements</p>
-<p>The following GPU-enabled devices are supported:</p>
+        <p><div class='inner-toc'><h2>目录</h2><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#kubernetes组件"><span class="toc-text">kubernetes组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Master组件"><span class="toc-text">Master组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-apiserver"><span class="toc-text">kube-apiserver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ETCD"><span class="toc-text">ETCD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-controller-manager"><span class="toc-text">kube-controller-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cloud-controller-manager"><span class="toc-text">cloud-controller-manager</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-scheduler"><span class="toc-text">kube-scheduler</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#插件addons"><span class="toc-text">插件addons</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS"><span class="toc-text">DNS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#用户界面"><span class="toc-text">用户界面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#容器资源监测"><span class="toc-text">容器资源监测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#cluster-level-logging"><span class="toc-text">cluster-level logging</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node组件"><span class="toc-text">Node组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kubelet"><span class="toc-text">kubelet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#kube-proxy"><span class="toc-text">kube-proxy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker"><span class="toc-text">docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RKT"><span class="toc-text">RKT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#supervisord"><span class="toc-text">supervisord</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fluentd"><span class="toc-text">fluentd</span></a></li></ol></li></ol></li></ol></div></p>
+<h1 id="kubernetes组件"><a href="#kubernetes组件" class="headerlink" title="kubernetes组件"></a>kubernetes组件</h1><h2 id="Master组件"><a href="#Master组件" class="headerlink" title="Master组件"></a>Master组件</h2><p><code>master</code>组件提供集群管理控制中心。</p>
+<p><code>master</code>组件可以在集群任意节点运行。但是为了简单起见，通常在一台VM/机器上启动所有Master组件，并且不会在此VM/机器上运行用户容器。请参考 <a href="https://kubernetes.io/docs/admin/high-availability" target="_blank" rel="noopener">构建高可用群集</a>以来构建multi-master-VM。</p>
+<h3 id="kube-apiserver"><a href="#kube-apiserver" class="headerlink" title="kube-apiserver"></a>kube-apiserver</h3><p><a href="https://kubernetes.io/docs/admin/kube-apiserver" target="_blank" rel="noopener">kube-apiserver</a>用于暴露Kubernetes API。任何的资源请求/调用操作都是通过kube-apiserver提供的接口进行。请参阅<a href="https://kubernetes.io/docs/admin/high-availability" target="_blank" rel="noopener">构建高可用群集</a>。</p>
+<h3 id="ETCD"><a href="#ETCD" class="headerlink" title="ETCD"></a>ETCD</h3><p><a href="https://kubernetes.io/docs/admin/etcd" target="_blank" rel="noopener">etcd</a>是Kubernetes提供默认的存储系统，保存所有集群数据，使用时需要为etcd数据提供备份计划。</p>
+<h3 id="kube-controller-manager"><a href="#kube-controller-manager" class="headerlink" title="kube-controller-manager"></a>kube-controller-manager</h3><p><a href="https://kubernetes.io/docs/admin/kube-controller-manager" target="_blank" rel="noopener">kube-controller-manager</a>运行管理控制器，它们是集群中处理常规任务的后台线程。逻辑上，每个控制器是一个单独的进程，但为了降低复杂性，它们都被编译成单个二进制文件，并在单个进程中运行。</p>
+<p>这些控制器包括：</p>
 <ul>
-<li>NVIDIA® GPU card with CUDA® Compute Capability 3.5 or higher. See the list of <a href="https://developer.nvidia.com/cuda-gpus" target="_blank" rel="noopener">CUDA-enabled GPU cards</a>.</li>
+<li><a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">节点（Node）控制器</a>。</li>
+<li>副本（Replication）控制器：负责维护系统中每个副本中的pod。</li>
+<li>端点（Endpoints）控制器：填充Endpoints对象（即连接Services＆Pods）。</li>
+<li><a href="http://docs.kubernetes.org.cn/84.html" target="_blank" rel="noopener">Service Account</a>和Token控制器：为新的<a href="http://docs.kubernetes.org.cn/242.html" target="_blank" rel="noopener">Namespace</a> 创建默认帐户访问API Token。</li>
 </ul>
-<p>Software requirements</p>
-<p>The following NVIDIA® software must be installed on your system:</p>
+<h3 id="cloud-controller-manager"><a href="#cloud-controller-manager" class="headerlink" title="cloud-controller-manager"></a>cloud-controller-manager</h3><p>云控制器管理器负责与底层云提供商的平台交互。云控制器管理器是Kubernetes版本1.6中引入的，目前还是Alpha的功能。</p>
+<p>云控制器管理器仅运行云提供商特定的（controller loops）控制器循环。可以通过将<code>--cloud-provider</code> flag设置为external启动kube-controller-manager ，来禁用控制器循环。</p>
+<p><code>cloud-controller-manager</code> 具体功能：</p>
 <ul>
-<li><a href="https://www.nvidia.com/drivers" target="_blank" rel="noopener">NVIDIA® GPU drivers</a> —CUDA 10.0 requires 410.x or higher.</li>
-<li><a href="https://developer.nvidia.com/cuda-toolkit-archive" target="_blank" rel="noopener">CUDA® Toolkit</a> —TensorFlow supports CUDA 10.0 (TensorFlow &gt;= 1.13.0)</li>
-<li><a href="http://docs.nvidia.com/cuda/cupti/" target="_blank" rel="noopener">CUPTI</a> ships with the CUDA Toolkit.</li>
-<li><a href="https://developer.nvidia.com/cudnn" target="_blank" rel="noopener">cuDNN SDK</a> (&gt;= 7.4.1)</li>
-<li><em>(Optional)</em> <a href="https://docs.nvidia.com/deeplearning/sdk/tensorrt-install-guide/index.html" target="_blank" rel="noopener">TensorRT 5.0</a> to improve latency and throughput for inference on some models.</li>
+<li>节点（Node）控制器</li>
+<li>路由（Route）控制器</li>
+<li>Service控制器</li>
+<li>卷（Volume）控制器</li>
 </ul>
-<p>Linux setup</p>
-<p>The <code>apt</code> instructions below are the easiest way to install the required NVIDIA software on Ubuntu. However, if <a href="https://www.tensorflow.org/install/source" target="_blank" rel="noopener">building TensorFlow from source</a>, manually install the software requirements listed above, and consider using a <code>-devel</code> <a href="https://www.tensorflow.org/install/docker" target="_blank" rel="noopener">TensorFlow Docker image</a> as a base.</p>
-<p>Install <a href="http://docs.nvidia.com/cuda/cupti/" target="_blank" rel="noopener">CUPTI</a> which ships with the CUDA® Toolkit. Append its installation directory to the <code>$LD_LIBRARY_PATH</code> environmental variable:</p>
-<pre><code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64</code></pre><p>For a GPU with CUDA Compute Capability 3.0, or different versions of the NVIDIA libraries, see the <a href="https://www.tensorflow.org/install/source" target="_blank" rel="noopener">Linux build from source</a> guide.</p>
-<p>Install CUDA with apt</p>
-<p>This section shows how to install CUDA 10 (TensorFlow &gt;= 1.13.0) and CUDA 9 for Ubuntu 16.04 and 18.04. These instructions may work for other Debian-based distros.</p>
-<p><strong>Caution:</strong> <a href="https://wiki.ubuntu.com/UEFI/SecureBoot" target="_blank" rel="noopener">Secure Boot</a> complicates installation of the NVIDIA driver and is beyond the scope of these instructions.</p>
-<p>Ubuntu 18.04 (CUDA 10)</p>
-<pre><code class="bsh"># Add NVIDIA package repositorieswget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/cuda-repo-ubuntu1804_10.0.130-1_amd64.debsudo dpkg -i cuda-repo-ubuntu1804_10.0.130-1_amd64.debsudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pubsudo apt-get updatewget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.debsudo apt install ./nvidia-machine-learning-repo-ubuntu1804_1.0.0-1_amd64.debsudo apt-get update# Install NVIDIA driversudo apt-get install --no-install-recommends nvidia-driver-418# Reboot. Check that GPUs are visible using the command: nvidia-smi# Install development and runtime libraries (~4GB)sudo apt-get install --no-install-recommends \    cuda-10-0 \    libcudnn7=7.6.2.24-1+cuda10.0  \    libcudnn7-dev=7.6.2.24-1+cuda10.0# Install TensorRT. Requires that libcudnn7 is installed above.sudo apt-get install -y --no-install-recommends libnvinfer5=5.1.5-1+cuda10.0 \    libnvinfer-dev=5.1.5-1+cuda10.0</code></pre>
-<p>Ubuntu 16.04 (CUDA 10)</p>
-<pre><code class="bsh"># Add NVIDIA package repositories# Add HTTPS support for apt-keysudo apt-get install gnupg-curlwget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_10.0.130-1_amd64.debsudo dpkg -i cuda-repo-ubuntu1604_10.0.130-1_amd64.debsudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pubsudo apt-get updatewget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.debsudo apt install ./nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.debsudo apt-get update# Install NVIDIA driver# Issue with driver install requires creating /usr/lib/nvidiasudo mkdir /usr/lib/nvidiasudo apt-get install --no-install-recommends nvidia-418# Reboot. Check that GPUs are visible using the command: nvidia-smi# Install development and runtime libraries (~4GB)sudo apt-get install --no-install-recommends \    cuda-10-0 \    libcudnn7=7.6.2.24-1+cuda10.0  \    libcudnn7-dev=7.6.2.24-1+cuda10.0# Install TensorRT. Requires that libcudnn7 is installed above.sudo apt-get install -y --no-install-recommends libnvinfer5=5.1.5-1+cuda10.0 \    libnvinfer-dev=5.1.5-1+cuda10.0</code></pre>
-<p>Ubuntu 16.04 (CUDA 9.0 for TensorFlow &lt; 1.13.0)</p>
-<pre><code class="bash"># Add NVIDIA package repository
-sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
+<h3 id="kube-scheduler"><a href="#kube-scheduler" class="headerlink" title="kube-scheduler"></a>kube-scheduler</h3><p><code>kube-scheduler</code> 监视新创建没有分配到<a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">Node</a>的<a href="http://docs.kubernetes.org.cn/312.html" target="_blank" rel="noopener">Pod</a>，为Pod选择一个Node。</p>
+<h3 id="插件addons"><a href="#插件addons" class="headerlink" title="插件addons"></a>插件addons</h3><p>插件（addon）是实现集群pod和Services功能的 。Pod由<a href="http://docs.kubernetes.org.cn/317.html" target="_blank" rel="noopener">Deployments</a>，ReplicationController等进行管理。Namespace 插件对象是在kube-system Namespace中创建。</p>
+<h4 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h4><p>虽然不严格要求使用插件，但Kubernetes集群都应该具有集群 DNS。                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                群集 DNS是一个DNS服务器，能够为 Kubernetes services提供 DNS记录。由Kubernetes启动的容器自动将这个DNS服务器包含在他们的DNS searches中。</p>
+<p>了解<a href="https://www.kubernetes.org.cn/542.html" target="_blank" rel="noopener">更多详情</a></p>
+<h4 id="用户界面"><a href="#用户界面" class="headerlink" title="用户界面"></a>用户界面</h4><p>kube-ui提供集群状态基础信息查看。更多详细信息，请参阅<a href="https://kubernetes.io/docs/tasks/access-kubernetes-api/http-proxy-access-api/" target="_blank" rel="noopener">使用HTTP代理访问Kubernetes API</a></p>
+<h4 id="容器资源监测"><a href="#容器资源监测" class="headerlink" title="容器资源监测"></a>容器资源监测</h4><p><a href="https://kubernetes.io/docs/user-guide/monitoring" target="_blank" rel="noopener">容器资源监控</a>提供一个UI浏览监控数据。</p>
+<h4 id="cluster-level-logging"><a href="#cluster-level-logging" class="headerlink" title="cluster-level logging"></a>cluster-level logging</h4><p><a href="https://kubernetes.io/docs/user-guide/logging/overview" target="_blank" rel="noopener">Cluster-level logging</a>，负责保存容器日志，搜索/查看日志。<a href="https://kubernetes.io/docs/user-guide/logging/overview" target="_blank" rel="noopener">Cluster-level logging</a>，负责保存容器日志，搜索/查看日志。</p>
+<h2 id="Node组件"><a href="#Node组件" class="headerlink" title="Node组件"></a>Node组件</h2><p>节点组件运行在<a href="http://docs.kubernetes.org.cn/304.html" target="_blank" rel="noopener">Node</a>，提供Kubernetes运行时环境，以及维护Pod。</p>
+<h3 id="kubelet"><a href="#kubelet" class="headerlink" title="kubelet"></a>kubelet</h3><p><a href="https://kubernetes.io/docs/admin/kubelet" target="_blank" rel="noopener">kubelet</a>是主要的节点代理，它会监视已分配给节点的pod，具体功能：</p>
+<ul>
+<li>安装Pod所需的volume。</li>
+<li>下载Pod的Secrets。</li>
+<li>Pod中运行的 docker（或experimentally，rkt）容器。</li>
+<li>定期执行容器健康检查。</li>
+<li>Reports the status of the pod back to the rest of the system, by creating a <em>mirror pod</em> if necessary.</li>
+<li>Reports the status of the node back to the rest of the system.                                                                                                                                                                                                                                                                                                                                                                                                                            </li>
+</ul>
+<h3 id="kube-proxy"><a href="#kube-proxy" class="headerlink" title="kube-proxy"></a>kube-proxy</h3><p><a href="https://kubernetes.io/docs/admin/kube-proxy" target="_blank" rel="noopener">kube-proxy</a>通过在主机上维护网络规则并执行连接转发来实现Kubernetes服务抽象。</p>
+<h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><p>docker用于运行容器。</p>
+<h3 id="RKT"><a href="#RKT" class="headerlink" title="RKT"></a>RKT</h3><p>rkt运行容器，作为docker工具的替代方案。</p>
+<h3 id="supervisord"><a href="#supervisord" class="headerlink" title="supervisord"></a>supervisord</h3><p>supervisord是一个轻量级的监控系统，用于保障kubelet和docker运行。</p>
+<h3 id="fluentd"><a href="#fluentd" class="headerlink" title="fluentd"></a>fluentd</h3><p>fluentd是一个守护进程，可提供<a href="https://kubernetes.io/docs/concepts/overview/components/#cluster-level-logging" target="_blank" rel="noopener">cluster-level logging</a>。</p>
 
-wget http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
-
-sudo apt install ./cuda-repo-ubuntu1604_9.1.85-1_amd64.deb
-
-wget http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64/nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
-
-sudo apt install ./nvidia-machine-learning-repo-ubuntu1604_1.0.0-1_amd64.deb
-sudo apt update
-
-# Install the NVIDIA driver
-# Issue with driver install requires creating /usr/lib/nvidiasudo 
-
-mkdir /usr/lib/nvidia
-sudo apt-get install --no-install-recommends nvidia-410
-
-# Reboot. Check that GPUs are visible using the command: nvidia-smi
-# Install CUDA and tools. Include optional NCCL 2.x
-
-sudo apt install cuda9.0 cuda-cublas-9-0 cuda-cufft-9-0 cuda-curand-9-0 \    
-    cuda-cusolver-9-0 cuda-cusparse-9-0 libcudnn7=7.2.1.38-1+cuda9.0 \    
-    libnccl2=2.2.13-1+cuda9.0 cuda-command-line-tools-9-0
-
-# Optional: Install the TensorRT runtime (must be after CUDA install)
-
-sudo apt updatesudo apt install libnvinfer4=4.1.2-1+cuda9.0</code></pre>
-<p>Windows setup</p>
-<p>See the <a href="https://www.tensorflow.org/install/gpu#hardware_requirements" target="_blank" rel="noopener">hardware requirements</a> and <a href="https://www.tensorflow.org/install/gpu#software_requirements" target="_blank" rel="noopener">software requirements</a> listed above. Read the <a href="https://docs.nvidia.com/cuda/cuda-installation-guide-microsoft-windows/" target="_blank" rel="noopener">CUDA® install guide for Windows</a>.</p>
-<p>Make sure the installed NVIDIA software packages match the versions listed above. In particular, TensorFlow will not load without the <code>cuDNN64_7.dll</code> file. To use a different version, see the <a href="https://www.tensorflow.org/install/source_windows" target="_blank" rel="noopener">Windows build from source</a> guide.</p>
-<p>Add the CUDA, CUPTI, and cuDNN installation directories to the <code>%PATH%</code> environmental variable. For example, if the CUDA Toolkit is installed to <code>C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0</code> and cuDNN to <code>C:\tools\cuda</code>, update your <code>%PATH%</code> to match:</p>
-<pre><code>SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\bin;%PATH% SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\extras\CUPTI\libx64;%PATH% SET PATH=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\include;%PATH% SET PATH=C:\tools\cuda\bin;%PATH%</code></pre>
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件. </span>
     </div>
@@ -673,12 +614,12 @@ sudo apt updatesudo apt install libnvinfer4=4.1.2-1+cuda9.0</code></pre>
 
 
 <div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>cuda常见问题解决办法</p>
-    <p><span class="copy-title">文章字数:</span><span class="post-count">1.4k</span></p>
+    <p><span class="copy-title">文章标题:</span>kubernetes组件</p>
+    <p><span class="copy-title">文章字数:</span><span class="post-count">883</span></p>
     <p><span class="copy-title">本文作者:</span><a  title="AlexBruce Lu">AlexBruce Lu</a></p>
-    <p><span class="copy-title">发布时间:</span>2019-12-18, 11:25:36</p>
-    <p><span class="copy-title">最后更新:</span>2019-12-18, 17:05:18</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2019/12/18/cuda%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" title="cuda常见问题解决办法">https://alexbrucelu.github.io/2019/12/18/cuda%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</a>
+    <p><span class="copy-title">发布时间:</span>2020-01-07, 15:10:58</p>
+    <p><span class="copy-title">最后更新:</span>2020-01-07, 15:46:23</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2020/01/07/kubernetes%E7%BB%84%E4%BB%B6/" title="kubernetes组件">https://alexbrucelu.github.io/2020/01/07/kubernetes%E7%BB%84%E4%BB%B6/</a>
     <p>
         <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
     </p>
